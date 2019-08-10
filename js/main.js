@@ -25,14 +25,14 @@ const Main = new function() {
 
 	function createRandomCreatur() {
 		let DNA = {
-			size: 1,
-			speed: 1,
-			r: 255 * Math.random(),
-			g: 255 * Math.random(),
-			b: 255 * Math.random(),
+			size: 		(Math.random() * 1.5 + .5) * 10,
+			speed: 		1,
+			r: 			255 * Math.random(),
+			g: 			255 * Math.random(),
+			b: 			255 * Math.random(),
 
-			eyeRange: 50 * Math.random(),
-			eyeCount: 1, //Math.round(5 * Math.random()),
+			eyeRange: 200 * Math.random(),
+			eyeCount: Math.round(5 * Math.random()),
 			eyeAngle: Math.PI / 6,
 
 			brain: []
@@ -57,8 +57,18 @@ const Main = new function() {
 }
 
 let date = new Date();
-Main.createCreaturs(1);
+Main.createCreaturs(2);
 Main.updateCreaturs();
 Renderer.renderCreaturs(Main.creaturs)
 
-console.log(new Date() - date);
+console.warn("time", new Date() - date);
+
+
+
+
+
+
+
+
+
+function newId() {return parseInt(Math.round(Math.random() * 100000000) + "" + Math.round(Math.random() * 100000000));}

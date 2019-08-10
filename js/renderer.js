@@ -38,7 +38,7 @@ const Renderer = new function() {
 		dtx.circle(
 			_creatur.x, 
 			_creatur.y, 
-			_creatur.size
+			_creatur.DNA.size
 		);
 		
 

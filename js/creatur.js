@@ -5,11 +5,11 @@ function _creatur(_DNA) {
 	let brain = createBrain(_DNA.brain);
 
 	const This = {
+		id: 		newId(),
 		energy: 	100,
 		angle: 		Math.random() * Math.PI * 2,
 		x: 			Math.round(Math.random() * Renderer.canvas.width),
 		y: 			Math.round(Math.random() * Renderer.canvas.height),
-		size: 		(Math.random() * 1.5 + .5) * 10,
 
 
 		DNA: 		_DNA,
@@ -38,13 +38,36 @@ function _creatur(_DNA) {
 
 	function getEyeData() {
 
+		console.log(getAllVisableCreaturs());
 
 		return [Math.random(), Math.random(), Math.random()];
 	}
 
 
-	function detectIfCollisionPosible(_otherCreatur) {
+	function getAllVisableCreaturs() {
+		let visableCreaturs = [];
+		for (creatur of Main.creaturs)
+		{
+			if (creatur.id == This.id) continue;
+			let status = detectIfInViewingDistance(creatur);
+			if (!status) continue;
+			visableCreaturs.push(status);
+		}
 
+		return visableCreaturs;
+	}
+
+
+	function detectIfInViewingDistance(_otherCreatur) {
+		let maxDistance = This.DNA.eyeRange + _otherCreatur.DNA.size;
+
+		let dx = Math.abs(This.x - _otherCreatur.x);
+		let dy = Math.abs(This.y - _otherCreatur.y);
+		let actualDistance = Math.sqrt(dx * dx + dy * dy);
+		if (actualDistance > maxDistance) return false;
+		
+		_otherCreatur.distanceFromCreatur = actualDistance;
+		return _otherCreatur;
 	}
 
 
