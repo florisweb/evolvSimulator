@@ -6,12 +6,10 @@ function _creatur(_DNA) {
 
 	const This = {
 		energy: 	100,
-		angle: 		Math.random(),
+		angle: 		Math.random() * Math.PI * 2,
 		x: 			Math.round(Math.random() * Renderer.canvas.width),
 		y: 			Math.round(Math.random() * Renderer.canvas.height),
-		size: 		Math.random() * 2,
-
-
+		size: 		(Math.random() * 1.5 + .5) * 10,
 
 
 		DNA: 		_DNA,
@@ -29,7 +27,7 @@ function _creatur(_DNA) {
 
 	function update() {
 
-		let inputs = [Math.random(), Math.random(), Math.random()];
+		let inputs = getEyeData();
 
 		let actionValues = This.brain.feedForward(inputs);
 		// console.log(actionValues);
@@ -37,6 +35,17 @@ function _creatur(_DNA) {
 
 	}
 
+
+	function getEyeData() {
+
+
+		return [Math.random(), Math.random(), Math.random()];
+	}
+
+
+	function detectIfCollisionPosible(_otherCreatur) {
+
+	}
 
 
 

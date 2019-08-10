@@ -32,19 +32,36 @@ const Renderer = new function() {
 
 
 	function renderCreatur(_creatur) {
-		const defaultCreaturSize = 10;
-
 		dtx.strokeStyle = "rgb(" + _creatur.DNA.r + ", " + _creatur.DNA.g + ", "+ _creatur.DNA.b + ")";
-		dtx.fillStyle = "rgba(" + _creatur.DNA.r + ", " + _creatur.DNA.g + ", "+ _creatur.DNA.b + ", 0.2)";
-		
+		dtx.fillStyle 	= "rgba(" + _creatur.DNA.r + ", " + _creatur.DNA.g + ", "+ _creatur.DNA.b + ", .2)";
+
 		dtx.circle(
 			_creatur.x, 
 			_creatur.y, 
-			_creatur.size * defaultCreaturSize
+			_creatur.size
 		);
+		
+
+
+		for (let e = 0; e < _creatur.DNA.eyeCount; e++) renderCreaturEye(_creatur, e);
+
+
+
 
 		dtx.stroke();
 		dtx.fill();
+	}
+
+	function renderCreaturEye(_creatur, _eyeIndex = 0) {// left = 0
+		let totalEyeAngle = (_creatur.DNA.eyeCount - 1) * _creatur.DNA.eyeAngle;
+		let startAngle = -totalEyeAngle / 2;
+		let thisAngle = startAngle + _eyeIndex * _creatur.DNA.eyeAngle + creatur.angle + Math.PI * .5;
+		
+		let relativeEyeX = Math.sin(thisAngle) * _creatur.DNA.eyeRange;
+		let relativeEyeY = Math.cos(thisAngle) * _creatur.DNA.eyeRange;
+
+		dtx.moveTo(_creatur.x, _creatur.y);
+		dtx.lineTo(_creatur.x + relativeEyeX, _creatur.y + relativeEyeY);
 	}
 
 

@@ -12,8 +12,8 @@ CREATUR
 		size: 1,
 		speed: 1,
 		eyeRange: 100,
-			eyeCount?
-			eyeAngle? - distance between all eyes
+			eyeCount
+			eyeAngle - distance between all eyes (Radians)
 
 		r: 0, 		\
 		g: 100,	 	creatur colour

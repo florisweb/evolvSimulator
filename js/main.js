@@ -7,7 +7,11 @@ const Main = new function() {
 		createRandomCreatur: createRandomCreatur,
 		createCreatur: createCreatur,
 		createCreaturs: function(_amount = 10) {
-			for (let i = 0; i < _amount; i++) this.createRandomCreatur();
+			for (let i = 0; i < _amount; i++)
+			{
+				c = this.createRandomCreatur();
+				c.i = i;
+			} 
 		},
 
 		updateCreaturs: function() {
@@ -27,7 +31,9 @@ const Main = new function() {
 			g: 255 * Math.random(),
 			b: 255 * Math.random(),
 
-			eyeRange: 100,
+			eyeRange: 50 * Math.random(),
+			eyeCount: 1, //Math.round(5 * Math.random()),
+			eyeAngle: Math.PI / 6,
 
 			brain: []
 		};
@@ -51,7 +57,7 @@ const Main = new function() {
 }
 
 let date = new Date();
-Main.createCreaturs(10);
+Main.createCreaturs(1);
 Main.updateCreaturs();
 Renderer.renderCreaturs(Main.creaturs)
 
