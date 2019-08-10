@@ -18,6 +18,7 @@
 		<script>
 			// temporary so things don't get cached
 			let antiCache = Math.round(Math.random() * 100000000);
+			$.getScript("js/neuralNetwork.js?antiCache=" 							+ antiCache, function() {});
 			$.getScript("js/creatur.js?antiCache=" 									+ antiCache, function() {});
 			$.getScript("js/main.js?antiCache=" 									+ antiCache, function() {});
 			

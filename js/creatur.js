@@ -3,21 +3,32 @@
 
 
 function _creatur() {
-	this.energy = 100;
-	this.DNA = {
-		size: 1,
-		speed: 1,
-		r: 0,
-		g: 100,
-		b: 255,
+	let brain;
 
-		eyeRange: 100,
-		
+	const This = {
+		energy: 100,
+		DNA: {
+			size: 1,
+			speed: 1,
+			r: 0,
+			g: 100,
+			b: 255,
 
-		brain: [
-		]
+			eyeRange: 100,
 
+			brain: [
+			]
+		}
 	}
+
+	return This;
+
+
+
+
+	
+
+
 
 
 
