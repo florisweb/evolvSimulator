@@ -7,6 +7,7 @@ An evolution simulator
 
 
 CREATUR
+
 	DNA = {
 		size: 1,
 		speed: 1,

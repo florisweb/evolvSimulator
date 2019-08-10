@@ -5,7 +5,15 @@ const Main = new function() {
 		creaturs: [],
 
 		createRandomCreatur: createRandomCreatur,
-		createCreatur: createCreatur
+		createCreatur: createCreatur,
+		createCreaturs: function(_amount = 10) {
+			for (let i = 0; i < _amount; i++) this.createRandomCreatur();
+		},
+
+		updateCreaturs: function() {
+			for (creatur of this.creaturs) creatur.update();
+		}
+		
 	}
 
 	return This;
@@ -41,3 +49,8 @@ const Main = new function() {
 	}
 
 }
+let date = new Date();
+Main.createCreaturs(10);
+Main.updateCreaturs();
+
+console.log(new Date() - date);

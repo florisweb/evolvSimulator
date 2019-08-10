@@ -1,17 +1,46 @@
 
 
 
-
 function _creatur(_DNA) {
 	let brain = createBrain(_DNA.brain);
 
 	const This = {
-		energy: 100,
-		DNA: _DNA,
-		brain: brain
+		energy: 	100,
+		angle: 		Math.random(),
+		x: 			Math.random() * Renderer.canvas.width,
+		y: 			Math.random() * Renderer.canvas.height,
+
+		DNA: 		_DNA,
+		brain: 		brain,
+	
+
+		update: 	update
 	}
 
 	return This;
+
+
+
+
+
+	function update() {
+
+		let inputs = [Math.random(), Math.random(), Math.random()];
+
+		let actionValues = This.brain.feedForward(inputs);
+		console.log(actionValues);
+
+
+	}
+
+
+
+
+
+
+
+
+
 
 
 	function createBrain(_brainDNA) {
@@ -35,7 +64,6 @@ function _creatur(_DNA) {
 	}
 
 
-
 	function populateBrain(_brain, _brainData) {
 		for (let l = 1; l < _brain.layers.length; l++)
 		{
@@ -52,6 +80,13 @@ function _creatur(_DNA) {
 	}
 
 }
+
+
+
+
+
+
+
 
 
 function arraySplice(_array, _length) {

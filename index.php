@@ -8,9 +8,15 @@
 
 		<!-- <link rel="stylesheet" type="text/css" href="css/component.css?a=37"> -->
 		<script type="text/javascript" src="/JS/jQuery.js" asy nc></script>
+
+		<style>
+			#worldCanvas {
+				border: 1px solid red;
+			}
+		</style>
 	</head>	
 	<body>
-
+		<canvas id="worldCanvas" width="500" height="500"></canvas>
 	
 
 
@@ -18,6 +24,7 @@
 		<script>
 			// temporary so things don't get cached
 			let antiCache = Math.round(Math.random() * 100000000);
+			$.getScript("js/renderer.js?antiCache=" 								+ antiCache, function() {});
 			$.getScript("js/neuralNetwork.js?antiCache=" 							+ antiCache, function() {});
 			$.getScript("js/creatur.js?antiCache=" 									+ antiCache, function() {});
 			$.getScript("js/main.js?antiCache=" 									+ antiCache, function() {});
