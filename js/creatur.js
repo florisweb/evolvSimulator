@@ -7,8 +7,12 @@ function _creatur(_DNA) {
 	const This = {
 		energy: 	100,
 		angle: 		Math.random(),
-		x: 			Math.random() * Renderer.canvas.width,
-		y: 			Math.random() * Renderer.canvas.height,
+		x: 			Math.round(Math.random() * Renderer.canvas.width),
+		y: 			Math.round(Math.random() * Renderer.canvas.height),
+		size: 		Math.random() * 2,
+
+
+
 
 		DNA: 		_DNA,
 		brain: 		brain,
@@ -28,7 +32,7 @@ function _creatur(_DNA) {
 		let inputs = [Math.random(), Math.random(), Math.random()];
 
 		let actionValues = This.brain.feedForward(inputs);
-		console.log(actionValues);
+		// console.log(actionValues);
 
 
 	}

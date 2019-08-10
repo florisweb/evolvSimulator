@@ -49,8 +49,10 @@ const Main = new function() {
 	}
 
 }
+
 let date = new Date();
 Main.createCreaturs(10);
 Main.updateCreaturs();
+Renderer.renderCreaturs(Main.creaturs)
 
 console.log(new Date() - date);
