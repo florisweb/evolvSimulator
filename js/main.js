@@ -15,7 +15,7 @@ const Main = new function() {
 		},
 
 		updateCreaturs: function() {
-			for (creatur of this.creaturs) creatur.update();
+			for (creatur of this.creaturs) creatur.inpData = creatur.update();
 		}
 		
 	}
@@ -31,11 +31,11 @@ const Main = new function() {
 			g: 			255 * Math.random(),
 			b: 			255 * Math.random(),
 
-			eyeRange: 200 * Math.random(),
-			eyeCount: Math.round(5 * Math.random()),
-			eyeAngle: Math.PI / 6,
+			eyeRange: 	500 * Math.random(),
+			eyeCount: 	Math.round(5 * Math.random()),
+			eyeAngle: 	Math.PI / 6,
 
-			brain: []
+			brain: 		[]
 		};
 
 
@@ -59,7 +59,7 @@ const Main = new function() {
 let date = new Date();
 Main.createCreaturs(2);
 Main.updateCreaturs();
-Renderer.renderCreaturs(Main.creaturs)
+Renderer.renderCreaturs(Main.creaturs);
 
 console.warn("time", new Date() - date);
 

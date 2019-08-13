@@ -8,8 +8,8 @@ function _creatur(_DNA) {
 		id: 		newId(),
 		energy: 	100,
 		angle: 		Math.random() * Math.PI * 2,
-		x: 			Math.round(Math.random() * Renderer.canvas.width),
-		y: 			Math.round(Math.random() * Renderer.canvas.height),
+		x: 			Math.round(Math.random() * Renderer.canvas.width * 0.4) + Renderer.canvas.width * 0.3,
+		y: 			Math.round(Math.random() * Renderer.canvas.height * 0.4)+ Renderer.canvas.height * 0.3,
 
 
 		DNA: 		_DNA,
@@ -26,25 +26,55 @@ function _creatur(_DNA) {
 
 
 	function update() {
-
 		let inputs = getEyeData();
-
 		let actionValues = This.brain.feedForward(inputs);
-		// console.log(actionValues);
 
-
+		return {eyeData: inputs};
 	}
 
 
 	function getEyeData() {
+		console.log("==================");
+		let creaturs 		= getAllCreatursWithinRange();
+		let totalEyeAngle 	= (This.DNA.eyeCount - 1) * This.DNA.eyeAngle;
+		let startAngle 		= -totalEyeAngle / 2;
 
-		console.log(getAllVisableCreaturs());
+		let results = createArrayWithValues(This.DNA.eyeCount, 1);
+		for (creatur of creaturs)
+		{
+			let dx = creatur.x - This.x;
+			let dy = creatur.y - This.y;
+			let directAngleToCreatur = atanWithDX(dx, dy);
+			// console.log(directAngleToCreatur);
+			// console.log(This.x, This.y, dx, dy, directAngleToCreatur, directAngleToCreatur/Math.PI);
+			let distanceToCreatur = Math.sqrt(dx * dx + dy * dy);
+				
+			
 
-		return [Math.random(), Math.random(), Math.random()];
+			for (let e = 0; e < This.DNA.eyeCount; e++)
+			{
+				// let thisAngle = startAngle + e * This.DNA.eyeAngle + ;
+				let thisAngle = startAngle + creatur.angle + .5 * Math.PI;
+				console.log(This.x, This.y, startAngle + e * This.DNA.eyeAngle);
+
+
+				let dAngle = Math.abs(thisAngle - directAngleToCreatur);
+				
+				let distance = calcDistanceFromEye(dAngle, distanceToCreatur, creatur.DNA.size);
+				if (isNaN(distance)) distance = This.DNA.eyeRange;
+				results[e] = distance / This.DNA.eyeRange;
+			}
+		}
+
+
+
+
+		return results;
 	}
 
 
-	function getAllVisableCreaturs() {
+
+	function getAllCreatursWithinRange() {
 		let visableCreaturs = [];
 		for (creatur of Main.creaturs)
 		{
@@ -71,6 +101,17 @@ function _creatur(_DNA) {
 	}
 
 
+
+
+
+	function calcDistanceFromEye(a, v, r) {
+		r = 1 / r;
+		let x = (v*r - Math.sqrt(-Math.pow(Math.tan(a), 2) * (v*v*r*r-1) + 1))
+				/
+				(r*Math.pow(Math.tan(a), 2) + r);
+
+		return x / Math.cos(a);
+	}
 
 
 
@@ -135,4 +176,15 @@ function arraySplice(_array, _length) {
 	return arr;
 }
 
+function createArrayWithValues(_length, _value) {
+	let arr = [];
+	for (let i = 0; i < _length; i++) arr.push(_value);
+	return arr;
+}	
 
+
+function atanWithDX(dx, dy) {
+	let angle = -Math.atan(dy / dx);
+	if (dx < 0) angle += Math.PI;
+	return angle;
+}

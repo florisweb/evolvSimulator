@@ -13,6 +13,7 @@ const Renderer = new function() {
 	}
 
 	let dtx	= This.canvas.getContext("2d");
+	This.dtx = dtx;
 	dtx.circle = function(x, y, size) {
 		dtx.beginPath();
 		dtx.ellipse(
@@ -42,29 +43,39 @@ const Renderer = new function() {
 		);
 		
 
-
-		for (let e = 0; e < _creatur.DNA.eyeCount; e++) renderCreaturEye(_creatur, e);
-
-
+		for (let e = 0; e < _creatur.DNA.eyeCount; e++) renderCreaturEye(_creatur, e, _creatur.inpData.eyeData[e]);
 
 
 		dtx.stroke();
 		dtx.fill();
 	}
 
-	function renderCreaturEye(_creatur, _eyeIndex = 0) {// left = 0
+	function renderCreaturEye(_creatur, _eyeIndex = 0, _eyeDistance = 1) {// right = 0
 		let totalEyeAngle = (_creatur.DNA.eyeCount - 1) * _creatur.DNA.eyeAngle;
 		let startAngle = -totalEyeAngle / 2;
-		let thisAngle = startAngle + _eyeIndex * _creatur.DNA.eyeAngle + creatur.angle + Math.PI * .5;
+		let thisAngle = startAngle + _eyeIndex * _creatur.DNA.eyeAngle + (_creatur.angle + .5 * Math.PI);
+		console.warn(_creatur.x, _creatur.y, thisAngle/Math.PI)
+		// let thisAngle = (_creatur.angle + .5 * Math.PI);
 		
-		let relativeEyeX = Math.sin(thisAngle) * _creatur.DNA.eyeRange;
-		let relativeEyeY = Math.cos(thisAngle) * _creatur.DNA.eyeRange;
+		let relativeEyeX = Math.cos(thisAngle) * _creatur.DNA.eyeRange;
+		let relativeEyeY = -Math.sin(thisAngle) * _creatur.DNA.eyeRange;
+		
 
 		dtx.moveTo(_creatur.x, _creatur.y);
 		dtx.lineTo(_creatur.x + relativeEyeX, _creatur.y + relativeEyeY);
+
+
+		let relativeEyeXDetector = Math.cos(thisAngle) * _creatur.DNA.eyeRange * _eyeDistance;
+		let relativeEyeYDetector = -Math.sin(thisAngle) * _creatur.DNA.eyeRange * _eyeDistance;
+		
+		dtx.fillRect(
+			relativeEyeXDetector + _creatur.x, 
+			relativeEyeYDetector + _creatur.y,
+			_creatur.DNA.size / 2,
+			_creatur.DNA.size / 2,
+		);
+
 	}
-
-
 
 
 
