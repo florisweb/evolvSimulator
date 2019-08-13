@@ -10,16 +10,23 @@
 		<script type="text/javascript" src="/JS/jQuery.js" asy nc></script>
 
 		<style>
+			body {
+				margin: 0;
+				padding: 0;
+			}
+
 			#worldCanvas {
+				position: fixed;
+				top: 0;
+				left: 0;
+				
 				border: 1px solid red;
 			}
 		</style>
 	</head>	
 	<body>
-		<canvas id="worldCanvas" width="500" height="500"></canvas>
+		<canvas id="worldCanvas" width="1200" height="600"></canvas>
 	
-
-
 
 		<script>
 			// temporary so things don't get cached
@@ -28,8 +35,6 @@
 			$.getScript("js/neuralNetwork.js?antiCache=" 							+ antiCache, function() {});
 			$.getScript("js/creatur.js?antiCache=" 									+ antiCache, function() {});
 			$.getScript("js/main.js?antiCache=" 									+ antiCache, function() {});
-			
-
 		</script>
  	
 	</body>

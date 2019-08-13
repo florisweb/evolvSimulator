@@ -9,11 +9,16 @@ const Renderer = new function() {
 		renderCreatur: renderCreatur,
 		renderCreaturs: function(_creaturs) {
 			for (creatur of _creaturs) this.renderCreatur(creatur);
+		},
+		update: function() {
+			dtx.fillStyle = "#fff";
+			dtx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+			this.renderCreaturs(Main.creaturs);
 		}
 	}
 
 	let dtx	= This.canvas.getContext("2d");
-	This.dtx = dtx;
+	
 	dtx.circle = function(x, y, size) {
 		dtx.beginPath();
 		dtx.ellipse(
@@ -31,7 +36,6 @@ const Renderer = new function() {
 	return This;
 	
 
-
 	function renderCreatur(_creatur) {
 		dtx.strokeStyle = "rgb(" + _creatur.DNA.r + ", " + _creatur.DNA.g + ", "+ _creatur.DNA.b + ")";
 		dtx.fillStyle 	= "rgba(" + _creatur.DNA.r + ", " + _creatur.DNA.g + ", "+ _creatur.DNA.b + ", .2)";
@@ -42,7 +46,6 @@ const Renderer = new function() {
 			_creatur.DNA.size
 		);
 		
-
 		for (let e = 0; e < _creatur.DNA.eyeCount; e++) renderCreaturEye(_creatur, e, _creatur.inpData.eyeData[e]);
 
 
@@ -71,5 +74,6 @@ const Renderer = new function() {
 			_creatur.DNA.size / 2,
 		);
 	}
-
 }
+
+

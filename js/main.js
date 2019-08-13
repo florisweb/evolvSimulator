@@ -6,6 +6,8 @@ const Main = new function() {
 
 		createRandomCreatur: createRandomCreatur,
 		createCreatur: createCreatur,
+
+		updates: 0,
 		createCreaturs: function(_amount = 10) {
 			for (let i = 0; i < _amount; i++)
 			{
@@ -16,6 +18,12 @@ const Main = new function() {
 
 		updateCreaturs: function() {
 			for (creatur of this.creaturs) creatur.inpData = creatur.update();
+		},
+
+		update: function(_render = true) {
+			this.updates++;
+			this.updateCreaturs();
+			if (_render) Renderer.update();
 		}
 		
 	}
@@ -25,15 +33,15 @@ const Main = new function() {
 
 	function createRandomCreatur() {
 		let DNA = {
-			size: 		(Math.random() * 1.5 + .5) * 10,
-			speed: 		1,
+			size: 		(Math.random() * 1.5 + .5) * 5,
+			speed: 		Math.random() * 3 + 1,
 			r: 			255 * Math.random(),
 			g: 			255 * Math.random(),
 			b: 			255 * Math.random(),
 
-			eyeRange: 	500,
+			eyeRange: 	200 * Math.random(),
 			eyeCount: 	Math.round(10 * Math.random()),
-			eyeAngle: 	Math.PI / 24,
+			eyeAngle: 	Math.PI / 2 * Math.random(),
 
 			brain: 		[]
 		};
@@ -57,12 +65,10 @@ const Main = new function() {
 }
 
 let date = new Date();
-Main.createCreaturs(2);
-Main.updateCreaturs();
-Renderer.renderCreaturs(Main.creaturs);
-
+Main.createCreaturs(10);
+Main.update();
 console.warn("time", new Date() - date);
-
+setInterval("Main.update(true)", 50);
 
 
 
