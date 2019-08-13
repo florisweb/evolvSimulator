@@ -31,9 +31,9 @@ const Main = new function() {
 			g: 			255 * Math.random(),
 			b: 			255 * Math.random(),
 
-			eyeRange: 	500 * Math.random(),
-			eyeCount: 	Math.round(5 * Math.random()),
-			eyeAngle: 	Math.PI / 6,
+			eyeRange: 	500,
+			eyeCount: 	Math.round(10 * Math.random()),
+			eyeAngle: 	Math.PI / 24,
 
 			brain: 		[]
 		};

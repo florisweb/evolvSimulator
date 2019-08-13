@@ -53,48 +53,23 @@ const Renderer = new function() {
 	function renderCreaturEye(_creatur, _eyeIndex = 0, _eyeDistance = 1) {// right = 0
 		let totalEyeAngle = (_creatur.DNA.eyeCount - 1) * _creatur.DNA.eyeAngle;
 		let startAngle = -totalEyeAngle / 2;
-		let thisAngle = startAngle + _eyeIndex * _creatur.DNA.eyeAngle + (_creatur.angle + .5 * Math.PI);
-		console.warn(_creatur.x, _creatur.y, thisAngle/Math.PI)
-		// let thisAngle = (_creatur.angle + .5 * Math.PI);
+		let thisAngle = startAngle + _eyeIndex * _creatur.DNA.eyeAngle + _creatur.angle;
 		
 		let relativeEyeX = Math.cos(thisAngle) * _creatur.DNA.eyeRange;
 		let relativeEyeY = -Math.sin(thisAngle) * _creatur.DNA.eyeRange;
 		
-
 		dtx.moveTo(_creatur.x, _creatur.y);
 		dtx.lineTo(_creatur.x + relativeEyeX, _creatur.y + relativeEyeY);
-
 
 		let relativeEyeXDetector = Math.cos(thisAngle) * _creatur.DNA.eyeRange * _eyeDistance;
 		let relativeEyeYDetector = -Math.sin(thisAngle) * _creatur.DNA.eyeRange * _eyeDistance;
 		
 		dtx.fillRect(
-			relativeEyeXDetector + _creatur.x, 
-			relativeEyeYDetector + _creatur.y,
+			relativeEyeXDetector + _creatur.x - _creatur.DNA.size / 4, 
+			relativeEyeYDetector + _creatur.y - _creatur.DNA.size / 4,
 			_creatur.DNA.size / 2,
 			_creatur.DNA.size / 2,
 		);
-
 	}
-
-
-
-// 	dtx.
-
-// 	function ellipse(centerX, centerY, width, height) {
-//   c.beginPath();
-//   c.moveTo(centerX, centerY - height/2); 
-//   c.bezierCurveTo(
-//     centerX + width/2, centerY - height/2, 
-//     centerX + width/2, centerY + height/2, 
-//     centerX, centerY + height/2); 
-//   c.bezierCurveTo(
-//     centerX - width/2, centerY + height/2, 
-//     centerX - width/2, centerY - height/2, 
-//     centerX, centerY - height/2); 
-//   c.fill();
-//   c.closePath();  
-// }
-
 
 }

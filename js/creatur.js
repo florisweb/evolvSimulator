@@ -53,20 +53,21 @@ function _creatur(_DNA) {
 
 			for (let e = 0; e < This.DNA.eyeCount; e++)
 			{
-				// let thisAngle = startAngle + e * This.DNA.eyeAngle + ;
-				let thisAngle = startAngle + creatur.angle + .5 * Math.PI;
-				console.log(This.x, This.y, startAngle + e * This.DNA.eyeAngle);
-
+				let thisAngle = startAngle + e * This.DNA.eyeAngle + This.angle;
+				
 
 				let dAngle = Math.abs(thisAngle - directAngleToCreatur);
 				
+
 				let distance = calcDistanceFromEye(dAngle, distanceToCreatur, creatur.DNA.size);
-				if (isNaN(distance)) distance = This.DNA.eyeRange;
+				if (isNaN(distance) || distance < 0) distance = This.DNA.eyeRange;
+
+				
 				results[e] = distance / This.DNA.eyeRange;
 			}
 		}
 
-
+		console.log(This.x, This.y, results);
 
 
 		return results;
