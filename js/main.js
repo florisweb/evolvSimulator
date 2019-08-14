@@ -30,7 +30,7 @@ const Main = new function() {
 		createCreatur: createCreatur,
 
 		updates: 0,
-		createcreatures: function(_amount = 10) {
+		createCreatures: function(_amount = 10) {
 			for (let i = 0; i < _amount; i++)
 			{
 				c = this.createRandomCreatur();
@@ -38,11 +38,11 @@ const Main = new function() {
 			} 
 		},
 
-		updatecreatures: function() {
+		updateCreatures: function() {
 			for (creatur of this.creatures) creatur.inpData = creatur.update();
 		},
 
-		getCreatur: function(_id) {
+		getCreature: function(_id) {
 			for (let i = 0; i < This.creatures.length; i++)
 			{
 				if (This.creatures[i].id != _id) continue;
@@ -50,7 +50,7 @@ const Main = new function() {
 			}
 			return false;
 		},
-		
+
 		killCreatur: function(_id) {
 			for (let i = 0; i < This.creatures.length; i++)
 			{
@@ -63,7 +63,7 @@ const Main = new function() {
 
 		update: function(_render = true) {
 			this.updates++;
-			this.updatecreatures();
+			this.updateCreatures();
 			
 			if (
 				this.updates % this.settings.renderEveryXFrames == 0 && 
@@ -116,7 +116,7 @@ const Main = new function() {
 }
 
 let startTime = new Date();
-Main.createcreatures(50);
+Main.createCreatures(50);
 Main.update();
 console.warn("time", new Date() - startTime);
 setInterval("Main.update(true)", 1);

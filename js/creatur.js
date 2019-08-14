@@ -84,10 +84,10 @@ function _creatur(_DNA, _metaData) {
 		
 		This.x += rx;
 		This.y += ry;
-		if (This.x < 0) This.x = 0;
-		if (This.y < 0) This.y = 0;
-		if (This.x > Renderer.canvas.width) This.x = Renderer.canvas.width;
-		if (This.y > Renderer.canvas.height) This.y = Renderer.canvas.height;
+		if (This.x < This.DNA.size) This.x = This.DNA.size;
+		if (This.y < This.DNA.size) This.y = This.DNA.size;
+		if (This.x > Renderer.canvas.width - This.DNA.size) This.x = Renderer.canvas.width - This.DNA.size;
+		if (This.y > Renderer.canvas.height - This.DNA.size) This.y = Renderer.canvas.height - This.DNA.size;
 	}
 
 
@@ -105,14 +105,14 @@ function _creatur(_DNA, _metaData) {
 				{
 					let dx = creatur.x - This.x;
 					let dy = creatur.y - This.y;
-					let directAngleToCreatur = atanWithDX(dx, dy);
+					let directAngleToCreature = atanWithDX(dx, dy);
 					let distanceToCreatur = Math.sqrt(dx * dx + dy * dy);
 						
 					
 					for (let e = 0; e < This.DNA.eyeCount; e++)
 					{
 						let thisAngle = startAngle + e * This.DNA.eyeAngle + This.angle;
-						let dAngle = Math.abs(thisAngle - directAngleToCreatur);
+						let dAngle = Math.abs(thisAngle - directAngleToCreature);
 						let distance = calcDistanceFromEye(dAngle, distanceToCreatur, creatur.DNA.size);
 						if (isNaN(distance) || distance < 0) distance = This.DNA.eyeRange;
 						
