@@ -37,6 +37,7 @@ const Main = new function() {
 		plants: 0,
 		creatures: 0,
 
+		running: true,
 
 
 		createRandomCreature: 	createRandomCreature,
@@ -94,6 +95,7 @@ const Main = new function() {
 
 			This.totalEnergyConsumption = 0;
 			This.totalBrainOutput = [0, 0, 0, 0];
+			if (this.running) requestAnimationFrame(function () {Main.update(_render)});
 		}
 	}
 
@@ -158,8 +160,6 @@ const Main = new function() {
 		let entity = new constructor(_DNA, _metaData);
 
 
-
-
 		This[_type + "s"]++; // to keep track of the amount of plants / creatures there are
 		This.entities.push(entity);
 		return entity;
@@ -172,7 +172,7 @@ Main.createCreatures(10);
 Main.createPlants(10);
 Main.update();
 console.warn("time", new Date() - startTime);
-// setInterval("Main.update(true)", 100);
+
 
 
 

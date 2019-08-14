@@ -58,7 +58,7 @@ const Renderer = new function() {
 
 		for (let i = 0; i < Main.totalBrainOutput.length; i++)
 		{
-			dtx.fillText("Brain [" + i + "]: " + Math.round(Main.totalBrainOutput[i] / Main.entities.length * 1000) / 1000, 5, fontSize * 5 + fontSize * i + fontSize * .5);
+			dtx.fillText("Brain [" + i + "]: " + Math.round(Main.totalBrainOutput[i] / Main.creatures * 1000) / 1000, 5, fontSize * 5 + fontSize * i + fontSize * .5);
 		}
 	}
 
@@ -88,19 +88,18 @@ const Renderer = new function() {
 	function renderEntityAngleArrow(_entity) {
 		let arrowSize = _entity.DNA.size / 2;
 
-		let rx1 = Math.cos(_entity.angle) * arrowSize;
-		let ry1 = -Math.sin(_entity.angle) * arrowSize;
+		let rx1 = Math.cos(_entity.angle + Math.PI) * arrowSize;
+		let ry1 = -Math.sin(_entity.angle + Math.PI) * arrowSize;
 
-		let rx2 = Math.cos(_entity.angle + Math.PI) * arrowSize;
-		let ry2 = -Math.sin(_entity.angle + Math.PI) * arrowSize;
+		let rx2 = Math.cos(_entity.angle) * arrowSize;
+		let ry2 = -Math.sin(_entity.angle) * arrowSize;
 
 		const arrowAngle = Math.PI / 0.85;
-		let rxArrowR = Math.cos(_entity.angle + Math.PI - arrowAngle) * arrowSize;
-		let ryArrowR = -Math.sin(_entity.angle + Math.PI - arrowAngle) * arrowSize;
+		let rxArrowR = Math.cos(_entity.angle - arrowAngle) * arrowSize;
+		let ryArrowR = -Math.sin(_entity.angle - arrowAngle) * arrowSize;
 
-		let rxArrowL = Math.cos(_entity.angle + Math.PI + arrowAngle) * arrowSize;
-		let ryArrowL = -Math.sin(_entity.angle + Math.PI + arrowAngle) * arrowSize;
-		
+		let rxArrowL = Math.cos(_entity.angle + arrowAngle) * arrowSize;
+		let ryArrowL = -Math.sin(_entity.angle + arrowAngle) * arrowSize;
 		
 		dtx.lineWidth = 3;
 		dtx.beginPath();
