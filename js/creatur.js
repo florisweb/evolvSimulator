@@ -37,8 +37,8 @@ function _creature(_DNA, _metaData) {
 		return {eyeData: inputs};
 	}
 
-	function calcEnergyConsumption() {
 
+	function calcEnergyConsumption() {
 		let energyConsumption 	= Main.settings.energyConsumption.default;
 		energyConsumption 		+= This.DNA.brain.length 							* Main.settings.energyConsumption.neuronConstant;
 		energyConsumption 		+= Math.abs(This.DNA.eyeCount * This.DNA.eyeRange) 	* Main.settings.energyConsumption.eyeConstant;

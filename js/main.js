@@ -172,7 +172,7 @@ Main.createCreatures(10);
 Main.createPlants(10);
 Main.update();
 console.warn("time", new Date() - startTime);
-setInterval("Main.update(true)", 1);
+// setInterval("Main.update(true)", 100);
 
 
 

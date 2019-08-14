@@ -42,13 +42,15 @@ const Renderer = new function() {
 	function renderDebugInfo() {
 		let fontSize = 20;
 		dtx.fillStyle = "#555";
+		dtx.font = fontSize + 'px sans-serif';
+
 		dtx.fill();
 		dtx.fillText("Entities: " + Main.entities.length + " (Plants: " + Main.plants + " creatures: " + Main.creatures + ")" , 5, fontSize);
 		dtx.fillText("Average energyconsumption: " + Math.round(Main.totalEnergyConsumption / Main.entities.length * 100) / 100, 5, fontSize * 2);
 		dtx.fillText("Frames: " + Main.updates, 5, fontSize * 3);
 		
 		
-		dtx.font = fontSize + 'px sans-serif';
+		
 		dtx.fillText("Fps: " + Math.round((Main.updates - prevRenderUpdates) / (new Date() - prevRenderTime) * 10000) / 10, 5, fontSize * 4);
 		prevRenderUpdates 	= Main.updates;
 		prevRenderTime 		= new Date();
@@ -62,23 +64,56 @@ const Renderer = new function() {
 
 
 
-	function renderCreatur(_creatur) {
-		dtx.strokeStyle = "rgb(" + _creatur.DNA.r * 255 + ", " + _creatur.DNA.g * 255 + ", "+ _creatur.DNA.b * 255 + ")";
-		dtx.fillStyle 	= "rgba(" + _creatur.DNA.r * 255 + ", " + _creatur.DNA.g * 255 + ", "+ _creatur.DNA.b * 255 + ", .2)";
-
+	function renderCreatur(_entity) {
+		dtx.strokeStyle = "rgb(" + _entity.DNA.r * 255 + ", " + _entity.DNA.g * 255 + ", " + _entity.DNA.b * 255 + ")";
+		dtx.fillStyle 	= "rgba(" + _entity.DNA.r * 255 + ", " + _entity.DNA.g * 255 + ", " + _entity.DNA.b * 255 + ", .2)";
+		dtx.lineWidth = 2;
 		dtx.circle(
-			_creatur.x, 
-			_creatur.y, 
-			_creatur.DNA.size
+			_entity.x, 
+			_entity.y, 
+			_entity.DNA.size
 		);
-		
-		if (_creatur.inpData)
-		{
-			for (let e = 0; e < _creatur.DNA.eyeCount; e++) renderCreaturEye(_creatur, e, _creatur.inpData.eyeData[e]);
-		}
-
 		dtx.stroke();
 		dtx.fill();
+
+		renderEntityAngleArrow(_entity);
+
+		
+		if (_entity.inpData && _entity.type == "creature")
+		{
+			for (let e = 0; e < _entity.DNA.eyeCount; e++) renderCreaturEye(_entity, e, _entity.inpData.eyeData[e]);
+		}
+	}
+
+	function renderEntityAngleArrow(_entity) {
+		let arrowSize = _entity.DNA.size / 2;
+
+		let rx1 = Math.cos(_entity.angle) * arrowSize;
+		let ry1 = -Math.sin(_entity.angle) * arrowSize;
+
+		let rx2 = Math.cos(_entity.angle + Math.PI) * arrowSize;
+		let ry2 = -Math.sin(_entity.angle + Math.PI) * arrowSize;
+
+		const arrowAngle = Math.PI / 0.85;
+		let rxArrowR = Math.cos(_entity.angle + Math.PI - arrowAngle) * arrowSize;
+		let ryArrowR = -Math.sin(_entity.angle + Math.PI - arrowAngle) * arrowSize;
+
+		let rxArrowL = Math.cos(_entity.angle + Math.PI + arrowAngle) * arrowSize;
+		let ryArrowL = -Math.sin(_entity.angle + Math.PI + arrowAngle) * arrowSize;
+		
+		
+		dtx.lineWidth = 3;
+		dtx.beginPath();
+		dtx.moveTo(rx1 + _entity.x, ry1 + _entity.y);
+		dtx.lineTo(rx2 + _entity.x, ry2 + _entity.y);
+
+		dtx.moveTo(rx2 + _entity.x, ry2 + _entity.y);
+		dtx.lineTo(rxArrowR + rx2 + _entity.x, ryArrowR + ry2 + _entity.y);
+
+		dtx.moveTo(rx2 + _entity.x, ry2 + _entity.y);
+		dtx.lineTo(rxArrowL + rx2 + _entity.x, ryArrowL + ry2 + _entity.y);
+		dtx.closePath();
+		dtx.stroke();;
 	}
 
 	function renderCreaturEye(_creatur, _eyeIndex = 0, _eyeDistance = 1) {
