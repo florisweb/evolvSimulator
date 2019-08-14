@@ -2,6 +2,12 @@
 const Main = new function() {
 
 	let This = {
+		totalEnergyConsumption: 0,
+		totalBrainOutput: [0, 0, 0, 0],
+		updates: 0,
+
+
+
 		settings: {
 			logging: false,
 			renderEveryXFrames: 1,
@@ -21,20 +27,17 @@ const Main = new function() {
 			}
 		},
 
-		totalEnergyConsumption: 0,
-		totalBrainOutput: [0, 0, 0, 0],
-
 		entities: [],
+
+
 
 		createRandomCreatur: createRandomCreatur,
 		createCreatur: createCreatur,
-
-		updates: 0,
+		
 		createCreatures: function(_amount = 10) {
 			for (let i = 0; i < _amount; i++)
 			{
-				c = this.createRandomCreatur();
-				c.i = i;
+				this.createRandomCreatur();
 			} 
 		},
 
@@ -51,7 +54,7 @@ const Main = new function() {
 			return false;
 		},
 
-		killCreatur: function(_id) {
+		killEntity: function(_id) {
 			for (let i = 0; i < This.entities.length; i++)
 			{
 				if (This.entities[i].id != _id) continue;

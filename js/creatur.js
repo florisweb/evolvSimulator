@@ -1,37 +1,22 @@
 
 
-
 function _creatur(_DNA, _metaData) {
-	let brain = createBrain(_DNA.brain);
+	_entity.call(this, _DNA, _metaData);
+	let This 				= this;
+	let entityUpdater 		= this.update;
+	let entityReproducer 	= this.reproduce;
 
-	const This = {
-		id: 		newId(),
-		energy: 	_metaData.energy,
-		age: 		0, // in frames
+	this.type				= "creature";
+	this.brain 				= createBrain(_DNA.brain);
+	this.move 				= move;
+	this.update 			= update;
+	this.reproduce 			= reproduce;
 
-		angle: 		_metaData.angle,
-		x: 			_metaData.x,
-		y: 			_metaData.y, 
-
-
-		DNA: 		_DNA,
-		brain: 		brain,
-	
-
-		update: 	update,
-		die: 		function () {
-			if (Main.settings.logging) console.warn("A creatur died:", This);
-			Main.killCreatur(this.id);
-		},
-		move: 		move,
-		reproduce: 	reproduce,
-	}
 
 	
 	let prevActionValues = [];                   
 	function update() {
-		This.age++;
-		if (This.energy <= 0) return This.die();
+		entityUpdater();
 		
 		const turnConstant = 0.2;
 		if (prevActionValues.length)
@@ -164,39 +149,10 @@ function _creatur(_DNA, _metaData) {
 
 
 	function reproduce() {
-		let startDNA = Object.assign({}, This.DNA);
-		let newDNA = mutateDNA(startDNA, Main.settings.mutationChance, Main.settings.mutationRate);
+		let newDNA = Object.assign({}, This.DNA);
+		newDNA.brain = mutateBrain(newDNA.brain, Main.settings.mutationChance, Main.settings.mutationRate);
 
-		let metaData = {
-			x: This.x, 
-			y: This.y, 
-			angle: This.angle,
-			energy: This.energy / 2,
-		};
-		This.energy *= .5;
-
-		let newCreatur = Main.createCreatur(newDNA, metaData);
-		newCreatur.parent = This;
-		return newCreatur;
-	
-
-
-
-		function mutateDNA(_startDNA, _mutationChance = 1, _mutationRate = 0.1) {
-			let newDNA = {};
-			for (genName in _startDNA)
-			{
-				if (genName == "brain") continue;
-				let genValue = _startDNA[genName];
-				newDNA[genName] = genValue;
-				
-				if (_mutationChance < Math.random()) continue;
-				newDNA[genName] += _mutationRate - _mutationRate * 2 * Math.random();
-			}
-
-			newDNA.brain = mutateBrain(_startDNA.brain, _mutationChance, _mutationRate);
-			return newDNA;
-		}
+		return entityReproducer(newDNA, {});
 
 		function mutateBrain(_brainDNA, _mutationChance = 1, _mutationRate = 0.1) {
 			let newBrainDNA = [];
@@ -210,7 +166,6 @@ function _creatur(_DNA, _metaData) {
 
 			return newBrainDNA;
 		}
-
 	}
 
 
@@ -220,10 +175,8 @@ function _creatur(_DNA, _metaData) {
 
 
 	function createBrain(_brainDNA) {
-		let brainStructure = [3]; // inputs
-
+		let brainStructure = [This.DNA.eyeCount]; // inputs
 		let layers = Math.abs(Math.round(_brainDNA[0]));
-
 
 		for (let l = 0; l < layers; l++)
 		{
@@ -255,7 +208,6 @@ function _creatur(_DNA, _metaData) {
 		return _brain;
 	}
 
-	return This;
 }
 
 
