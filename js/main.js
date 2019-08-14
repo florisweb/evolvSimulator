@@ -81,7 +81,7 @@ const Main = new function() {
 			return false;
 		},
 
-		update: function(_render = true) {
+		update: function() {
 			this.updates++;
 			this.updateEntities();
 
@@ -95,7 +95,7 @@ const Main = new function() {
 
 			This.totalEnergyConsumption = 0;
 			This.totalBrainOutput = [0, 0, 0, 0];
-			if (this.running) requestAnimationFrame(function () {Main.update(_render)});
+			if (this.running) requestAnimationFrame(function () {Main.update()});
 		}
 	}
 
