@@ -24,9 +24,10 @@ function _creatur(_DNA) {
 	let prevActionValues = [];
 
 	function update() {	
+		const turnConstant = 0.2;
 		if (prevActionValues.length)
 		{
-			This.angle += 1 - prevActionValues[0];
+			This.angle += (1 - prevActionValues[0]) * turnConstant;
 			This.move(prevActionValues[1]);
 		}
 
