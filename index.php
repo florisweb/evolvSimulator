@@ -28,7 +28,7 @@
 		</style>
 	</head>	
 	<body>
-		<canvas id="worldCanvas" width="500" height="500"></canvas>
+		<canvas id="worldCanvas" width="1000" height="1000"></canvas>
 	
 
 		<script>
@@ -38,6 +38,7 @@
 			$.getScript("js/neuralNetwork.js?antiCache=" 							+ antiCache, function() {});
 			$.getScript("js/entity.js?antiCache=" 									+ antiCache, function() {});
 			$.getScript("js/creatur.js?antiCache=" 									+ antiCache, function() {});
+			$.getScript("js/plant.js?antiCache=" 									+ antiCache, function() {});
 			$.getScript("js/main.js?antiCache=" 									+ antiCache, function() {});
 		</script>
  	

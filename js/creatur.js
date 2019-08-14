@@ -1,6 +1,6 @@
 
 
-function _creatur(_DNA, _metaData) {
+function _creature(_DNA, _metaData) {
 	_entity.call(this, _DNA, _metaData);
 	let This 				= this;
 	let entityUpdater 		= this.update;
@@ -38,13 +38,13 @@ function _creatur(_DNA, _metaData) {
 	}
 
 	function calcEnergyConsumption() {
-		This.energy += Main.settings.energyImportPerFrame / Main.entities.length; // x = totalFoodInput
-		
+
 		let energyConsumption 	= Main.settings.energyConsumption.default;
 		energyConsumption 		+= This.DNA.brain.length 							* Main.settings.energyConsumption.neuronConstant;
 		energyConsumption 		+= Math.abs(This.DNA.eyeCount * This.DNA.eyeRange) 	* Main.settings.energyConsumption.eyeConstant;
 		energyConsumption 		+= Math.abs(Math.pow(This.DNA.size, 3))				* Main.settings.energyConsumption.sizeConstant;
-		energyConsumption 		+= This.age 										* Main.settings.energyConsumption.ageConstant;
+		energyConsumption 		+= This.age 										* Main.settings.energyConsumption.creatureAgeConstant;
+		
 		if (prevActionValues.length)
 		{
 			energyConsumption += Math.abs(1 - prevActionValues[0]) 					* Main.settings.energyConsumption.turnConstant;

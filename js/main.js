@@ -12,13 +12,19 @@ const Main = new function() {
 			logging: false,
 			renderEveryXFrames: 1,
 			
-			energyImportPerFrame: 50,
+			sunBrightness: 10,
 			mutationChance: 1,
 			mutationRate: 0.1,
 
+			plantRange: [10, 100], // min - max plants
+			creatureRange: [10, 100], // min - max plants
+
+
+
 			energyConsumption: {
 				default: 0.1, // to be kept alive
-				ageConstant: 0.001, // degration of the body makes it less efficient
+				creatureAgeConstant: 0.001, // degration of the body makes it less efficient
+				plantAgeConstant: 0.1,
 				sizeConstant: 0.001,
 				eyeConstant: 0.001,
 				neuronConstant: 0.01,
@@ -28,24 +34,33 @@ const Main = new function() {
 		},
 
 		entities: [],
+		plants: 0,
+		creatures: 0,
 
 
 
-		createRandomCreatur: createRandomCreatur,
-		createCreatur: createCreatur,
+		createRandomCreature: 	createRandomCreature,
+		createRandomPlant: 		createRandomPlant,
+		createEntity: 			createEntity,
 		
 		createCreatures: function(_amount = 10) {
 			for (let i = 0; i < _amount; i++)
 			{
-				this.createRandomCreatur();
+				this.createRandomCreature();
+			} 
+		},
+		createPlants: function(_amount = 10) {
+			for (let i = 0; i < _amount; i++)
+			{
+				this.createRandomPlant();
 			} 
 		},
 
-		updateCreatures: function() {
-			for (creatur of this.entities) creatur.inpData = creatur.update();
+		updateEntities: function() {
+			for (entity of this.entities) entity.inpData = entity.update();
 		},
 
-		getCreature: function(_id) {
+		getEntity: function(_id) {
 			for (let i = 0; i < This.entities.length; i++)
 			{
 				if (This.entities[i].id != _id) continue;
@@ -58,6 +73,7 @@ const Main = new function() {
 			for (let i = 0; i < This.entities.length; i++)
 			{
 				if (This.entities[i].id != _id) continue;
+				this[This.entities[i].type + "s"]--;
 				This.entities.splice(i, 1);
 				return true;
 			}
@@ -66,12 +82,16 @@ const Main = new function() {
 
 		update: function(_render = true) {
 			this.updates++;
-			this.updateCreatures();
+			this.updateEntities();
+
+			if (this.plants < this.settings.plantRange[0])		 this.createRandomPlant();
+			if (this.creatures < this.settings.creatureRange[0]) this.createRandomCreature();
 			
 			if (
 				this.updates % this.settings.renderEveryXFrames == 0 && 
 				_render
 			) Renderer.update();
+
 			This.totalEnergyConsumption = 0;
 			This.totalBrainOutput = [0, 0, 0, 0];
 		}
@@ -80,7 +100,7 @@ const Main = new function() {
 	return This;
 
 
-	function createRandomCreatur() {
+	function createRandomCreature() {
 		let DNA = {
 			size: 		(Math.random() * 1.5 + .5) * 15,
 			speed: 		Math.random() * 3 + 1,
@@ -95,31 +115,51 @@ const Main = new function() {
 			brain: 		[]
 		};
 
-
 		DNA.brain = [
 			Math.random()
 		];
 		for (let i = 0; i < DNA.brain[0]; i++) DNA.brain.push(Math.random() * 2);
 
-		return createCreatur(DNA, {
+		return createEntity(DNA, {
 			energy: 100,
-			angle: Math.random() * Math.PI * 2,
-			x: Math.round(Math.random() * Renderer.canvas.width),
-			y: Math.round(Math.random() * Renderer.canvas.height),
-		});
+			angle: 	Math.random() * Math.PI * 2,
+			x: 		Math.round(Math.random() * Renderer.canvas.width),
+			y: 		Math.round(Math.random() * Renderer.canvas.height),
+		}, "creature");
+	}
+
+	function createRandomPlant() {
+		let DNA = {
+			size: 		(Math.random() * 1.5 + .5) * 15,
+			r: 			Math.random(),
+			g: 			Math.random(),
+			b: 			Math.random()
+		};
+
+		return createEntity(DNA, {
+			energy: 100,
+			angle: 	Math.random() * Math.PI * 2,
+			x: 		Math.round(Math.random() * Renderer.canvas.width),
+			y: 		Math.round(Math.random() * Renderer.canvas.height),
+		}, "plant");
 	}
 
 
-	function createCreatur(_DNA, _metaData) {
-		let creatur = new _creatur(_DNA, _metaData);
-		This.entities.push(creatur);
-		return creatur;
+	function createEntity(_DNA, _metaData, _type = "plant") {
+		let constructor = _creature;
+		if (_type == "plant") constructor = _plant;
+		let entity = new constructor(_DNA, _metaData);
+
+		This[_type + "s"]++; // to keep track of the amount of plants / creatures there are
+		This.entities.push(entity);
+		return entity;
 	}
 
 }
 
 let startTime = new Date();
-Main.createCreatures(50);
+Main.createCreatures(10);
+Main.createPlants(10);
 Main.update();
 console.warn("time", new Date() - startTime);
 setInterval("Main.update(true)", 1);

@@ -34,17 +34,23 @@ function _entity(_DNA, _metaData) {
 
 
 	function reproduce(_startDNA, metaData = {}) {
-		let startDNA = Object.assign({}, This.DNA);
-		if (_startDNA) startDNA = _startDNA;
-		let newDNA	 = mutateDNA(startDNA, Main.settings.mutationChance, Main.settings.mutationRate);
+		let startDNA 	= Object.assign({}, This.DNA);
+		if (_startDNA) 	startDNA = _startDNA;
+		let newDNA	 	= mutateDNA(startDNA, Main.settings.mutationChance, Main.settings.mutationRate);
 
-		metaData.x 		= This.x;
-		metaData.y 		= This.y;
-		metaData.angle 	= This.angle;
+		metaData.angle 	= Math.random() * 2 * Math.PI;
+
+		let distance	= newDNA.size + This.DNA.size;
+		let rx 			=  Math.cos(This.angle) * distance;
+		let ry 			= -Math.sin(This.angle) * distance;
+		metaData.x 		= This.x + rx;
+		metaData.y 		= This.y + ry;
+
+		
 		metaData.energy	= This.energy * .5;
 		This.energy 	*= .5;
 
-		let newEntity 		= Main.createCreatur(newDNA, metaData);
+		let newEntity 		= Main.createEntity(newDNA, metaData, newDNA.type);
 		newEntity.parent 	= This;
 		return newEntity;
 	}

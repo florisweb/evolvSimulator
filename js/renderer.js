@@ -40,21 +40,23 @@ const Renderer = new function() {
 	let prevRenderTime = new Date();
 	let prevRenderUpdates = 0;
 	function renderDebugInfo() {
+		let fontSize = 20;
 		dtx.fillStyle = "#555";
 		dtx.fill();
-		let theoraticalCreatureLimit = Main.settings.energyImportPerFrame / (Main.totalEnergyConsumption / Main.entities.length);
-		dtx.fillText("Creatures: " + Main.entities.length + " / " + Math.round(theoraticalCreatureLimit * 100) / 100, 5, 10);
-		dtx.fillText("Average energyconsumption: " + Math.round(Main.totalEnergyConsumption / Main.entities.length * 100) / 100, 5, 25);
-		dtx.fillText("Frames: " + Main.updates, 5, 40);
+		dtx.fillText("Entities: " + Main.entities.length + " (Plants: " + Main.plants + " creatures: " + Main.creatures + ")" , 5, fontSize);
+		dtx.fillText("Average energyconsumption: " + Math.round(Main.totalEnergyConsumption / Main.entities.length * 100) / 100, 5, fontSize * 2);
+		dtx.fillText("Frames: " + Main.updates, 5, fontSize * 3);
 		
-		dtx.fillText("Fps: " + Math.round((Main.updates - prevRenderUpdates) / (new Date() - prevRenderTime) * 10000) / 10, 5, 55);
+		
+		dtx.font = fontSize + 'px sans-serif';
+		dtx.fillText("Fps: " + Math.round((Main.updates - prevRenderUpdates) / (new Date() - prevRenderTime) * 10000) / 10, 5, fontSize * 4);
 		prevRenderUpdates 	= Main.updates;
 		prevRenderTime 		= new Date();
 
 
 		for (let i = 0; i < Main.totalBrainOutput.length; i++)
 		{
-			dtx.fillText("Brain [" + i + "]: " + Math.round(Main.totalBrainOutput[i] / Main.entities.length * 1000) / 1000, 5, 75 + 15 * i);
+			dtx.fillText("Brain [" + i + "]: " + Math.round(Main.totalBrainOutput[i] / Main.entities.length * 1000) / 1000, 5, fontSize * 5 + fontSize * i + fontSize * .5);
 		}
 	}
 
