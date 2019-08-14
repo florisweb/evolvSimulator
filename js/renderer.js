@@ -37,8 +37,8 @@ const Renderer = new function() {
 	
 
 	function renderCreatur(_creatur) {
-		dtx.strokeStyle = "rgb(" + _creatur.DNA.r + ", " + _creatur.DNA.g + ", "+ _creatur.DNA.b + ")";
-		dtx.fillStyle 	= "rgba(" + _creatur.DNA.r + ", " + _creatur.DNA.g + ", "+ _creatur.DNA.b + ", .2)";
+		dtx.strokeStyle = "rgb(" + _creatur.DNA.r * 255 + ", " + _creatur.DNA.g * 255 + ", "+ _creatur.DNA.b * 255 + ")";
+		dtx.fillStyle 	= "rgba(" + _creatur.DNA.r * 255 + ", " + _creatur.DNA.g * 255 + ", "+ _creatur.DNA.b * 255 + ", .2)";
 
 		dtx.circle(
 			_creatur.x, 
@@ -46,8 +46,10 @@ const Renderer = new function() {
 			_creatur.DNA.size
 		);
 		
-		for (let e = 0; e < _creatur.DNA.eyeCount; e++) renderCreaturEye(_creatur, e, _creatur.inpData.eyeData[e]);
-
+		if (_creatur.inpData)
+		{
+			for (let e = 0; e < _creatur.DNA.eyeCount; e++) renderCreaturEye(_creatur, e, _creatur.inpData.eyeData[e]);
+		}
 
 		dtx.stroke();
 		dtx.fill();

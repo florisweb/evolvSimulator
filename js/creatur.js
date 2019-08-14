@@ -1,15 +1,15 @@
 
 
 
-function _creatur(_DNA) {
+function _creatur(_DNA, _metaData) {
 	let brain = createBrain(_DNA.brain);
 
 	const This = {
 		id: 		newId(),
-		energy: 	100,
-		angle: 		Math.random() * Math.PI * 2,
-		x: 			Math.round(Math.random() * Renderer.canvas.width),
-		y: 			Math.round(Math.random() * Renderer.canvas.height),
+		energy: 	_metaData.energy,
+		angle: 		_metaData.angle,
+		x: 			_metaData.x,
+		y: 			_metaData.y, 
 
 
 		DNA: 		_DNA,
@@ -17,23 +17,39 @@ function _creatur(_DNA) {
 	
 
 		update: 	update,
-		move: 		move
+		die: 		function () {
+			if (Main.settings.logging) console.warn("A creatur died:", This);
+			Main.killCreatur(this.id);
+		},
+		move: 		move,
+		reproduce: 	reproduce
 	}
 
 	
-	let prevActionValues = [];
-
+	let prevActionValues = [];                   
 	function update() {	
+		if (This.energy <= 0) return This.die();
+		let energyConcumption = Main.settings.energyConcumption.default;
+		energyConcumption += This.DNA.brain.length 					* Main.settings.energyConcumption.neuronConstant;
+
 		const turnConstant = 0.2;
 		if (prevActionValues.length)
 		{
+			energyConcumption += Math.abs(1 - prevActionValues[0]) 	* Main.settings.energyConcumption.turnConstant;
+			energyConcumption += prevActionValues[1] 				* Main.settings.energyConcumption.moveConstant;
+
 			This.angle += (1 - prevActionValues[0]) * turnConstant;
 			This.move(prevActionValues[1]);
+			if (prevActionValues[2] > 0.5) This.reproduce();
 		}
 
-		let inputs = getEyeData();
+
+
+		let inputs = eye.getData();
 		prevActionValues = This.brain.feedForward(inputs);
 
+		// console.log(energyConcumption, This.energy);
+		This.energy -= energyConcumption;
 		return {eyeData: inputs};
 	}
 
@@ -54,76 +70,125 @@ function _creatur(_DNA) {
 
 
 
+	const eye = new function() {
+		return {
+			getData: function() {
+				let creatures 		= getAllcreaturesWithinRange();
+				let totalEyeAngle 	= (This.DNA.eyeCount - 1) * This.DNA.eyeAngle;
+				let startAngle 		= -totalEyeAngle / 2;
 
-	function getEyeData() {
-		let creatures 		= getAllcreaturesWithinRange();
-		let totalEyeAngle 	= (This.DNA.eyeCount - 1) * This.DNA.eyeAngle;
-		let startAngle 		= -totalEyeAngle / 2;
-
-		let results = createArrayWithValues(This.DNA.eyeCount, 1);
-		for (creatur of creatures)
-		{
-			let dx = creatur.x - This.x;
-			let dy = creatur.y - This.y;
-			let directAngleToCreatur = atanWithDX(dx, dy);
-			let distanceToCreatur = Math.sqrt(dx * dx + dy * dy);
-				
-			
-			for (let e = 0; e < This.DNA.eyeCount; e++)
-			{
-				let thisAngle = startAngle + e * This.DNA.eyeAngle + This.angle;
-				let dAngle = Math.abs(thisAngle - directAngleToCreatur);
-				let distance = calcDistanceFromEye(dAngle, distanceToCreatur, creatur.DNA.size);
-				if (isNaN(distance) || distance < 0) distance = This.DNA.eyeRange;
-				
-				let percDistance = distance / This.DNA.eyeRange;
-				if (percDistance < results[e]) results[e] = percDistance;
+				let results = createArrayWithValues(This.DNA.eyeCount, 1);
+				for (creatur of creatures)
+				{
+					let dx = creatur.x - This.x;
+					let dy = creatur.y - This.y;
+					let directAngleToCreatur = atanWithDX(dx, dy);
+					let distanceToCreatur = Math.sqrt(dx * dx + dy * dy);
+						
+					
+					for (let e = 0; e < This.DNA.eyeCount; e++)
+					{
+						let thisAngle = startAngle + e * This.DNA.eyeAngle + This.angle;
+						let dAngle = Math.abs(thisAngle - directAngleToCreatur);
+						let distance = calcDistanceFromEye(dAngle, distanceToCreatur, creatur.DNA.size);
+						if (isNaN(distance) || distance < 0) distance = This.DNA.eyeRange;
+						
+						let percDistance = distance / This.DNA.eyeRange;
+						if (percDistance < results[e]) results[e] = percDistance;
+					}
+				}
+				return results;
 			}
 		}
-		return results;
-	}
 
+		function getAllcreaturesWithinRange() {
+			let visablecreatures = [];
+			for (creatur of Main.creatures)
+			{
+				if (creatur.id == This.id) continue;
+				let status = detectIfInViewingDistance(creatur);
+				if (!status) continue;
+				visablecreatures.push(status);
+			}
 
-
-	function getAllcreaturesWithinRange() {
-		let visablecreatures = [];
-		for (creatur of Main.creatures)
-		{
-			if (creatur.id == This.id) continue;
-			let status = detectIfInViewingDistance(creatur);
-			if (!status) continue;
-			visablecreatures.push(status);
+			return visablecreatures;
 		}
 
-		return visablecreatures;
+		function detectIfInViewingDistance(_otherCreatur) {
+			let maxDistance = This.DNA.eyeRange + _otherCreatur.DNA.size;
+
+			let dx = Math.abs(This.x - _otherCreatur.x);
+			let dy = Math.abs(This.y - _otherCreatur.y);
+			let actualDistance = Math.sqrt(dx * dx + dy * dy);
+			if (actualDistance > maxDistance) return false;
+			
+			_otherCreatur.distanceFromCreatur = actualDistance;
+			return _otherCreatur;
+		}
+
+		function calcDistanceFromEye(a, v, r) {
+			r = 1 / r;
+			let x = (v*r - Math.sqrt(-Math.pow(Math.tan(a), 2) * (v*v*r*r-1) + 1))
+					/
+					(r*Math.pow(Math.tan(a), 2) + r);
+
+			return x / Math.cos(a);
+		}
 	}
 
 
-	function detectIfInViewingDistance(_otherCreatur) {
-		let maxDistance = This.DNA.eyeRange + _otherCreatur.DNA.size;
 
-		let dx = Math.abs(This.x - _otherCreatur.x);
-		let dy = Math.abs(This.y - _otherCreatur.y);
-		let actualDistance = Math.sqrt(dx * dx + dy * dy);
-		if (actualDistance > maxDistance) return false;
-		
-		_otherCreatur.distanceFromCreatur = actualDistance;
-		return _otherCreatur;
+
+
+	function reproduce() {
+		let startDNA = Object.assign({}, This.DNA);
+		let newDNA = mutateDNA(startDNA, 0.1, 0.1);
+
+		let metaData = {
+			x: This.x, 
+			y: This.y, 
+			angle: This.angle,
+			energy: This.energy / 2,
+		};
+		This.energy *= .5;
+
+		let newCreatur = Main.createCreatur(newDNA, metaData);
+		newCreatur.parent = This;
+		return newCreatur;
+	
+
+
+
+		function mutateDNA(_startDNA, _mutationChance = 1, _mutationRate = 0.1) {
+			let newDNA = {};
+			for (genName in _startDNA)
+			{
+				if (genName == "brain") continue;
+				let genValue = _startDNA[genName];
+				newDNA[genName] = genValue;
+				
+				if (_mutationChance < Math.random()) continue;
+				newDNA[genName] += _mutationRate - _mutationRate * 2 * Math.random();
+			}
+
+			newDNA.brain = mutateBrain(_startDNA.brain, _mutationChance, _mutationRate);
+			return newDNA;
+		}
+
+		function mutateBrain(_brainDNA, _mutationChance = 1, _mutationRate = 0.1) {
+			let newBrainDNA = [];
+			
+			for (let n = 0; n < _brainDNA.length; n++)
+			{
+				if (_mutationChance < Math.random()) continue;
+				let neuronValue = _brainDNA[n];
+				newBrainDNA[n] = neuronValue + _mutationRate - _mutationRate * 2 * Math.random();
+			}
+
+			return newBrainDNA;
+		}
+
 	}
-
-
-
-
-
-	function calcDistanceFromEye(a, v, r) {
-		r = 1 / r;
-		let x = (v*r - Math.sqrt(-Math.pow(Math.tan(a), 2) * (v*v*r*r-1) + 1))
-				/
-				(r*Math.pow(Math.tan(a), 2) + r);
-
-		return x / Math.cos(a);
-	}
-
 
 
 
