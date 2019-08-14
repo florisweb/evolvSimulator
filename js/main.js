@@ -4,15 +4,19 @@ const Main = new function() {
 	let This = {
 		settings: {
 			logging: false,
+			renderEveryXFrames: 1,
+			energyImportPerFrame: 20,
 			energyConcumption: {
 				default: 0.1, // to be kept alive
+				sizeConstant: 0.0001,
+				eyeConstant: 0.001,
 				neuronConstant: 0.01,
 				turnConstant: 0.1,
-				moveConstant: 0.1,
+				moveConstant: 0.5,
 			}
 		},
 
-
+		totalEnergyConcumption: 0,
 
 
 		creatures: [],
@@ -46,7 +50,12 @@ const Main = new function() {
 		update: function(_render = true) {
 			this.updates++;
 			this.updatecreatures();
-			if (_render) Renderer.update();
+			
+			if (
+				this.updates % this.settings.renderEveryXFrames == 0 && 
+				_render
+			) Renderer.update();
+			This.totalEnergyConcumption = 0;
 		}
 	}
 
@@ -95,7 +104,7 @@ let date = new Date();
 Main.createcreatures(50);
 Main.update();
 console.warn("time", new Date() - date);
-// setInterval("Main.update(true)", 500);
+setInterval("Main.update(true)", 1);
 
 
 

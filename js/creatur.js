@@ -7,6 +7,8 @@ function _creatur(_DNA, _metaData) {
 	const This = {
 		id: 		newId(),
 		energy: 	_metaData.energy,
+		age: 		0, // in frames
+
 		angle: 		_metaData.angle,
 		x: 			_metaData.x,
 		y: 			_metaData.y, 
@@ -22,37 +24,51 @@ function _creatur(_DNA, _metaData) {
 			Main.killCreatur(this.id);
 		},
 		move: 		move,
-		reproduce: 	reproduce
+		reproduce: 	reproduce,
 	}
 
 	
 	let prevActionValues = [];                   
-	function update() {	
+	function update() {
+		This.age++;
 		if (This.energy <= 0) return This.die();
-		let energyConcumption = Main.settings.energyConcumption.default;
-		energyConcumption += This.DNA.brain.length 					* Main.settings.energyConcumption.neuronConstant;
-
+		
 		const turnConstant = 0.2;
 		if (prevActionValues.length)
 		{
-			energyConcumption += Math.abs(1 - prevActionValues[0]) 	* Main.settings.energyConcumption.turnConstant;
-			energyConcumption += prevActionValues[1] 				* Main.settings.energyConcumption.moveConstant;
-
 			This.angle += (1 - prevActionValues[0]) * turnConstant;
 			This.move(prevActionValues[1]);
-			if (prevActionValues[2] > 0.5) This.reproduce();
+			if (prevActionValues[2] > 0.5 && This.age % 100 == 0) This.reproduce();
 		}
-
 
 
 		let inputs = eye.getData();
 		prevActionValues = This.brain.feedForward(inputs);
 
-		// console.log(energyConcumption, This.energy);
+		let energyConcumption = calcEnergyConcumption();
 		This.energy -= energyConcumption;
+		Main.totalEnergyConcumption += energyConcumption;
+
 		return {eyeData: inputs};
 	}
 
+	function calcEnergyConcumption() {
+		This.energy += Main.settings.energyImportPerFrame / Main.creatures.length; // x = totalFoodInput
+		
+		let energyConcumption 	= Main.settings.energyConcumption.default;
+		energyConcumption 		+= This.DNA.brain.length 					* Main.settings.energyConcumption.neuronConstant;
+		energyConcumption 		+= This.DNA.eyeCount * This.DNA.eyeRange 	* Main.settings.energyConcumption.eyeConstant;
+		energyConcumption 		+= Math.pow(This.DNA.size, 3)				* Main.settings.energyConcumption.sizeConstant;
+
+		if (prevActionValues.length)
+		{
+			energyConcumption += Math.abs(1 - prevActionValues[0]) 	* Main.settings.energyConcumption.turnConstant;
+			energyConcumption += prevActionValues[1] 				* Main.settings.energyConcumption.moveConstant;
+		}
+
+
+		return energyConcumption;
+	}
 	
 	function move(_stepSize = 1) {
 		const movementConstant = 10;

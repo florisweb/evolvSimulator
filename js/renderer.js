@@ -13,6 +13,7 @@ const Renderer = new function() {
 		update: function() {
 			dtx.fillStyle = "#fff";
 			dtx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+			renderDebugInfo();
 			this.rendercreatures(Main.creatures);
 		}
 	}
@@ -35,6 +36,16 @@ const Renderer = new function() {
 
 	return This;
 	
+
+	function renderDebugInfo() {
+		dtx.fillStyle = "#555";
+		dtx.fill();
+		dtx.fillText("Creatures: " + Main.creatures.length, 5, 10);
+		dtx.fillText("Average energyconcumption: " + Math.round(Main.totalEnergyConcumption / Main.creatures.length * 100) / 100, 5, 25);
+		dtx.fillText("Frames: " + Main.updates, 5, 40);
+	}
+
+
 
 	function renderCreatur(_creatur) {
 		dtx.strokeStyle = "rgb(" + _creatur.DNA.r * 255 + ", " + _creatur.DNA.g * 255 + ", "+ _creatur.DNA.b * 255 + ")";
