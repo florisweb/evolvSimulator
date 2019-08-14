@@ -40,7 +40,8 @@ const Renderer = new function() {
 	function renderDebugInfo() {
 		dtx.fillStyle = "#555";
 		dtx.fill();
-		dtx.fillText("Creatures: " + Main.creatures.length, 5, 10);
+		let theoraticalCreatureLimit = Main.settings.energyImportPerFrame / (Main.totalEnergyConcumption / Main.creatures.length);
+		dtx.fillText("Creatures: " + Main.creatures.length + " / " + Math.round(theoraticalCreatureLimit * 100) / 100, 5, 10);
 		dtx.fillText("Average energyconcumption: " + Math.round(Main.totalEnergyConcumption / Main.creatures.length * 100) / 100, 5, 25);
 		dtx.fillText("Frames: " + Main.updates, 5, 40);
 	}
