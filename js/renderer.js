@@ -34,16 +34,28 @@ const Renderer = new function() {
 		dtx.closePath();
 	}
 
-	return This;
+	
 	
 
+	let prevRenderTime = new Date();
+	let prevRenderUpdates = 0;
 	function renderDebugInfo() {
 		dtx.fillStyle = "#555";
 		dtx.fill();
-		let theoraticalCreatureLimit = Main.settings.energyImportPerFrame / (Main.totalEnergyConcumption / Main.creatures.length);
+		let theoraticalCreatureLimit = Main.settings.energyImportPerFrame / (Main.totalEnergyConsumption / Main.creatures.length);
 		dtx.fillText("Creatures: " + Main.creatures.length + " / " + Math.round(theoraticalCreatureLimit * 100) / 100, 5, 10);
-		dtx.fillText("Average energyconcumption: " + Math.round(Main.totalEnergyConcumption / Main.creatures.length * 100) / 100, 5, 25);
+		dtx.fillText("Average energyconsumption: " + Math.round(Main.totalEnergyConsumption / Main.creatures.length * 100) / 100, 5, 25);
 		dtx.fillText("Frames: " + Main.updates, 5, 40);
+		
+		dtx.fillText("Fps: " + Math.round((Main.updates - prevRenderUpdates) / (new Date() - prevRenderTime) * 10000) / 10, 5, 55);
+		prevRenderUpdates 	= Main.updates;
+		prevRenderTime 		= new Date();
+
+
+		for (let i = 0; i < Main.totalBrainOutput.length; i++)
+		{
+			dtx.fillText("Brain [" + i + "]: " + Math.round(Main.totalBrainOutput[i] / Main.creatures.length * 1000) / 1000, 5, 75 + 15 * i);
+		}
 	}
 
 
@@ -89,6 +101,8 @@ const Renderer = new function() {
 			eyeDetectorSize,
 		);
 	}
+
+	return This;
 }
 
 

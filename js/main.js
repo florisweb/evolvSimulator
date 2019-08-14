@@ -5,19 +5,24 @@ const Main = new function() {
 		settings: {
 			logging: false,
 			renderEveryXFrames: 1,
-			energyImportPerFrame: 20,
-			energyConcumption: {
+			
+			energyImportPerFrame: 50,
+			mutationChance: 1,
+			mutationRate: 0.1,
+
+			energyConsumption: {
 				default: 0.1, // to be kept alive
-				sizeConstant: 0.0001,
+				ageConstant: 0.001, // degration of the body makes it less efficient
+				sizeConstant: 0.001,
 				eyeConstant: 0.001,
 				neuronConstant: 0.01,
-				turnConstant: 0.1,
-				moveConstant: 0.5,
+				turnConstant: 0.2,
+				moveConstant: 1,
 			}
 		},
 
-		totalEnergyConcumption: 0,
-
+		totalEnergyConsumption: 0,
+		totalBrainOutput: [0, 0, 0, 0],
 
 		creatures: [],
 
@@ -37,6 +42,15 @@ const Main = new function() {
 			for (creatur of this.creatures) creatur.inpData = creatur.update();
 		},
 
+		getCreatur: function(_id) {
+			for (let i = 0; i < This.creatures.length; i++)
+			{
+				if (This.creatures[i].id != _id) continue;
+				return This.creatures[i];
+			}
+			return false;
+		},
+		
 		killCreatur: function(_id) {
 			for (let i = 0; i < This.creatures.length; i++)
 			{
@@ -55,7 +69,8 @@ const Main = new function() {
 				this.updates % this.settings.renderEveryXFrames == 0 && 
 				_render
 			) Renderer.update();
-			This.totalEnergyConcumption = 0;
+			This.totalEnergyConsumption = 0;
+			This.totalBrainOutput = [0, 0, 0, 0];
 		}
 	}
 
@@ -70,7 +85,7 @@ const Main = new function() {
 			g: 			Math.random(),
 			b: 			Math.random(),
 
-			eyeRange: 	200 * Math.random() + 300,
+			eyeRange: 	Renderer.canvas.width * Math.random() * 0.5,
 			eyeCount: 	Math.round(2 * Math.random()),
 			eyeAngle: 	Math.PI / 20 * Math.random(),
 
@@ -100,10 +115,10 @@ const Main = new function() {
 
 }
 
-let date = new Date();
+let startTime = new Date();
 Main.createcreatures(50);
 Main.update();
-console.warn("time", new Date() - date);
+console.warn("time", new Date() - startTime);
 setInterval("Main.update(true)", 1);
 
 

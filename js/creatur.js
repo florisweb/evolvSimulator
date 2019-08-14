@@ -36,7 +36,7 @@ function _creatur(_DNA, _metaData) {
 		const turnConstant = 0.2;
 		if (prevActionValues.length)
 		{
-			This.angle += (1 - prevActionValues[0]) * turnConstant;
+			This.angle += (.5 - prevActionValues[0]) * turnConstant;
 			This.move(prevActionValues[1]);
 			if (prevActionValues[2] > 0.5 && This.age % 100 == 0) This.reproduce();
 		}
@@ -45,31 +45,38 @@ function _creatur(_DNA, _metaData) {
 		let inputs = eye.getData();
 		prevActionValues = This.brain.feedForward(inputs);
 
-		let energyConcumption = calcEnergyConcumption();
-		This.energy -= energyConcumption;
-		Main.totalEnergyConcumption += energyConcumption;
+		let energyConsumption = calcEnergyConsumption();
+		This.energy -= energyConsumption;
+		Main.totalEnergyConsumption += energyConsumption;
 
 		return {eyeData: inputs};
 	}
 
-	function calcEnergyConcumption() {
+	function calcEnergyConsumption() {
 		This.energy += Main.settings.energyImportPerFrame / Main.creatures.length; // x = totalFoodInput
 		
-		let energyConcumption 	= Main.settings.energyConcumption.default;
-		energyConcumption 		+= This.DNA.brain.length 					* Main.settings.energyConcumption.neuronConstant;
-		energyConcumption 		+= This.DNA.eyeCount * This.DNA.eyeRange 	* Main.settings.energyConcumption.eyeConstant;
-		energyConcumption 		+= Math.pow(This.DNA.size, 3)				* Main.settings.energyConcumption.sizeConstant;
-
+		let energyConsumption 	= Main.settings.energyConsumption.default;
+		energyConsumption 		+= This.DNA.brain.length 							* Main.settings.energyConsumption.neuronConstant;
+		energyConsumption 		+= Math.abs(This.DNA.eyeCount * This.DNA.eyeRange) 	* Main.settings.energyConsumption.eyeConstant;
+		energyConsumption 		+= Math.abs(Math.pow(This.DNA.size, 3))				* Main.settings.energyConsumption.sizeConstant;
+		energyConsumption 		+= This.age 										* Main.settings.energyConsumption.ageConstant;
 		if (prevActionValues.length)
 		{
-			energyConcumption += Math.abs(1 - prevActionValues[0]) 	* Main.settings.energyConcumption.turnConstant;
-			energyConcumption += prevActionValues[1] 				* Main.settings.energyConcumption.moveConstant;
+			energyConsumption += Math.abs(1 - prevActionValues[0]) 					* Main.settings.energyConsumption.turnConstant;
+			energyConsumption += prevActionValues[1] 								* Main.settings.energyConsumption.moveConstant;
+
+			for (let i = 0; i < prevActionValues.length; i++)
+			{
+				Main.totalBrainOutput[i] += prevActionValues[i];
+			}
 		}
 
 
-		return energyConcumption;
+		return energyConsumption;
 	}
-	
+
+
+	let prevAngle = 0;
 	function move(_stepSize = 1) {
 		const movementConstant = 10;
 		let rx = Math.cos(This.angle) * _stepSize * movementConstant * This.DNA.speed;
@@ -158,7 +165,7 @@ function _creatur(_DNA, _metaData) {
 
 	function reproduce() {
 		let startDNA = Object.assign({}, This.DNA);
-		let newDNA = mutateDNA(startDNA, 0.1, 0.1);
+		let newDNA = mutateDNA(startDNA, Main.settings.mutationChance, Main.settings.mutationRate);
 
 		let metaData = {
 			x: This.x, 
