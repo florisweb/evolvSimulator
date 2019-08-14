@@ -53,7 +53,7 @@ function _creatur(_DNA, _metaData) {
 	}
 
 	function calcEnergyConsumption() {
-		This.energy += Main.settings.energyImportPerFrame / Main.creatures.length; // x = totalFoodInput
+		This.energy += Main.settings.energyImportPerFrame / Main.entities.length; // x = totalFoodInput
 		
 		let energyConsumption 	= Main.settings.energyConsumption.default;
 		energyConsumption 		+= This.DNA.brain.length 							* Main.settings.energyConsumption.neuronConstant;
@@ -126,7 +126,7 @@ function _creatur(_DNA, _metaData) {
 
 		function getAllcreaturesWithinRange() {
 			let visablecreatures = [];
-			for (creatur of Main.creatures)
+			for (creatur of Main.entities)
 			{
 				if (creatur.id == This.id) continue;
 				let status = detectIfInViewingDistance(creatur);

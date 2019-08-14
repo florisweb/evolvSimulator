@@ -24,7 +24,7 @@ const Main = new function() {
 		totalEnergyConsumption: 0,
 		totalBrainOutput: [0, 0, 0, 0],
 
-		creatures: [],
+		entities: [],
 
 		createRandomCreatur: createRandomCreatur,
 		createCreatur: createCreatur,
@@ -39,23 +39,23 @@ const Main = new function() {
 		},
 
 		updateCreatures: function() {
-			for (creatur of this.creatures) creatur.inpData = creatur.update();
+			for (creatur of this.entities) creatur.inpData = creatur.update();
 		},
 
 		getCreature: function(_id) {
-			for (let i = 0; i < This.creatures.length; i++)
+			for (let i = 0; i < This.entities.length; i++)
 			{
-				if (This.creatures[i].id != _id) continue;
-				return This.creatures[i];
+				if (This.entities[i].id != _id) continue;
+				return This.entities[i];
 			}
 			return false;
 		},
 
 		killCreatur: function(_id) {
-			for (let i = 0; i < This.creatures.length; i++)
+			for (let i = 0; i < This.entities.length; i++)
 			{
-				if (This.creatures[i].id != _id) continue;
-				This.creatures.splice(i, 1);
+				if (This.entities[i].id != _id) continue;
+				This.entities.splice(i, 1);
 				return true;
 			}
 			return false;
@@ -109,7 +109,7 @@ const Main = new function() {
 
 	function createCreatur(_DNA, _metaData) {
 		let creatur = new _creatur(_DNA, _metaData);
-		This.creatures.push(creatur);
+		This.entities.push(creatur);
 		return creatur;
 	}
 
