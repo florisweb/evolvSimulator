@@ -57,9 +57,7 @@ const Renderer = new function() {
 		let totalEyeAngle = (_creatur.DNA.eyeCount - 1) * _creatur.DNA.eyeAngle;
 		let startAngle = -totalEyeAngle / 2;
 		let thisAngle = startAngle + _eyeIndex * _creatur.DNA.eyeAngle + _creatur.angle;
-		
-		console.warn(thisAngle/Math.PI);
-		
+
 		let relativeEyeX = Math.cos(thisAngle) * _creatur.DNA.eyeRange;
 		let relativeEyeY = -Math.sin(thisAngle) * _creatur.DNA.eyeRange;
 		

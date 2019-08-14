@@ -22,7 +22,7 @@ function _creatur(_DNA) {
 
 	
 	let prevActionValues = [];
-	
+
 	function update() {	
 		if (prevActionValues.length)
 		{
@@ -73,13 +73,12 @@ function _creatur(_DNA) {
 				let thisAngle = startAngle + e * This.DNA.eyeAngle + This.angle;
 				let dAngle = Math.abs(thisAngle - directAngleToCreatur);
 				let distance = calcDistanceFromEye(dAngle, distanceToCreatur, creatur.DNA.size);
-				console.log(This.angle/Math.PI);
 				if (isNaN(distance) || distance < 0) distance = This.DNA.eyeRange;
 				
-				results[e] = distance / This.DNA.eyeRange;
+				let percDistance = distance / This.DNA.eyeRange;
+				if (percDistance < results[e]) results[e] = percDistance;
 			}
 		}
-
 		return results;
 	}
 

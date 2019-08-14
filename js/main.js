@@ -39,9 +39,9 @@ const Main = new function() {
 			g: 			255 * Math.random(),
 			b: 			255 * Math.random(),
 
-			eyeRange: 	200 * Math.random() + 350,
-			eyeCount: 	Math.round(10 * Math.random()),
-			eyeAngle: 	Math.PI / 4 * Math.random(),
+			eyeRange: 	200 * Math.random(),
+			eyeCount: 	Math.round(50 * Math.random()),
+			eyeAngle: 	0.1,//Math.PI / 50 * Math.random(),
 
 			brain: 		[]
 		};
@@ -65,15 +65,10 @@ const Main = new function() {
 }
 
 let date = new Date();
-Main.createcreatures(2);
+Main.createcreatures(4);
 Main.update();
 console.warn("time", new Date() - date);
-// setInterval("Main.update(true)", 50);
-
-
-
-
-
+// setInterval("Main.update(true)", 500);
 
 
 
