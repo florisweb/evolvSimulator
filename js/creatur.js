@@ -20,17 +20,18 @@ function _creatur(_DNA) {
 		move: 		move
 	}
 
-	return This;
+	
+	let prevActionValues = [];
+	
+	function update() {	
+		if (prevActionValues.length)
+		{
+			This.angle += 1 - prevActionValues[0];
+			This.move(prevActionValues[1]);
+		}
 
-
-
-
-
-	function update() {
 		let inputs = getEyeData();
-		let actionValues = This.brain.feedForward(inputs);
-		This.angle += 1 - actionValues[0];
-		This.move(actionValues[1]);
+		prevActionValues = This.brain.feedForward(inputs);
 
 		return {eyeData: inputs};
 	}
@@ -54,12 +55,12 @@ function _creatur(_DNA) {
 
 
 	function getEyeData() {
-		let creaturs 		= getAllCreatursWithinRange();
+		let creatures 		= getAllcreaturesWithinRange();
 		let totalEyeAngle 	= (This.DNA.eyeCount - 1) * This.DNA.eyeAngle;
 		let startAngle 		= -totalEyeAngle / 2;
 
 		let results = createArrayWithValues(This.DNA.eyeCount, 1);
-		for (creatur of creaturs)
+		for (creatur of creatures)
 		{
 			let dx = creatur.x - This.x;
 			let dy = creatur.y - This.y;
@@ -72,7 +73,7 @@ function _creatur(_DNA) {
 				let thisAngle = startAngle + e * This.DNA.eyeAngle + This.angle;
 				let dAngle = Math.abs(thisAngle - directAngleToCreatur);
 				let distance = calcDistanceFromEye(dAngle, distanceToCreatur, creatur.DNA.size);
-
+				console.log(This.angle/Math.PI);
 				if (isNaN(distance) || distance < 0) distance = This.DNA.eyeRange;
 				
 				results[e] = distance / This.DNA.eyeRange;
@@ -84,17 +85,17 @@ function _creatur(_DNA) {
 
 
 
-	function getAllCreatursWithinRange() {
-		let visableCreaturs = [];
-		for (creatur of Main.creaturs)
+	function getAllcreaturesWithinRange() {
+		let visablecreatures = [];
+		for (creatur of Main.creatures)
 		{
 			if (creatur.id == This.id) continue;
 			let status = detectIfInViewingDistance(creatur);
 			if (!status) continue;
-			visableCreaturs.push(status);
+			visablecreatures.push(status);
 		}
 
-		return visableCreaturs;
+		return visablecreatures;
 	}
 
 
@@ -166,6 +167,7 @@ function _creatur(_DNA) {
 		return _brain;
 	}
 
+	return This;
 }
 
 

@@ -2,13 +2,13 @@
 const Main = new function() {
 
 	let This = {
-		creaturs: [],
+		creatures: [],
 
 		createRandomCreatur: createRandomCreatur,
 		createCreatur: createCreatur,
 
 		updates: 0,
-		createCreaturs: function(_amount = 10) {
+		createcreatures: function(_amount = 10) {
 			for (let i = 0; i < _amount; i++)
 			{
 				c = this.createRandomCreatur();
@@ -16,13 +16,13 @@ const Main = new function() {
 			} 
 		},
 
-		updateCreaturs: function() {
-			for (creatur of this.creaturs) creatur.inpData = creatur.update();
+		updatecreatures: function() {
+			for (creatur of this.creatures) creatur.inpData = creatur.update();
 		},
 
 		update: function(_render = true) {
 			this.updates++;
-			this.updateCreaturs();
+			this.updatecreatures();
 			if (_render) Renderer.update();
 		}
 		
@@ -33,15 +33,15 @@ const Main = new function() {
 
 	function createRandomCreatur() {
 		let DNA = {
-			size: 		(Math.random() * 1.5 + .5) * 5,
+			size: 		(Math.random() * 1.5 + .5) * 15,
 			speed: 		Math.random() * 3 + 1,
 			r: 			255 * Math.random(),
 			g: 			255 * Math.random(),
 			b: 			255 * Math.random(),
 
-			eyeRange: 	200 * Math.random(),
+			eyeRange: 	200 * Math.random() + 350,
 			eyeCount: 	Math.round(10 * Math.random()),
-			eyeAngle: 	Math.PI / 2 * Math.random(),
+			eyeAngle: 	Math.PI / 4 * Math.random(),
 
 			brain: 		[]
 		};
@@ -58,17 +58,17 @@ const Main = new function() {
 
 	function createCreatur(_DNA) {
 		let creatur = new _creatur(_DNA);
-		This.creaturs.push(creatur);
+		This.creatures.push(creatur);
 		return creatur;
 	}
 
 }
 
 let date = new Date();
-Main.createCreaturs(10);
+Main.createcreatures(2);
 Main.update();
 console.warn("time", new Date() - date);
-setInterval("Main.update(true)", 50);
+// setInterval("Main.update(true)", 50);
 
 
 

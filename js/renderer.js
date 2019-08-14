@@ -7,13 +7,13 @@ const Renderer = new function() {
 	let This = {
 		canvas: $("#worldCanvas")[0],
 		renderCreatur: renderCreatur,
-		renderCreaturs: function(_creaturs) {
-			for (creatur of _creaturs) this.renderCreatur(creatur);
+		rendercreatures: function(_creatures) {
+			for (creatur of _creatures) this.renderCreatur(creatur);
 		},
 		update: function() {
 			dtx.fillStyle = "#fff";
 			dtx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-			this.renderCreaturs(Main.creaturs);
+			this.rendercreatures(Main.creatures);
 		}
 	}
 
@@ -53,10 +53,12 @@ const Renderer = new function() {
 		dtx.fill();
 	}
 
-	function renderCreaturEye(_creatur, _eyeIndex = 0, _eyeDistance = 1) {// right = 0
+	function renderCreaturEye(_creatur, _eyeIndex = 0, _eyeDistance = 1) {
 		let totalEyeAngle = (_creatur.DNA.eyeCount - 1) * _creatur.DNA.eyeAngle;
 		let startAngle = -totalEyeAngle / 2;
 		let thisAngle = startAngle + _eyeIndex * _creatur.DNA.eyeAngle + _creatur.angle;
+		
+		console.warn(thisAngle/Math.PI);
 		
 		let relativeEyeX = Math.cos(thisAngle) * _creatur.DNA.eyeRange;
 		let relativeEyeY = -Math.sin(thisAngle) * _creatur.DNA.eyeRange;
@@ -67,11 +69,12 @@ const Renderer = new function() {
 		let relativeEyeXDetector = Math.cos(thisAngle) * _creatur.DNA.eyeRange * _eyeDistance;
 		let relativeEyeYDetector = -Math.sin(thisAngle) * _creatur.DNA.eyeRange * _eyeDistance;
 		
+		let eyeDetectorSize = 10;//_creatur.DNA.size / 2;
 		dtx.fillRect(
-			relativeEyeXDetector + _creatur.x - _creatur.DNA.size / 4, 
-			relativeEyeYDetector + _creatur.y - _creatur.DNA.size / 4,
-			_creatur.DNA.size / 2,
-			_creatur.DNA.size / 2,
+			relativeEyeXDetector + _creatur.x - eyeDetectorSize / 2,
+			relativeEyeYDetector + _creatur.y - eyeDetectorSize / 2,
+			eyeDetectorSize,
+			eyeDetectorSize,
 		);
 	}
 }

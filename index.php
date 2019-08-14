@@ -19,13 +19,15 @@
 				position: fixed;
 				top: 0;
 				left: 0;
+				width: 100vw;
+				height: auto;
 				
 				border: 1px solid red;
 			}
 		</style>
 	</head>	
 	<body>
-		<canvas id="worldCanvas" width="1200" height="600"></canvas>
+		<canvas id="worldCanvas" width="500" height="500"></canvas>
 	
 
 		<script>
