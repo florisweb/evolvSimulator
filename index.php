@@ -14,11 +14,12 @@
 				margin: 0;
 				padding: 0;
 			}
+			button {
+				position: relative;
+				float: left;
+			}
 
 			#worldCanvas {
-				position: fixed;
-				top: 0;
-				left: 0;
 				width: auto;
 				height: 100vh;
 
@@ -27,7 +28,10 @@
 		</style>
 	</head>	
 	<body>
+		<button onclick="Main.running = true; Main.update()">Run</button>
+		<button onclick="Main.running = false">Stop</button>
 		<canvas id="worldCanvas" width="1000" height="1000"></canvas>
+	
 	
 
 		<script>
@@ -36,7 +40,7 @@
 			$.getScript("js/renderer.js?antiCache=" 								+ antiCache, function() {});
 			$.getScript("js/neuralNetwork.js?antiCache=" 							+ antiCache, function() {});
 			$.getScript("js/entity.js?antiCache=" 									+ antiCache, function() {});
-			$.getScript("js/creatur.js?antiCache=" 									+ antiCache, function() {});
+			$.getScript("js/creature.js?antiCache=" 								+ antiCache, function() {});
 			$.getScript("js/plant.js?antiCache=" 									+ antiCache, function() {});
 			$.getScript("js/main.js?antiCache=" 									+ antiCache, function() {});
 		</script>

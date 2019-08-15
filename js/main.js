@@ -88,10 +88,7 @@ const Main = new function() {
 			if (this.plants < this.settings.plantRange[0])		 this.createRandomPlant();
 			if (this.creatures < this.settings.creatureRange[0]) this.createRandomCreature();
 			
-			if (
-				this.updates % this.settings.renderEveryXFrames == 0 && 
-				_render
-			) Renderer.update();
+			if (this.updates % this.settings.renderEveryXFrames == 0) Renderer.update();
 
 			This.totalEnergyConsumption = 0;
 			This.totalBrainOutput = [0, 0, 0, 0];
