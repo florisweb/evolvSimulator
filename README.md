@@ -35,15 +35,16 @@ CREATUR
 
 	Brain:
 	Inputs:
+	- Energy (Mapped between 0 and 1)
 	- Eye A: distance untill closest thing on eyeline
 	- Eye B: ''
-	- Eye C: ''
+	- ...
 
 	Outputs: 
 	- relativeRotation: 0,5 is none 0 is counterclockwise 1 is clockwise
-	- forwardsSpeed
-	- reproduce: 	> 0,5 creatur will be cloned with some mutations
-	- bite: 		> 0.5 takes some energy dependent on the size, and will take a part of a nearby creature's energy
+	- forwardsSpeed		> 0.1
+	- reproduce: 		> 0,5 creatur will be cloned with some mutations
+	- bite: 			> 0.5 takes some energy dependent on the size, and will take a part of a nearby creature's energy
 
 
 
