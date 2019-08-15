@@ -40,25 +40,26 @@ const Renderer = new function() {
 	let prevRenderTime = new Date();
 	let prevRenderUpdates = 0;
 	function renderDebugInfo() {
-		let fontSize = 20;
+		let fontSize = 25;
 		dtx.fillStyle = "#555";
 		dtx.font = fontSize + 'px sans-serif';
 
 		dtx.fill();
 		dtx.fillText("Entities: " + Main.entities.length + " (Plants: " + Main.plants + " creatures: " + Main.creatures + ")" , 5, fontSize);
 		dtx.fillText("Average biteIncome: " + Math.round(Main.totalBiteEnergy / Main.bites * 1000) / 1000, 5, fontSize * 2);
-		dtx.fillText("Frames: " + Main.updates, 5, fontSize * 3);
+		dtx.fillText("Average energyConsumption (without biteCost): " + Math.round(Main.totalEnergyConsumption / Main.creatures * 1000) / 1000, 5, fontSize * 3);
+		dtx.fillText("Frames: " + Main.updates, 5, fontSize * 4);
 		
 		
 		
-		dtx.fillText("Fps: " + Math.round((Main.updates - prevRenderUpdates) / (new Date() - prevRenderTime) * 10000) / 10, 5, fontSize * 4);
+		dtx.fillText("Fps: " + Math.round((Main.updates - prevRenderUpdates) / (new Date() - prevRenderTime) * 10000) / 10, 5, fontSize * 5);
 		prevRenderUpdates 	= Main.updates;
 		prevRenderTime 		= new Date();
 
 
 		for (let i = 0; i < Main.totalBrainOutput.length; i++)
 		{
-			dtx.fillText("Brain [" + i + "]: " + Math.round(Main.totalBrainOutput[i] / Main.creatures * 1000) / 1000, 5, fontSize * 5 + fontSize * i + fontSize * .5);
+			dtx.fillText("Brain [" + i + "]: " + Math.round(Main.totalBrainOutput[i] / Main.creatures * 1000) / 1000, 5, fontSize * 6 + fontSize * i + fontSize * .5);
 		}
 	}
 
@@ -122,6 +123,7 @@ const Renderer = new function() {
 		let relativeEyeX = Math.cos(thisAngle) * _creatur.DNA.eyeRange;
 		let relativeEyeY = -Math.sin(thisAngle) * _creatur.DNA.eyeRange;
 		
+		dtx.lineWidth = 1;
 		dtx.beginPath();
 		dtx.moveTo(_creatur.x, _creatur.y);
 		dtx.lineTo(_creatur.x + relativeEyeX, _creatur.y + relativeEyeY);
@@ -136,7 +138,7 @@ const Renderer = new function() {
 			eyeDetectorSize,
 			eyeDetectorSize,
 		);
-		
+
 		dtx.closePath();
 		dtx.fill();
 		dtx.stroke();

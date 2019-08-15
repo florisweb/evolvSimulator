@@ -10,7 +10,6 @@ const Main = new function() {
 		totalBiteEnergy: 0,
 
 
-
 		settings: {
 			logging: false,
 			renderEveryXFrames: 1,
@@ -19,19 +18,19 @@ const Main = new function() {
 			mutationChance: 1,
 			mutationRate: 0.1,
 
-			plantRange: [20, 100], // min - max plants
-			creatureRange: [50, 100], // min - max plants
+			plantRange: [10, 100], // min - max plants
+			creatureRange: [10, 100], // min - max plants
 
 			biteConstant: 0.1,
 
 			energyConsumption: {
 				default: 0, // to be kept alive
-				creatureAgeConstant: 0.001, // degration of the body makes it less efficient
-				plantAgeConstant: 0.1,
-				sizeConstant: 0.001,
-				eyeConstant: 0.00,
+				creatureAgeConstant: 0.0001, // degration of the body makes it less efficient
+				plantAgeConstant: .1,
+				sizeConstant: 0.000005,
+				eyeConstant: 0.0,
 				neuronConstant: 0.0,
-				turnConstant: 0,//.2,
+				turnConstant: 0.01,
 				moveConstant: .1,
 			}
 		},
@@ -43,22 +42,23 @@ const Main = new function() {
 
 
 		running: false,
+		frameRate: 1,
 
 		update: function() {
 			this.updates++;
 			this.updateEntities();
 
-			if (this.plants < this.settings.plantRange[0])		 this.createRandomPlant();
-			if (this.creatures < this.settings.creatureRange[0]) this.createRandomCreature();
+			for (let p = 0; p < this.settings.plantRange[0] - this.plants; p++) 		this.createRandomPlant();
+			for (let c = 0; c < this.settings.creatureRange[0] - this.creatures; c++) 	this.createRandomCreature();
 			
 			if (this.updates % this.settings.renderEveryXFrames == 0) Renderer.update();
 
-			This.totalEnergyConsumption = 0;
-			This.totalBrainOutput = [0, 0, 0, 0];
-			This.totalBiteEnergy = 0;
-			This.bites = 0;
+			This.totalEnergyConsumption 	= 0;
+			This.totalBrainOutput		 	= [0, 0, 0, 0];
+			This.totalBiteEnergy 			= 0;
+			This.bites 						= 0;
 			// if (this.running) requestAnimationFrame(function () {Main.update()});
-			if (this.running) setTimeout(function () {Main.update()}, 1);
+			if (this.running) setTimeout(function () {Main.update()}, This.frameRate);
 		},
 
 
@@ -139,7 +139,7 @@ const Main = new function() {
 
 	function createRandomPlant() {
 		let DNA = {
-			size: 		(Math.random() * 1.5 + .5) * 15,
+			size: 		(Math.random() * 1.5 + .5) * 10,
 			r: 			Math.random(),
 			g: 			Math.random(),
 			b: 			Math.random()
