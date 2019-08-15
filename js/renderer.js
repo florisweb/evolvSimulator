@@ -48,18 +48,20 @@ const Renderer = new function() {
 		dtx.fillText("Entities: " + Main.entities.length + " (Plants: " + Main.plants + " creatures: " + Main.creatures + ")" , 5, fontSize);
 		dtx.fillText("Average biteIncome: " + Math.round(Main.totalBiteEnergy / Main.bites * 1000) / 1000, 5, fontSize * 2);
 		dtx.fillText("Average energyConsumption (without biteCost): " + Math.round(Main.totalEnergyConsumption / Main.creatures * 1000) / 1000, 5, fontSize * 3);
-		dtx.fillText("Frames: " + Main.updates, 5, fontSize * 4);
+		dtx.fillText("Average age: " + Math.round(Main.totalAge / Main.creatures * 1000) / 1000, 5, fontSize * 4);
+		dtx.fillText("Average energy: " + Math.round(Main.totalEnergy / Main.creatures * 1000) / 1000, 5, fontSize * 5);
+		dtx.fillText("Frames: " + Main.updates, 5, fontSize * 6);
 		
 		
 		
-		dtx.fillText("Fps: " + Math.round((Main.updates - prevRenderUpdates) / (new Date() - prevRenderTime) * 10000) / 10, 5, fontSize * 5);
+		dtx.fillText("Fps: " + Math.round((Main.updates - prevRenderUpdates) / (new Date() - prevRenderTime) * 10000) / 10, 5, fontSize * 7);
 		prevRenderUpdates 	= Main.updates;
 		prevRenderTime 		= new Date();
 
 
 		for (let i = 0; i < Main.totalBrainOutput.length; i++)
 		{
-			dtx.fillText("Brain [" + i + "]: " + Math.round(Main.totalBrainOutput[i] / Main.creatures * 1000) / 1000, 5, fontSize * 6 + fontSize * i + fontSize * .5);
+			dtx.fillText("Brain [" + i + "]: " + Math.round(Main.totalBrainOutput[i] / Main.creatures * 1000) / 1000, 5, fontSize * 8 + fontSize * i + fontSize * .5);
 		}
 	}
 

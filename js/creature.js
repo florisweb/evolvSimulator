@@ -18,6 +18,8 @@ function _creature(_DNA, _metaData) {
 	let prevActionValues = [];                   
 	function update() {
 		entityUpdater();
+		Main.totalAge 		+= This.age;
+		Main.totalEnergy 	+= This.energy;
 		
 		const turnConstant = 0.2;
 		if (prevActionValues.length)

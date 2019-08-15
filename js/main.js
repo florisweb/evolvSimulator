@@ -8,6 +8,8 @@ const Main = new function() {
 
 		bites: 0,
 		totalBiteEnergy: 0,
+		totalEnergy: 0,
+		totalAge: 0,
 
 
 		settings: {
@@ -57,6 +59,8 @@ const Main = new function() {
 			This.totalBrainOutput		 	= [0, 0, 0, 0];
 			This.totalBiteEnergy 			= 0;
 			This.bites 						= 0;
+			This.totalEnergy 				= 0;
+			This.totalAge 					= 0;
 			// if (this.running) requestAnimationFrame(function () {Main.update()});
 			if (this.running) setTimeout(function () {Main.update()}, This.frameRate);
 		},
