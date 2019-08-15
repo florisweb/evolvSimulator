@@ -12,14 +12,6 @@ const Renderer = new function() {
 			dtx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 			renderDebugInfo();
 			this.rendercreatures(Main.entities);
-		},
-
-		setCoordsWithinWorld: function(_x, _y, _size) {
-			if (_x < _size) 						_x	= _size
-			if (_y < _size) 						_y = _size;
-			if (_x > This.canvas.width - _size) 	_x = This.canvas.width - _size;
-			if (_y > This.canvas.height - _size)	_y = This.canvas.height - _size;
-			return {x: _x, y: _y};
 		}
 	}
 

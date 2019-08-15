@@ -25,10 +25,12 @@ function _creature(_DNA, _metaData) {
 		if (prevActionValues.length)
 		{
 			This.angle += (.5 - prevActionValues[0]) * turnConstant;
-			if (prevActionValues[1] > .1)This.move((prevActionValues[1] - .1) / 0.9);
+			if (prevActionValues[1] > .1) This.move((prevActionValues[1] - .1) / 0.9);
 			// if (prevActionValues[2] > .5 && This.age % 100 == 0) This.reproduce();
 			if (This.energy >= 150 && This.age % 100 == 0) This.reproduce();
 			if (prevActionValues[3] > .5) This.bite((prevActionValues[3] - .5) * 2);
+
+			Collision.apply(This);
 		}
 
 
@@ -78,10 +80,6 @@ function _creature(_DNA, _metaData) {
 		
 		This.x += rx;
 		This.y += ry;
-
-		let coords = Renderer.setCoordsWithinWorld(This.x, This.y, This.DNA.size);
-		This.x = coords.x;
-		This.y = coords.y;
 	}
 
 

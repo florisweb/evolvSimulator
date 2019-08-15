@@ -122,11 +122,9 @@ const Main = new function() {
 				return true;
 			}
 			return false;
-		}
+		},
+
 	}
-
-	return This;
-
 
 	function createRandomCreature() {
 		let DNA = {
@@ -173,11 +171,7 @@ const Main = new function() {
 	}
 
 
-	function createEntity(_DNA, _metaData, _type = "plant") {
-		let coords = Renderer.setCoordsWithinWorld(_metaData.x, _metaData.y, _DNA.size);
-		_metaData.x = coords.x;
-		_metaData.y = coords.y;
-
+	function createEntity(_DNA, _metaData, _type = "plant") {		
 		let constructor = _creature;
 		if (_type == "plant")
 		{
@@ -188,12 +182,16 @@ const Main = new function() {
 		}
 		
 		let entity = new constructor(_DNA, _metaData);
+		Collision.apply(entity);
 
 
 		This[_type + "s"]++; // to keep track of the amount of plants / creatures there are
 		This.entities.push(entity);
 		return entity;
 	}
+
+
+	return This;
 }
 
 let startTime = new Date();
