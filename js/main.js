@@ -21,7 +21,7 @@ const Main = new function() {
 			mutationRate: 0.1,
 
 			plantRange: [10, 100], // min - max plants
-			creatureRange: [10, 100], // min - max plants
+			creatureRange: [1, 1], // min - max plants
 
 			biteConstant: 0.1,
 

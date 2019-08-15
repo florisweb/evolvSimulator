@@ -31,7 +31,11 @@ function _creature(_DNA, _metaData) {
 		}
 
 
-		let inputs = eye.getData();
+		let inputs = [
+			sigmoid(This.energy / 100) // energy
+		];
+		inputs = inputs.concat(eye.getData());
+
 		prevActionValues = This.brain.feedForward(inputs);
 
 		let energyConsumption = calcEnergyConsumption();
@@ -224,7 +228,7 @@ function _creature(_DNA, _metaData) {
 
 
 	function createBrain(_brainDNA) {
-		let brainStructure = [This.DNA.eyeCount]; // inputs
+		let brainStructure = [1 + This.DNA.eyeCount]; // inputs [energy + eyes]
 		let layers = Math.abs(Math.round(_brainDNA[0]));
 
 		for (let l = 0; l < layers; l++)
