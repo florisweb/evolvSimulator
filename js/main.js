@@ -61,17 +61,23 @@ const Main = new function() {
 			This.bites 						= 0;
 			This.totalEnergy 				= 0;
 			This.totalAge 					= 0;
-			if (this.running && _update) requestAnimationFrame(function () {Main.update()});
-			// if (this.running) setTimeout(function () {Main.update()}, This.frameRate);
+			// if (this.running && _update) requestAnimationFrame(function () {Main.update()});
+			if (this.running && _update) setTimeout(function () {Main.update()}, This.frameRate);
 		},
 
-		loopRuns: 0,
-		loop: function(_times) {
-			if (_times) this.loopRuns = _times / 1000;
-			console.log("run", this.loopRuns);
-			this.loopRuns--;
-			for (let i = 0; i < 1000; i++) this.update(false);
-			if (this.running && this.loopRuns > 0) requestAnimationFrame(function () {Main.loop()});
+		totalRuns: 0,
+		loop: function(_times, msPerLoop = 50) {
+			if (_times) this.totalRuns = _times;
+			
+			let updateLength = new Date();
+			this.update(false);
+			updateLength = new Date() - updateLength + 1;
+			let updatesPerLoop = msPerLoop / updateLength;
+
+			This.totalRuns -= updatesPerLoop + 1;
+
+			for (let i = 1; i < updatesPerLoop; i++) this.update(false);
+			if (this.running && This.totalRuns > 0) {requestAnimationFrame(function () {Main.loop()});} else {console.log("finished")}
 		},
 
 
@@ -194,7 +200,6 @@ const Main = new function() {
 let startTime = new Date();
 Main.update();
 console.warn("time", new Date() - startTime);
-
 
 
 
