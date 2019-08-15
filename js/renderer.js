@@ -75,6 +75,15 @@ const Renderer = new function() {
 
 
 	function renderCreatur(_entity) {
+		// draw the energy bubble
+		dtx.fillStyle 	= "rgba(" + _entity.DNA.r * 255 + ", " + _entity.DNA.g * 255 + ", " + _entity.DNA.b * 255 + ", .05)";
+		dtx.circle(
+			_entity.x, 
+			_entity.y, 
+			_entity.DNA.size + Math.sqrt(4 * _entity.energy / Math.PI)
+		);
+		dtx.fill();
+
 		dtx.strokeStyle = "rgba(" + _entity.DNA.r * 255 + ", " + _entity.DNA.g * 255 + ", " + _entity.DNA.b * 255 + ", .9)";
 		dtx.fillStyle 	= "rgba(" + _entity.DNA.r * 255 + ", " + _entity.DNA.g * 255 + ", " + _entity.DNA.b * 255 + ", .2)";
 		dtx.lineWidth = 2;
@@ -86,13 +95,7 @@ const Renderer = new function() {
 		dtx.stroke();
 		dtx.fill();
 
-		dtx.fillStyle 	= "rgba(" + _entity.DNA.r * 255 + ", " + _entity.DNA.g * 255 + ", " + _entity.DNA.b * 255 + ", .05)";
-		dtx.circle(
-			_entity.x, 
-			_entity.y, 
-			_entity.DNA.size * _entity.energy / 100
-		);
-		dtx.fill();
+
 
 		if (_entity.type != "plant") renderEntityAngleArrow(_entity);
 
