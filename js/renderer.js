@@ -10,8 +10,8 @@ const Renderer = new function() {
 		update: function() {
 			dtx.fillStyle = "#fff";
 			dtx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-			renderDebugInfo();
 			this.rendercreatures(Main.entities);
+			renderDebugInfo();
 		}
 	}
 

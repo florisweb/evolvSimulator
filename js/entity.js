@@ -30,6 +30,7 @@ function _entity(_DNA, _metaData) {
 	function update() {
 		This.age++;
 		if (This.energy <= 0) return This.die();
+		Collision.apply(This);
 	}
 
 
@@ -41,7 +42,7 @@ function _entity(_DNA, _metaData) {
 		let angleMutation = Math.PI * .5;
 		metaData.angle 	= This.angle + angleMutation - angleMutation * 2 * Math.random();
 
-		let distance	= (newDNA.size + This.DNA.size) * 2;
+		let distance	= (newDNA.size + This.DNA.size) * 4;
 		let rx 			=  Math.cos(This.angle) * distance;
 		let ry 			= -Math.sin(This.angle) * distance;
 		metaData.x 		= This.x + rx;

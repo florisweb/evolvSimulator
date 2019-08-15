@@ -1,7 +1,7 @@
 
 const Collision = new function() {
 	const This = {
-		getAllFactorsOfEntitiesWithinRange: getAllFactorsOfEntitiesWithinRange,
+		getAllEntitiesWithinRange: getAllEntitiesWithinRange,
 		calcFactor: calcFactor,
 		addFactors: addFactors,
 		applyFactor: applyFactor,
@@ -33,7 +33,7 @@ const Collision = new function() {
 	}
 
 	function calcFactor(_entity) {
-		let inRange = getAllFactorsOfEntitiesWithinRange(_entity);
+		let inRange = getAllEntitieFactorsWithinRange(_entity);
 		let sumFactor = {
 			angle: 0,
 			power: 0
@@ -62,8 +62,28 @@ const Collision = new function() {
 		}
 	}
 
+	function getAllEntitiesWithinRange(_self, _range = 0) {
+		let visableEntities = [];
+		for (entity of Main.entities)
+		{
+			if (entity.id == _self.id) continue;
 
-	function getAllFactorsOfEntitiesWithinRange(_self) {
+			let maxDistance = entity.DNA.size + _range;
+			let dx = entity.x - _self.x;
+			let dy = entity.y - _self.y;
+			let directDistance = Math.sqrt(dx * dx + dy * dy);
+
+			let distance = maxDistance - directDistance;
+
+			if (distance <= 0) continue;
+			visableEntities.push(entity);
+		}
+
+		return visableEntities;
+	}
+
+
+	function getAllEntitieFactorsWithinRange(_self) {
 		let visableEntities = [];
 		for (entity of Main.entities)
 		{

@@ -29,8 +29,6 @@ function _creature(_DNA, _metaData) {
 			// if (prevActionValues[2] > .5 && This.age % 100 == 0) This.reproduce();
 			if (This.energy >= 150 && This.age % 100 == 0) This.reproduce();
 			if (prevActionValues[3] > .5) This.bite((prevActionValues[3] - .5) * 2);
-
-			Collision.apply(This);
 		}
 
 
@@ -176,7 +174,7 @@ function _creature(_DNA, _metaData) {
 
 
 	function bite(_bitePower) {
-		let entities = getAllEntitiesWithinRange();
+		let entities = Collision.getAllEntitiesWithinRange(This, This.DNA.size * 1.3);
 		let energyPerByte = _bitePower * This.DNA.size * Main.settings.biteConstant;
 
 		let startEnergy = This.energy;
@@ -185,7 +183,7 @@ function _creature(_DNA, _metaData) {
 		for (entity of entities) 
 		{
 			let energy 		= energyPerByte / (entity.DNA.size * .1);
-			if (entity.type == "plant") energy * 10;
+			if (entity.type == "plant") energy * 20;
 			if (energy.energy < energy) energy = entity.energy;
 			entity.energy 	-= energy;
 			This.energy 	+= energy;
@@ -193,33 +191,6 @@ function _creature(_DNA, _metaData) {
 
 		Main.bites++;
 		Main.totalBiteEnergy += This.energy - startEnergy;
-
-
-	
-		function getAllEntitiesWithinRange() {
-			let visableEntities = [];
-			for (entity of Main.entities)
-			{
-				if (entity.id == This.id) continue;
-				let status = detectIfInViewingDistance(entity);
-				if (!status) continue;
-				visableEntities.push(entity);
-			}
-
-			return visableEntities;
-		}
-
-		function detectIfInViewingDistance(_otherEntity) {
-			let maxDistance = This.DNA.size + _otherEntity.DNA.size;
-
-			let dx = Math.abs(This.x - _otherEntity.x);
-			let dy = Math.abs(This.y - _otherEntity.y);
-			let actualDistance = Math.sqrt(dx * dx + dy * dy);
-			if (actualDistance > maxDistance) return false;
-			
-			return _otherEntity;
-		}
-
 	}
 
 

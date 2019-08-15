@@ -16,21 +16,21 @@ const Main = new function() {
 			logging: false,
 			renderEveryXFrames: 1,
 			
-			sunEnergyPerPixel: .005 * Math.pow(.1, 0),
+			sunEnergyPerPixel: .003,
 			mutationChance: 1,
-			mutationRate: 0.1,
+			mutationRate: 0.2,
 
-			plantRange: [5, 500], // min - max plants
-			creatureRange: [5, 500], // min - max plants
+			plantRange: [5, 250], // min - max plants
+			creatureRange: [20, 250], // min - max plants
 
 			biteConstant: 0.1,
 
 			energyConsumption: {
 				default: 0, // to be kept alive
-				plantAgeConstant: .0005,
-				creatureAgeConstant: 0.0001, // degration of the body makes it less efficient
-				sizeConstant: 0.00001,
-				eyeConstant: 0.0,
+				plantAgeConstant: .0002,
+				creatureAgeConstant: .0001, // degration of the body makes it less efficient
+				sizeConstant: .00001,
+				eyeConstant: .0,
 				neuronConstant: 0.0,
 				turnConstant: 0.01,
 				moveConstant: .1,
