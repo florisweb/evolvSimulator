@@ -27,7 +27,7 @@ const Main = new function() {
 
 			energyConsumption: {
 				default: 0, // to be kept alive
-				plantAgeConstant: .05,
+				plantAgeConstant: .01,
 				creatureAgeConstant: 0.0001, // degration of the body makes it less efficient
 				sizeConstant: 0.00001,
 				eyeConstant: 0.0,

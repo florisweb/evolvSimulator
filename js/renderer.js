@@ -76,13 +76,17 @@ const Renderer = new function() {
 
 	function renderCreatur(_entity) {
 		// draw the energy bubble
-		dtx.fillStyle 	= "rgba(" + _entity.DNA.r * 255 + ", " + _entity.DNA.g * 255 + ", " + _entity.DNA.b * 255 + ", .05)";
+		
+		dtx.fillStyle 	= "rgba(" + _entity.DNA.r * 255 + ", " + _entity.DNA.g * 255 + ", " + _entity.DNA.b * 255 + ", 0.1)";
+		dtx.strokeStyle = "rgba(" + _entity.DNA.r * 255 + ", " + _entity.DNA.g * 255 + ", " + _entity.DNA.b * 255 + ", 0.1)";
 		dtx.circle(
 			_entity.x, 
 			_entity.y, 
 			_entity.DNA.size + Math.sqrt(4 * _entity.energy / Math.PI)
 		);
-		dtx.fill();
+		if (_entity.type == "creature") dtx.fill();
+		if (_entity.type == "plant") dtx.stroke();
+
 
 		dtx.strokeStyle = "rgba(" + _entity.DNA.r * 255 + ", " + _entity.DNA.g * 255 + ", " + _entity.DNA.b * 255 + ", .9)";
 		dtx.fillStyle 	= "rgba(" + _entity.DNA.r * 255 + ", " + _entity.DNA.g * 255 + ", " + _entity.DNA.b * 255 + ", .2)";
