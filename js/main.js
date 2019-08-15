@@ -16,19 +16,19 @@ const Main = new function() {
 			logging: false,
 			renderEveryXFrames: 1,
 			
-			sunBrightness: 10,
+			sunBrightness: 8,
 			mutationChance: 1,
 			mutationRate: 0.1,
 
 			plantRange: [10, 100], // min - max plants
-			creatureRange: [1, 1], // min - max plants
+			creatureRange: [100, 200], // min - max plants
 
 			biteConstant: 0.1,
 
 			energyConsumption: {
 				default: 0, // to be kept alive
 				creatureAgeConstant: 0.0001, // degration of the body makes it less efficient
-				plantAgeConstant: .1,
+				plantAgeConstant: .2,
 				sizeConstant: 0.000005,
 				eyeConstant: 0.0,
 				neuronConstant: 0.0,
@@ -115,15 +115,15 @@ const Main = new function() {
 
 	function createRandomCreature() {
 		let DNA = {
-			size: 		(Math.random() * 1.5 + .5) * 15,
-			speed: 		Math.random() * 3 + 1,
+			size: 		(Math.random() * 1.5 + .1) * 15,
+			speed: 		Math.random() * 3 + .1,
 			r: 			Math.random(),
 			g: 			Math.random(),
 			b: 			Math.random(),
 
 			eyeRange: 	Renderer.canvas.width * Math.random() * 0.5,
-			eyeCount: 	Math.round(2 * Math.random()),
-			eyeAngle: 	Math.PI / 20 * Math.random(),
+			eyeCount: 	Math.round(5 * Math.pow(Math.random(), 2)),
+			eyeAngle: 	Math.PI * Math.random(),
 
 			brain: 		[]
 		};

@@ -25,9 +25,10 @@ function _creature(_DNA, _metaData) {
 		if (prevActionValues.length)
 		{
 			This.angle += (.5 - prevActionValues[0]) * turnConstant;
-			This.move(prevActionValues[1]);
-			if (prevActionValues[2] > 0.5 && This.age % 100 == 0) This.reproduce();
-			if (prevActionValues[3] > 0.5) This.bite((prevActionValues[3] - .5) * 2);
+			if (prevActionValues[1] > .1)This.move((prevActionValues[1] - .1) / 0.9);
+			// if (prevActionValues[2] > .5 && This.age % 100 == 0) This.reproduce();
+			if (This.energy >= 150 && This.age % 100 == 0) This.reproduce();
+			if (prevActionValues[3] > .5) This.bite((prevActionValues[3] - .5) * 2);
 		}
 
 
@@ -89,7 +90,7 @@ function _creature(_DNA, _metaData) {
 	const eye = new function() {
 		return {
 			getData: function() {
-				let creatures 		= getAllcreaturesWithinRange();
+				let creatures 		= getAllEntitiesWithinRange();
 				let totalEyeAngle 	= (This.DNA.eyeCount - 1) * This.DNA.eyeAngle;
 				let startAngle 		= -totalEyeAngle / 2;
 
@@ -109,7 +110,7 @@ function _creature(_DNA, _metaData) {
 						let distance = calcDistanceFromEye(dAngle, distanceToCreatur, creatur.DNA.size);
 						if (isNaN(distance) || distance < 0) distance = This.DNA.eyeRange;
 						
-						let percDistance = distance / This.DNA.eyeRange;
+						let percDistance = 1 - distance / This.DNA.eyeRange;
 						if (percDistance < results[e]) results[e] = percDistance;
 					}
 				}
@@ -117,17 +118,18 @@ function _creature(_DNA, _metaData) {
 			}
 		}
 
-		function getAllcreaturesWithinRange() {
-			let visablecreatures = [];
-			for (creatur of Main.entities)
+		function getAllEntitiesWithinRange() {
+			let visableEntities = [];
+			for (entity of Main.entities)
 			{
-				if (creatur.id == This.id) continue;
-				let status = detectIfInViewingDistance(creatur);
+				if (entity.id == This.id) continue;
+				let status = detectIfInViewingDistance(entity);
 				if (!status) continue;
-				visablecreatures.push(status);
+				if (entity.type != "plant") continue; // only plants are visable for now
+				visableEntities.push(status);
 			}
 
-			return visablecreatures;
+			return visableEntities;
 		}
 
 		function detectIfInViewingDistance(_otherCreatur) {
@@ -158,7 +160,9 @@ function _creature(_DNA, _metaData) {
 		let newDNA = Object.assign({}, This.DNA);
 		newDNA.brain = mutateBrain(newDNA.brain, Main.settings.mutationChance, Main.settings.mutationRate);
 
-		return entityReproducer(newDNA, {});
+		let entity = entityReproducer(newDNA, {type: This.type});
+		console.log("reproduce", entity, This.type);
+		return entity;
 
 		function mutateBrain(_brainDNA, _mutationChance = 1, _mutationRate = 0.1) {
 			let newBrainDNA = [];

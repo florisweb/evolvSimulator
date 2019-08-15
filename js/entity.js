@@ -50,7 +50,7 @@ function _entity(_DNA, _metaData) {
 		metaData.energy	= This.energy * .5;
 		This.energy 	*= .5;
 
-		let newEntity 		= Main.createEntity(newDNA, metaData, newDNA.type);
+		let newEntity 		= Main.createEntity(newDNA, metaData, metaData.type);
 		newEntity.parent 	= This;
 		return newEntity;
 	}
