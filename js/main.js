@@ -16,18 +16,18 @@ const Main = new function() {
 			logging: false,
 			renderEveryXFrames: 1,
 			
-			sunBrightness: 10,
+			sunBrightness: .2,
 			mutationChance: 1,
 			mutationRate: 0.1,
 
-			plantRange: [5, 100], // min - max plants
-			creatureRange: [5, 100], // min - max plants
+			plantRange: [5, 500], // min - max plants
+			creatureRange: [5, 500], // min - max plants
 
 			biteConstant: 0.1,
 
 			energyConsumption: {
 				default: 0, // to be kept alive
-				plantAgeConstant: .01,
+				plantAgeConstant: .0005,
 				creatureAgeConstant: 0.0001, // degration of the body makes it less efficient
 				sizeConstant: 0.00001,
 				eyeConstant: 0.0,
@@ -194,13 +194,20 @@ const Main = new function() {
 		This.entities.push(entity);
 		return entity;
 	}
-
 }
 
 let startTime = new Date();
 Main.update();
 console.warn("time", new Date() - startTime);
 
+
+// sort creatures on energylevel 
+// Main.entities.sort(function (a, b) {
+// 	if (a.type == "plant") return 1;
+// 	if (a.energy > b.energy) return -1;
+// 	if (a.energy < b.energy) return 1;
+// 	return 0;
+// });
 
 
 function newId() {return parseInt(Math.round(Math.random() * 100000000) + "" + Math.round(Math.random() * 100000000));}

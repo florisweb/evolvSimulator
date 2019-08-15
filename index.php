@@ -14,9 +14,12 @@
 				margin: 0;
 				padding: 0;
 			}
-			button, input{
+			button, input {
 				position: relative;
 				float: left;
+			}
+			input {
+				width: 50vw;
 			}
 
 			#worldCanvas {
@@ -30,42 +33,12 @@
 	<body>
 		<button onclick="Main.running = true; Main.update()">Start</button>
 		<button onclick="Main.running = false">Stop</button>
-		<input type="range" value="1" min="0" max="100" step="1" oninput="Main.settings.renderEveryXFrames = this.value">
+		<input type="range" value="1" min="0" max="100" step="1" oninput="Main.settings.renderEveryXFrames = this.value * this.value">
 		<canvas id="worldCanvas" width="1000" height="1000"></canvas>
 	
 	
 
 		<script>
-			// Javascript - how to execute a function without blocking the eventloop
-			// function z() {
-			// 	Promise.resolve().then(function () {
-			// 		let start = new Date;
-			// 		console.log("start");
-
-			// 		let a = [];
-			// 		for (let i = 0; i < 10000000; i++)
-			// 		{
-			// 			a.push(i);
-			// 			a.push(a);
-			// 		}
-			// 		// for (let i = 0; i < 10; i++) Main.loop(1000);
-			// 		console.log("End: ", new Date() - start);
-			// 	});
-			// }
-
-
-			// function ex() {
-			// 	let start = new Date;
-			// 	console.log("start ex");
-			
-			// 	z();
-				
-			// 	console.log("End ex: ", new Date() - start);
-			// }
-
-
-
-
 			// temporary so things don't get cached
 			let antiCache = Math.round(Math.random() * 100000000);
 			$.getScript("js/renderer.js?antiCache=" 								+ antiCache, function() {});
