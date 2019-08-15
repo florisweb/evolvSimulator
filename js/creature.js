@@ -187,7 +187,8 @@ function _creature(_DNA, _metaData) {
 		for (entity of entities) 
 		{
 			let energy 		= energyPerByte / (entity.DNA.size * .1);
-			if (entity.type == "plant") energy * 3;
+			if (entity.type == "plant") energy * 10;
+			if (energy.energy < energy) energy = entity.energy;
 			entity.energy 	-= energy;
 			This.energy 	+= energy;
 		}

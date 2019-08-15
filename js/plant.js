@@ -17,7 +17,7 @@ function _plant(_DNA, _metaData) {
 		This.energy -= calcEnergyConsumption();
 
 
-		if (This.age % 1000 == 0 && This.energy > 100 && Math.random() > 0.5)
+		if (This.age % 500 == 0 && This.energy > 100 && Math.random() > 0.5)
 		{
 			This.reproduce();
 		}
@@ -33,10 +33,10 @@ function _plant(_DNA, _metaData) {
 
 
 	function calcPhotosynthesesGain() {
-		let gain 	= This.DNA.g * 1.5;
+		let gain 	= This.DNA.g;
 		gain 		-= This.DNA.r;
 		gain 		-= This.DNA.b * .5;
-		gain 		+= Math.pow(This.DNA.size, 2) * 0.01; // bigger surface-area
+		gain 		+= Math.pow(This.DNA.size, 2) * 0.005; // bigger surface-area
 		if (gain < 0) gain = 0;
 		return gain * Main.settings.sunBrightness;
 	}

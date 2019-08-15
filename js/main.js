@@ -46,7 +46,7 @@ const Main = new function() {
 		running: false,
 		frameRate: 1,
 
-		update: function() {
+		update: function(_update = true) {
 			this.updates++;
 			this.updateEntities();
 
@@ -61,8 +61,17 @@ const Main = new function() {
 			This.bites 						= 0;
 			This.totalEnergy 				= 0;
 			This.totalAge 					= 0;
-			// if (this.running) requestAnimationFrame(function () {Main.update()});
-			if (this.running) setTimeout(function () {Main.update()}, This.frameRate);
+			if (this.running && _update) requestAnimationFrame(function () {Main.update()});
+			// if (this.running) setTimeout(function () {Main.update()}, This.frameRate);
+		},
+
+		loopRuns: 0,
+		loop: function(_times) {
+			if (_times) this.loopRuns = _times / 1000;
+			console.log("run", this.loopRuns);
+			this.loopRuns--;
+			for (let i = 0; i < 1000; i++) this.update(false);
+			if (this.running && this.loopRuns > 0) requestAnimationFrame(function () {Main.loop()});
 		},
 
 
