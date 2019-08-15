@@ -16,7 +16,7 @@ const Main = new function() {
 			logging: false,
 			renderEveryXFrames: 1,
 			
-			sunBrightness: .2,
+			sunEnergyPerPixel: .005 * Math.pow(.1, 0),
 			mutationChance: 1,
 			mutationRate: 0.1,
 
@@ -43,7 +43,7 @@ const Main = new function() {
 
 
 
-		running: false,
+		running: true,
 		frameRate: 1,
 
 		update: function(_update = true) {

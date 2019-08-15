@@ -33,12 +33,15 @@ function _plant(_DNA, _metaData) {
 
 
 	function calcPhotosynthesesGain() {
-		let gain 	= This.DNA.g;
-		gain 		-= This.DNA.r;
-		gain 		-= This.DNA.b * .5;
-		gain 		+= Math.pow(This.DNA.size, 2) * 0.005; // bigger surface-area
+		let solarEfficiency = This.DNA.g;
+		solarEfficiency 	-= This.DNA.r;
+		solarEfficiency 	-= This.DNA.b * .5;
+
+		let surfaceArea = Math.pow(This.DNA.size, 2);
+		let gain = surfaceArea * Main.settings.sunEnergyPerPixel * solarEfficiency;
+
 		if (gain < 0) gain = 0;
-		return gain * Main.settings.sunBrightness;
+		return gain;
 	}
 
 }
