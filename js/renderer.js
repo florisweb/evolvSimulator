@@ -76,7 +76,7 @@ const Renderer = new function() {
 		dtx.stroke();
 		dtx.fill();
 
-		renderEntityAngleArrow(_entity);
+		if (_entity.type != "plant") renderEntityAngleArrow(_entity);
 
 		
 		if (_entity.inpData && _entity.type == "creature")
