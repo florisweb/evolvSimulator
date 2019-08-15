@@ -38,9 +38,10 @@ function _entity(_DNA, _metaData) {
 		if (_startDNA) 	startDNA = _startDNA;
 		let newDNA	 	= mutateDNA(startDNA, Main.settings.mutationChance, Main.settings.mutationRate);
 
-		metaData.angle 	= Math.random() * 2 * Math.PI;
+		let angleMutation = Math.PI * .5;
+		metaData.angle 	= This.angle + angleMutation - angleMutation * 2 * Math.random();
 
-		let distance	= newDNA.size + This.DNA.size;
+		let distance	= (newDNA.size + This.DNA.size) * 2;
 		let rx 			=  Math.cos(This.angle) * distance;
 		let ry 			= -Math.sin(This.angle) * distance;
 		metaData.x 		= This.x + rx;

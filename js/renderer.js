@@ -1,7 +1,4 @@
 
-
-
-
 const Renderer = new function() {
 
 	let This = {
@@ -15,12 +12,22 @@ const Renderer = new function() {
 			dtx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 			renderDebugInfo();
 			this.rendercreatures(Main.entities);
+		},
+
+		setCoordsWithinWorld: function(_x, _y, _size) {
+			if (_x < _size) 						_x	= _size
+			if (_y < _size) 						_y = _size;
+			if (_x > This.canvas.width - _size) 	_x = This.canvas.width - _size;
+			if (_y > This.canvas.height - _size)	_y = This.canvas.height - _size;
+			return {x: _x, y: _y};
 		}
 	}
 
 	let dtx	= This.canvas.getContext("2d");
 	
 	dtx.circle = function(x, y, size) {
+		if (size < 0) return;
+
 		dtx.beginPath();
 		dtx.ellipse(
 			x, 
@@ -40,7 +47,7 @@ const Renderer = new function() {
 	let prevRenderTime = new Date();
 	let prevRenderUpdates = 0;
 	function renderDebugInfo() {
-		let fontSize = 25;
+		let fontSize = 30;
 		dtx.fillStyle = "#555";
 		dtx.font = fontSize + 'px sans-serif';
 
@@ -68,7 +75,7 @@ const Renderer = new function() {
 
 
 	function renderCreatur(_entity) {
-		dtx.strokeStyle = "rgb(" + _entity.DNA.r * 255 + ", " + _entity.DNA.g * 255 + ", " + _entity.DNA.b * 255 + ")";
+		dtx.strokeStyle = "rgba(" + _entity.DNA.r * 255 + ", " + _entity.DNA.g * 255 + ", " + _entity.DNA.b * 255 + ", .9)";
 		dtx.fillStyle 	= "rgba(" + _entity.DNA.r * 255 + ", " + _entity.DNA.g * 255 + ", " + _entity.DNA.b * 255 + ", .2)";
 		dtx.lineWidth = 2;
 		dtx.circle(
@@ -77,6 +84,14 @@ const Renderer = new function() {
 			_entity.DNA.size
 		);
 		dtx.stroke();
+		dtx.fill();
+
+		dtx.fillStyle 	= "rgba(" + _entity.DNA.r * 255 + ", " + _entity.DNA.g * 255 + ", " + _entity.DNA.b * 255 + ", .05)";
+		dtx.circle(
+			_entity.x, 
+			_entity.y, 
+			_entity.DNA.size * _entity.energy / 100
+		);
 		dtx.fill();
 
 		if (_entity.type != "plant") renderEntityAngleArrow(_entity);

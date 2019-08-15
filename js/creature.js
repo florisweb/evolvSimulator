@@ -78,10 +78,10 @@ function _creature(_DNA, _metaData) {
 		
 		This.x += rx;
 		This.y += ry;
-		if (This.x < This.DNA.size) This.x = This.DNA.size;
-		if (This.y < This.DNA.size) This.y = This.DNA.size;
-		if (This.x > Renderer.canvas.width - This.DNA.size) This.x = Renderer.canvas.width - This.DNA.size;
-		if (This.y > Renderer.canvas.height - This.DNA.size) This.y = Renderer.canvas.height - This.DNA.size;
+
+		let coords = Renderer.setCoordsWithinWorld(This.x, This.y, This.DNA.size);
+		This.x = coords.x;
+		This.y = coords.y;
 	}
 
 
@@ -159,10 +159,7 @@ function _creature(_DNA, _metaData) {
 	function reproduce() {
 		let newDNA = Object.assign({}, This.DNA);
 		newDNA.brain = mutateBrain(newDNA.brain, Main.settings.mutationChance, Main.settings.mutationRate);
-
-		let entity = entityReproducer(newDNA, {type: This.type});
-		console.log("reproduce", entity, This.type);
-		return entity;
+		return entityReproducer(newDNA, {type: This.type});
 
 		function mutateBrain(_brainDNA, _mutationChance = 1, _mutationRate = 0.1) {
 			let newBrainDNA = [];
@@ -185,11 +182,12 @@ function _creature(_DNA, _metaData) {
 		let energyPerByte = _bitePower * This.DNA.size * Main.settings.biteConstant;
 
 		let startEnergy = This.energy;
-		This.energy -= energyPerByte * 0.01; //1% of the bites energy is used to bite
+		This.energy -= energyPerByte * 0.05; //1% of the bites energy is used to bite
 
 		for (entity of entities) 
 		{
 			let energy 		= energyPerByte / (entity.DNA.size * .1);
+			if (entity.type == "plant") energy * 3;
 			entity.energy 	-= energy;
 			This.energy 	+= energy;
 		}

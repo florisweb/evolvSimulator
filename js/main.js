@@ -16,20 +16,20 @@ const Main = new function() {
 			logging: false,
 			renderEveryXFrames: 1,
 			
-			sunBrightness: 8,
+			sunBrightness: 10,
 			mutationChance: 1,
 			mutationRate: 0.1,
 
-			plantRange: [10, 100], // min - max plants
-			creatureRange: [100, 200], // min - max plants
+			plantRange: [5, 100], // min - max plants
+			creatureRange: [5, 100], // min - max plants
 
 			biteConstant: 0.1,
 
 			energyConsumption: {
 				default: 0, // to be kept alive
+				plantAgeConstant: .05,
 				creatureAgeConstant: 0.0001, // degration of the body makes it less efficient
-				plantAgeConstant: .2,
-				sizeConstant: 0.000005,
+				sizeConstant: 0.00001,
 				eyeConstant: 0.0,
 				neuronConstant: 0.0,
 				turnConstant: 0.01,
@@ -121,9 +121,9 @@ const Main = new function() {
 			g: 			Math.random(),
 			b: 			Math.random(),
 
-			eyeRange: 	Renderer.canvas.width * Math.random() * 0.5,
+			eyeRange: 	Renderer.canvas.width * Math.random() * 0.25,
 			eyeCount: 	Math.round(5 * Math.pow(Math.random(), 2)),
-			eyeAngle: 	Math.PI * Math.random(),
+			eyeAngle: 	Math.PI * Math.pow(Math.random(), 4),
 
 			brain: 		[]
 		};
@@ -159,6 +159,10 @@ const Main = new function() {
 
 
 	function createEntity(_DNA, _metaData, _type = "plant") {
+		let coords = Renderer.setCoordsWithinWorld(_metaData.x, _metaData.y, _DNA.size);
+		_metaData.x = coords.x;
+		_metaData.y = coords.y;
+
 		let constructor = _creature;
 		if (_type == "plant")
 		{
