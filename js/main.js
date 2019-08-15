@@ -16,9 +16,11 @@ const Main = new function() {
 			logging: false,
 			renderEveryXFrames: 1,
 			
-			sunEnergyPerPixel: .003,
+			sunEnergyPerPixel: .0005,
 			mutationChance: 1,
 			mutationRate: 0.2,
+			plantLeafSize: 5,
+			creatureBiteRange: 2,
 
 			plantRange: [5, 250], // min - max plants
 			creatureRange: [20, 250], // min - max plants
@@ -28,8 +30,8 @@ const Main = new function() {
 			energyConsumption: {
 				default: 0, // to be kept alive
 				plantAgeConstant: .0002,
-				creatureAgeConstant: .0001, // degration of the body makes it less efficient
-				sizeConstant: .00001,
+				creatureAgeConstant: .00005, // degration of the body makes it less efficient
+				sizeConstant: .0001,
 				eyeConstant: .0,
 				neuronConstant: 0.0,
 				turnConstant: 0.01,
@@ -142,7 +144,7 @@ const Main = new function() {
 		};
 
 		DNA.brain = [
-			Math.random()
+			Math.random() * 2
 		];
 		for (let i = 0; i < DNA.brain[0]; i++) DNA.brain.push(Math.random() * 2);
 

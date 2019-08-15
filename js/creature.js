@@ -174,7 +174,7 @@ function _creature(_DNA, _metaData) {
 
 
 	function bite(_bitePower) {
-		let entities = Collision.getAllEntitiesWithinRange(This, This.DNA.size * 1.3);
+		let entities = Collision.getAllEntitiesWithinRange(This, This.DNA.size * Main.settings.creatureBiteRange);
 		let energyPerByte = _bitePower * This.DNA.size * Main.settings.biteConstant;
 
 		let startEnergy = This.energy;
@@ -206,6 +206,7 @@ function _creature(_DNA, _metaData) {
 		for (let l = 0; l < layers; l++)
 		{
 			let curLayerLength = Math.abs(Math.round(_brainDNA[l + 1]));
+			if (curLayerLength <= 0) curLayerLength = 1; 
 			brainStructure.push(curLayerLength);
 		}
 
