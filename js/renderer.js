@@ -78,7 +78,6 @@ const Renderer = new function() {
 
 		if (_entity.type != "plant") renderEntityAngleArrow(_entity);
 
-		
 		if (_entity.inpData && _entity.type == "creature")
 		{
 			for (let e = 0; e < _entity.DNA.eyeCount; e++) renderCreaturEye(_entity, e, _entity.inpData.eyeData[e]);
@@ -123,6 +122,7 @@ const Renderer = new function() {
 		let relativeEyeX = Math.cos(thisAngle) * _creatur.DNA.eyeRange;
 		let relativeEyeY = -Math.sin(thisAngle) * _creatur.DNA.eyeRange;
 		
+		dtx.beginPath();
 		dtx.moveTo(_creatur.x, _creatur.y);
 		dtx.lineTo(_creatur.x + relativeEyeX, _creatur.y + relativeEyeY);
 
@@ -136,6 +136,10 @@ const Renderer = new function() {
 			eyeDetectorSize,
 			eyeDetectorSize,
 		);
+		
+		dtx.closePath();
+		dtx.fill();
+		dtx.stroke();
 	}
 
 	return This;
