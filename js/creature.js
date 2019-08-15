@@ -11,6 +11,7 @@ function _creature(_DNA, _metaData) {
 	this.move 				= move;
 	this.update 			= update;
 	this.reproduce 			= reproduce;
+	this.bite				= bite;
 
 
 	
@@ -24,6 +25,7 @@ function _creature(_DNA, _metaData) {
 			This.angle += (.5 - prevActionValues[0]) * turnConstant;
 			This.move(prevActionValues[1]);
 			if (prevActionValues[2] > 0.5 && This.age % 100 == 0) This.reproduce();
+			if (prevActionValues[3] > 0.5) This.bite((prevActionValues[3] - .5) * 2);
 		}
 
 
@@ -146,8 +148,6 @@ function _creature(_DNA, _metaData) {
 
 
 
-
-
 	function reproduce() {
 		let newDNA = Object.assign({}, This.DNA);
 		newDNA.brain = mutateBrain(newDNA.brain, Main.settings.mutationChance, Main.settings.mutationRate);
@@ -166,6 +166,53 @@ function _creature(_DNA, _metaData) {
 
 			return newBrainDNA;
 		}
+	}
+
+
+
+	function bite(_bitePower) {
+		let entities = getAllEntitiesWithinRange();
+		let energyPerByte = _bitePower * This.DNA.size * Main.settings.biteConstant;
+
+		let startEnergy = This.energy;
+		This.energy -= energyPerByte * 0.01; //1% of the bites energy is used to bite
+
+		for (entity of entities) 
+		{
+			let energy 		= energyPerByte / (entity.DNA.size * .1);
+			entity.energy 	-= energy;
+			This.energy 	+= energy;
+		}
+
+		Main.bites++;
+		Main.totalBiteEnergy += This.energy - startEnergy;
+
+
+	
+		function getAllEntitiesWithinRange() {
+			let visableEntities = [];
+			for (entity of Main.entities)
+			{
+				if (entity.id == This.id) continue;
+				let status = detectIfInViewingDistance(entity);
+				if (!status) continue;
+				visableEntities.push(entity);
+			}
+
+			return visableEntities;
+		}
+
+		function detectIfInViewingDistance(_otherEntity) {
+			let maxDistance = This.DNA.size + _otherEntity.DNA.size;
+
+			let dx = Math.abs(This.x - _otherEntity.x);
+			let dy = Math.abs(This.y - _otherEntity.y);
+			let actualDistance = Math.sqrt(dx * dx + dy * dy);
+			if (actualDistance > maxDistance) return false;
+			
+			return _otherEntity;
+		}
+
 	}
 
 

@@ -6,6 +6,9 @@ const Main = new function() {
 		totalBrainOutput: [0, 0, 0, 0],
 		updates: 0,
 
+		bites: 0,
+		totalBiteEnergy: 0,
+
 
 
 		settings: {
@@ -16,20 +19,20 @@ const Main = new function() {
 			mutationChance: 1,
 			mutationRate: 0.1,
 
-			plantRange: [10, 100], // min - max plants
-			creatureRange: [10, 100], // min - max plants
+			plantRange: [20, 100], // min - max plants
+			creatureRange: [50, 100], // min - max plants
 
-
+			biteConstant: 0.1,
 
 			energyConsumption: {
-				default: 0.1, // to be kept alive
+				default: 0, // to be kept alive
 				creatureAgeConstant: 0.001, // degration of the body makes it less efficient
 				plantAgeConstant: 0.1,
 				sizeConstant: 0.001,
-				eyeConstant: 0.001,
-				neuronConstant: 0.01,
-				turnConstant: 0.2,
-				moveConstant: 1,
+				eyeConstant: 0.00,
+				neuronConstant: 0.0,
+				turnConstant: 0,//.2,
+				moveConstant: .1,
 			}
 		},
 
@@ -37,7 +40,28 @@ const Main = new function() {
 		plants: 0,
 		creatures: 0,
 
-		running: true,
+
+
+		running: false,
+
+		update: function() {
+			this.updates++;
+			this.updateEntities();
+
+			if (this.plants < this.settings.plantRange[0])		 this.createRandomPlant();
+			if (this.creatures < this.settings.creatureRange[0]) this.createRandomCreature();
+			
+			if (this.updates % this.settings.renderEveryXFrames == 0) Renderer.update();
+
+			This.totalEnergyConsumption = 0;
+			This.totalBrainOutput = [0, 0, 0, 0];
+			This.totalBiteEnergy = 0;
+			This.bites = 0;
+			// if (this.running) requestAnimationFrame(function () {Main.update()});
+			if (this.running) setTimeout(function () {Main.update()}, 1);
+		},
+
+
 
 
 		createRandomCreature: 	createRandomCreature,
@@ -79,20 +103,6 @@ const Main = new function() {
 				return true;
 			}
 			return false;
-		},
-
-		update: function() {
-			this.updates++;
-			this.updateEntities();
-
-			if (this.plants < this.settings.plantRange[0])		 this.createRandomPlant();
-			if (this.creatures < this.settings.creatureRange[0]) this.createRandomCreature();
-			
-			if (this.updates % this.settings.renderEveryXFrames == 0) Renderer.update();
-
-			This.totalEnergyConsumption = 0;
-			This.totalBrainOutput = [0, 0, 0, 0];
-			if (this.running) requestAnimationFrame(function () {Main.update()});
 		}
 	}
 
@@ -165,8 +175,6 @@ const Main = new function() {
 }
 
 let startTime = new Date();
-Main.createCreatures(10);
-Main.createPlants(10);
 Main.update();
 console.warn("time", new Date() - startTime);
 

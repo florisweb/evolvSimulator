@@ -46,7 +46,7 @@ const Renderer = new function() {
 
 		dtx.fill();
 		dtx.fillText("Entities: " + Main.entities.length + " (Plants: " + Main.plants + " creatures: " + Main.creatures + ")" , 5, fontSize);
-		dtx.fillText("Average energyconsumption: " + Math.round(Main.totalEnergyConsumption / Main.entities.length * 100) / 100, 5, fontSize * 2);
+		dtx.fillText("Average biteIncome: " + Math.round(Main.totalBiteEnergy / Main.bites * 1000) / 1000, 5, fontSize * 2);
 		dtx.fillText("Frames: " + Main.updates, 5, fontSize * 3);
 		
 		

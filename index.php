@@ -28,7 +28,7 @@
 		</style>
 	</head>	
 	<body>
-		<button onclick="Main.running = true; Main.update()">Run</button>
+		<button onclick="Main.running = true; Main.update()">Start</button>
 		<button onclick="Main.running = false">Stop</button>
 		<canvas id="worldCanvas" width="1000" height="1000"></canvas>
 	
