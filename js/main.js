@@ -22,8 +22,8 @@ const Main = new function() {
 			plantLeafSize: 5,
 			creatureBiteRange: 2,
 
-			plantRange: [5, 250], // min - max plants
-			creatureRange: [1, 250], // min - max plants
+			plantRange: [0, 0], //[5, 250], // min - max plants
+			creatureRange: [50, 250], // min - max plants
 
 			biteConstant: 0.1,
 

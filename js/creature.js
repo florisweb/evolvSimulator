@@ -24,6 +24,7 @@ function _creature(_DNA, _metaData) {
 			console.warn("IsNan", This);
 			Main.running = false;
 		}
+
 		entityUpdater();
 		Main.totalAge 		+= This.age;
 		Main.totalEnergy 	+= This.energy;
@@ -208,11 +209,13 @@ function _creature(_DNA, _metaData) {
 	function createBrain(_brainDNA) {
 		const outputNeurons = 4;
 
-		let brainStructure = [1 + This.DNA.eyeCount]; // inputs [energy + eyes]
+		let brainStructure = [1 + Math.abs(Math.round(This.DNA.eyeCount))]; // inputs [energy + eyes]
 		let layers = Math.abs(Math.round(_brainDNA[0]));
 
 		let newBrainDNA = Object.assign([], _brainDNA);
 		let curBrainIndex = layers;
+
+		let supposedBrainDNASize = layers + 1;
 
 		for (let l = 1; l < layers + 2; l++)
 		{
@@ -225,25 +228,34 @@ function _creature(_DNA, _metaData) {
 				brainStructure.push(curLayerLength);
 			} else curLayerLength = outputNeurons;
 			
+			supposedBrainDNASize += curLayerLength + prevLayerLength * curLayerLength;
+
 			for (let n = 0; n < curLayerLength; n++)
 			{
 				curBrainIndex++;
 				if (!newBrainDNA[curBrainIndex])
 				{
 					newBrainDNA[curBrainIndex] = 1 - Math.random() * 2;
-				} else console.log("Exists bias:", newBrainDNA[curBrainIndex])
+				}
 			
 				for (let w = 0; w < prevLayerLength; w++)
 				{
 					curBrainIndex++;
-					if (newBrainDNA[curBrainIndex]) {console.log("Exists weight:", newBrainDNA[curBrainIndex]); continue;}
+					if (newBrainDNA[curBrainIndex]) continue;
 					newBrainDNA[curBrainIndex] = 1 - Math.random() * 2;
 				}
 			}	
 		}
 
 		brainStructure.push(outputNeurons); // outputs
-		
+
+
+		if (supposedBrainDNASize > newBrainDNA.length)
+		{
+			console.warn("Brain-error", This, supposedBrainDNASize, newBrainDNA.length, brainStructure);
+			Main.running = false;
+		}
+
 
 		let brain = new NeuralNetwork(brainStructure);
 		let brainData = Object.assign([], newBrainDNA).splice(layers + 1, newBrainDNA.length);
