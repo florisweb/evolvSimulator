@@ -18,6 +18,12 @@ function _creature(_DNA, _metaData) {
 	
 	let prevActionValues = [];                   
 	function update() {
+
+		if (isNaN(This.energy)) 
+		{
+			console.warn("IsNan", This);
+			Main.running = false;
+		}
 		entityUpdater();
 		Main.totalAge 		+= This.age;
 		Main.totalEnergy 	+= This.energy;
@@ -222,19 +228,22 @@ function _creature(_DNA, _metaData) {
 			for (let n = 0; n < curLayerLength; n++)
 			{
 				curBrainIndex++;
-				if (newBrainDNA[curBrainIndex]) continue;
-				newBrainDNA[curBrainIndex] = 1 - Math.random() * 2;
+				if (!newBrainDNA[curBrainIndex])
+				{
+					newBrainDNA[curBrainIndex] = 1 - Math.random() * 2;
+				} else console.log("Exists bias:", newBrainDNA[curBrainIndex])
 			
 				for (let w = 0; w < prevLayerLength; w++)
 				{
 					curBrainIndex++;
-					if (newBrainDNA[curBrainIndex]) continue;
+					if (newBrainDNA[curBrainIndex]) {console.log("Exists weight:", newBrainDNA[curBrainIndex]); continue;}
 					newBrainDNA[curBrainIndex] = 1 - Math.random() * 2;
 				}
 			}	
 		}
 
 		brainStructure.push(outputNeurons); // outputs
+		
 
 		let brain = new NeuralNetwork(brainStructure);
 		let brainData = Object.assign([], newBrainDNA).splice(layers + 1, newBrainDNA.length);
