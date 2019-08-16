@@ -203,17 +203,43 @@ function _creature(_DNA, _metaData) {
 		let brainStructure = [1 + This.DNA.eyeCount]; // inputs [energy + eyes]
 		let layers = Math.abs(Math.round(_brainDNA[0]));
 
+		let newBrainDNA = Object.assign([], _brainDNA);
+		let curBrainIndex = layers;
+
 		for (let l = 0; l < layers; l++)
 		{
+			let prevLayerLength = brainStructure[l - 1];
 			let curLayerLength = Math.abs(Math.round(_brainDNA[l + 1]));
 			if (curLayerLength <= 0) curLayerLength = 1; 
 			brainStructure.push(curLayerLength);
+
+			for (let b = 0; b < curLayerLength; b++)
+			{
+				curBrainIndex++;
+				if (_brainDNA[curBrainIndex]) continue;
+				newBrainDNA[curBrainIndex] = 1 - Math.random() * 2;
+			}
+
+			for (let n = 0; n < curLayerLength; n++)
+			{
+				for (let w = 0; w < prevLayerLength; w++)
+				{
+					curBrainIndex++;
+					if (_brainDNA[curBrainIndex]) continue;
+					newBrainDNA[curBrainIndex] = 1 - Math.random() * 2;
+				}
+			}
 		}
 
+
 		brainStructure.push(4); // outputs
+		
+
 
 		let brain = new NeuralNetwork(brainStructure);
 		let brainData = _brainDNA.splice(layers + 1, _brainDNA.length);
+
+
 
 		return populateBrain(brain, brainData);
 	}
@@ -235,10 +261,6 @@ function _creature(_DNA, _metaData) {
 	}
 
 }
-
-
-
-
 
 
 

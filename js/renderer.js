@@ -39,7 +39,7 @@ const Renderer = new function() {
 	let prevRenderTime = new Date();
 	let prevRenderUpdates = 0;
 	function renderDebugInfo() {
-		let fontSize = 30;
+		let fontSize = 3 * This.canvas.width / 100;
 		dtx.fillStyle = "#555";
 		dtx.font = fontSize + 'px sans-serif';
 

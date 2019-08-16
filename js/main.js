@@ -23,7 +23,7 @@ const Main = new function() {
 			creatureBiteRange: 2,
 
 			plantRange: [5, 250], // min - max plants
-			creatureRange: [20, 250], // min - max plants
+			creatureRange: [1, 1], // min - max plants
 
 			biteConstant: 0.1,
 
@@ -34,8 +34,8 @@ const Main = new function() {
 				sizeConstant: .0001,
 				eyeConstant: .0,
 				neuronConstant: 0.0,
-				turnConstant: 0.01,
-				moveConstant: .1,
+				turnConstant: 0.005,
+				moveConstant: .05,
 			}
 		},
 
@@ -45,7 +45,7 @@ const Main = new function() {
 
 
 
-		running: true,
+		running: false,
 		frameRate: 1,
 
 		update: function(_update = true) {
@@ -130,8 +130,8 @@ const Main = new function() {
 
 	function createRandomCreature() {
 		let DNA = {
-			size: 		(Math.random() * 1.5 + .1) * 15,
-			speed: 		Math.random() * 3 + .1,
+			size: 		(Math.random() + .1) * 10,
+			speed: 		Math.random() + .1,
 			r: 			Math.random(),
 			g: 			Math.random(),
 			b: 			Math.random(),
@@ -144,7 +144,7 @@ const Main = new function() {
 		};
 
 		DNA.brain = [
-			Math.random() * 2
+			Math.random() * 5
 		];
 		for (let i = 0; i < DNA.brain[0]; i++) DNA.brain.push(Math.random() * 2);
 
@@ -206,6 +206,15 @@ console.warn("time", new Date() - startTime);
 // 	if (a.type == "plant") return 1;
 // 	if (a.energy > b.energy) return -1;
 // 	if (a.energy < b.energy) return 1;
+// 	return 0;
+// });
+
+// sort creatures on brainLength 
+// Main.entities.sort(function (a, b) {
+// 	if (a.type == "plant") return 1;
+// 	if (b.type == "plant") return -1;
+// 	if (a.DNA.brain.length > b.DNA.brain.length) return -1;
+// 	if (a.DNA.brain.length < b.DNA.brain.length) return 1;
 // 	return 0;
 // });
 
