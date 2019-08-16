@@ -208,18 +208,18 @@ function _creature(_DNA, _metaData) {
 		let newBrainDNA = Object.assign([], _brainDNA);
 		let curBrainIndex = layers;
 
-		for (let l = 0; l < layers + 1; l++)
+		for (let l = 1; l < layers + 2; l++)
 		{
-			let prevLayerLength = brainStructure[l];
-			let curLayerLength = Math.abs(Math.round(_brainDNA[l + 1]));
+			let prevLayerLength = brainStructure[l - 1];
+			let curLayerLength = Math.abs(Math.round(_brainDNA[l]));
 			if (curLayerLength <= 0) curLayerLength = 1; 
 
-			if (l != layers) 
+			if (l != layers + 1) 
 			{
 				brainStructure.push(curLayerLength);
 			} else curLayerLength = outputNeurons;
-
-			for (let b = 0; b < curLayerLength; b++)
+			
+			for (let n = 0; n < curLayerLength; n++)
 			{
 				curBrainIndex++;
 				if (newBrainDNA[curBrainIndex]) continue;
@@ -231,12 +231,10 @@ function _creature(_DNA, _metaData) {
 					if (newBrainDNA[curBrainIndex]) continue;
 					newBrainDNA[curBrainIndex] = 1 - Math.random() * 2;
 				}
-			}
+			}	
 		}
-		
 
 		brainStructure.push(outputNeurons); // outputs
-		
 
 		let brain = new NeuralNetwork(brainStructure);
 		let brainData = Object.assign([], newBrainDNA).splice(layers + 1, newBrainDNA.length);
