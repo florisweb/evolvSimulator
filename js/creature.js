@@ -8,6 +8,7 @@ function _creature(_DNA, _metaData) {
 
 	this.type				= "creature";
 	this.brain 				= createBrain(_DNA.brain);
+
 	this.move 				= move;
 	this.update 			= update;
 	this.reproduce 			= reproduce;
@@ -198,62 +199,60 @@ function _creature(_DNA, _metaData) {
 
 
 
-
 	function createBrain(_brainDNA) {
+		const outputNeurons = 4;
+
 		let brainStructure = [1 + This.DNA.eyeCount]; // inputs [energy + eyes]
 		let layers = Math.abs(Math.round(_brainDNA[0]));
 
 		let newBrainDNA = Object.assign([], _brainDNA);
 		let curBrainIndex = layers;
 
-		for (let l = 0; l < layers; l++)
+		for (let l = 0; l < layers + 1; l++)
 		{
-			let prevLayerLength = brainStructure[l - 1];
+			let prevLayerLength = brainStructure[l];
 			let curLayerLength = Math.abs(Math.round(_brainDNA[l + 1]));
 			if (curLayerLength <= 0) curLayerLength = 1; 
-			brainStructure.push(curLayerLength);
+
+			if (l != layers) 
+			{
+				brainStructure.push(curLayerLength);
+			} else curLayerLength = outputNeurons;
 
 			for (let b = 0; b < curLayerLength; b++)
 			{
 				curBrainIndex++;
-				if (_brainDNA[curBrainIndex]) continue;
+				if (newBrainDNA[curBrainIndex]) continue;
 				newBrainDNA[curBrainIndex] = 1 - Math.random() * 2;
-			}
-
-			for (let n = 0; n < curLayerLength; n++)
-			{
+			
 				for (let w = 0; w < prevLayerLength; w++)
 				{
 					curBrainIndex++;
-					if (_brainDNA[curBrainIndex]) continue;
+					if (newBrainDNA[curBrainIndex]) continue;
 					newBrainDNA[curBrainIndex] = 1 - Math.random() * 2;
 				}
 			}
 		}
-
-
-		brainStructure.push(4); // outputs
 		
 
+		brainStructure.push(outputNeurons); // outputs
+		
 
 		let brain = new NeuralNetwork(brainStructure);
-		let brainData = _brainDNA.splice(layers + 1, _brainDNA.length);
-
-
-
-		return populateBrain(brain, brainData);
+		let brainData = Object.assign([], newBrainDNA).splice(layers + 1, newBrainDNA.length);
+		This.DNA.brain = newBrainDNA;
+		return populateBrain(brain, brainData, brainStructure);
 	}
 
-
-	function populateBrain(_brain, _brainData) {
+	function populateBrain(_brain, _brainData, _brainStructure) {
 		for (let l = 1; l < _brain.layers.length; l++)
 		{
 			let cLayer 	= _brain.layers[l];
-			cLayer.b 	= arraySplice(_brainData, cLayer.b.length);
+			cLayer.b 	= _brainData.splice(0, _brainStructure[l]);
 
 			for (let n = 0; n < cLayer.w.length; n++)
 			{
-				cLayer.w[n] = arraySplice(_brainData, cLayer.w[n].length);
+				cLayer.w[n] = _brainData.splice(0, _brainStructure[l - 1]);
 			}
 		}
 
@@ -265,16 +264,6 @@ function _creature(_DNA, _metaData) {
 
 
 
-
-function arraySplice(_array, _length) {
-	let arr = _array.splice(0, _length);
-	for (let i = 0; i < _length; i++)
-	{
-		if (arr[i]) continue;
-		arr[i] = 1 - Math.random() * 2;
-	}
-	return arr;
-}
 
 function createArrayWithValues(_length, _value) {
 	let arr = [];

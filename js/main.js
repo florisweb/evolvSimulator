@@ -23,7 +23,7 @@ const Main = new function() {
 			creatureBiteRange: 2,
 
 			plantRange: [5, 250], // min - max plants
-			creatureRange: [1, 1], // min - max plants
+			creatureRange: [1, 250], // min - max plants
 
 			biteConstant: 0.1,
 
