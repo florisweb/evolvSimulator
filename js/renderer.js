@@ -56,12 +56,6 @@ const Renderer = new function() {
 		dtx.fillText("Fps: " + Math.round((Main.updates - prevRenderUpdates) / (new Date() - prevRenderTime) * 10000) / 10, 5, fontSize * 7);
 		prevRenderUpdates 	= Main.updates;
 		prevRenderTime 		= new Date();
-
-
-		for (let i = 0; i < Main.totalBrainOutput.length; i++)
-		{
-			dtx.fillText("Brain [" + i + "]: " + Math.round(Main.totalBrainOutput[i] / Main.creatures * 1000) / 1000, 5, fontSize * 8 + fontSize * i + fontSize * .5);
-		}
 	}
 
 

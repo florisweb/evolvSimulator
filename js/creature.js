@@ -18,14 +18,7 @@ function _creature(_DNA, _metaData) {
 	
 	let prevActionValues = [];                   
 	function update() {
-
-		if (isNaN(This.energy)) 
-		{
-			console.warn("IsNan", This);
-			Main.running = false;
-		}
-
-		if (entityUpdater()) return; // the creature died;
+		if (entityUpdater()) return; // the creature died
 
 		Main.totalAge 		+= This.age;
 		Main.totalEnergy 	+= This.energy;
@@ -63,17 +56,9 @@ function _creature(_DNA, _metaData) {
 		energyConsumption 		+= Math.abs(Math.pow(This.DNA.size, 3))				* Main.settings.energyConsumption.sizeConstant;
 		energyConsumption 		+= This.age 										* Main.settings.energyConsumption.creatureAgeConstant;
 		
-		if (prevActionValues.length)
-		{
-			energyConsumption += Math.abs(1 - prevActionValues[0]) 					* Main.settings.energyConsumption.turnConstant;
-			energyConsumption += prevActionValues[1] 								* Main.settings.energyConsumption.moveConstant;
-
-			for (let i = 0; i < prevActionValues.length; i++)
-			{
-				Main.totalBrainOutput[i] += prevActionValues[i];
-			}
-		}
-
+		if (!prevActionValues.length) return energyConsumption;
+		energyConsumption += Math.abs(1 - prevActionValues[0]) 						* Main.settings.energyConsumption.turnConstant;
+		energyConsumption += prevActionValues[1] 									* Main.settings.energyConsumption.moveConstant;
 
 		return energyConsumption;
 	}

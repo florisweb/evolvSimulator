@@ -3,7 +3,6 @@ const Main = new function() {
 
 	let This = {
 		totalEnergyConsumption: 0,
-		totalBrainOutput: [0, 0, 0, 0],
 		updates: 0,
 
 		bites: 0,
@@ -13,17 +12,16 @@ const Main = new function() {
 
 
 		settings: {
-			logging: false,
 			renderEveryXFrames: 1,
 			
-			sunEnergyPerPixel: .0005,
+			sunEnergyPerPixel: .0003,
 			mutationChance: 1,
 			mutationRate: 0.2,
 			plantLeafSize: 5,
 			creatureBiteRange: 2,
 
 			plantRange: [5, 250], // min - max plants
-			creatureRange: [10, 250], // min - max plants
+			creatureRange: [50, 250], // min - max plants
 
 			biteConstant: 0.1,
 
@@ -36,6 +34,9 @@ const Main = new function() {
 				neuronConstant: 0.0,
 				turnConstant: 0.005,
 				moveConstant: .05,
+			},
+			performance: {
+				checkCollisionFrameCount: 1, // checks the collisions every x frames
 			}
 		},
 
@@ -58,7 +59,6 @@ const Main = new function() {
 			if (this.updates % this.settings.renderEveryXFrames == 0) Renderer.update();
 
 			This.totalEnergyConsumption 	= 0;
-			This.totalBrainOutput		 	= [0, 0, 0, 0];
 			This.totalBiteEnergy 			= 0;
 			This.bites 						= 0;
 			This.totalEnergy 				= 0;
@@ -149,7 +149,7 @@ const Main = new function() {
 		for (let i = 0; i < DNA.brain[0]; i++) DNA.brain.push(Math.random() * 2);
 
 		return createEntity(DNA, {
-			energy: 10,
+			energy: 100,
 			angle: 	Math.random() * Math.PI * 2,
 			x: 		Math.round(Math.random() * Renderer.canvas.width),
 			y: 		Math.round(Math.random() * Renderer.canvas.height),

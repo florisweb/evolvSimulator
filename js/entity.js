@@ -18,20 +18,17 @@ function _entity(_DNA, _metaData) {
 	this.DNA 		= _DNA;
 
 	this.update 	= update;
+	this.reproduce 	= reproduce;
 	this.die = function () {
-		if (Main.settings.logging) console.warn("A entity of type " + this.type + "died:", This);
 		Main.killEntity(this.id);
 		return true;
 	};
-	this.reproduce 	= reproduce;
-
 	
 
-	
 	function update() {
 		This.age++;
 		if (This.energy <= 0) return This.die();
-		Collision.apply(This);
+		if (This.age % Main.settings.performance.checkCollisionFrameCount == 0) Collision.apply(This);
 	}
 
 
