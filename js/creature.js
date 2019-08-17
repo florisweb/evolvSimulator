@@ -84,7 +84,8 @@ function _creature(_DNA, _metaData) {
 		const movementConstant = 10;
 		let rx = Math.cos(This.angle) * _stepSize * movementConstant * This.DNA.speed;
 		let ry = -Math.sin(This.angle) * _stepSize * movementConstant * This.DNA.speed;
-		Main.entityGrid.move(This, This.x + rx, This.y + ry)
+		This.x += rx;
+		This.y += ry;
 	}
 
 
