@@ -14,21 +14,21 @@ const Main = new function() {
 		settings: {
 			renderEveryXFrames: 1,
 			
-			sunEnergyPerPixel: .0003,
+			sunEnergyPerPixel: .0005,
 			mutationChance: 1,
 			mutationRate: 0.2,
 			plantLeafSize: 5,
 			creatureBiteRange: 2,
 
 			plantRange: [5, 250], // min - max plants
-			creatureRange: [50, 250], // min - max plants
+			creatureRange: [1, 250], // min - max plants
 
 			biteConstant: 0.1,
 
 			energyConsumption: {
 				default: 0, // to be kept alive
 				plantAgeConstant: .0002,
-				creatureAgeConstant: .00005, // degration of the body makes it less efficient
+				creatureAgeConstant: .00001, // degration of the body makes it less efficient
 				sizeConstant: .0001,
 				eyeConstant: .0,
 				neuronConstant: 0.0,
@@ -136,7 +136,7 @@ const Main = new function() {
 			g: 			Math.random(),
 			b: 			Math.random(),
 
-			eyeRange: 	Renderer.canvas.width * Math.random() * 0.25,
+			eyeRange: 	Renderer.canvas.width * Math.random() * 0.25 * 2,
 			eyeCount: 	Math.round(5 * Math.pow(Math.random(), 2)),
 			eyeAngle: 	Math.PI * Math.pow(Math.random(), 4),
 
@@ -144,9 +144,9 @@ const Main = new function() {
 		};
 
 		DNA.brain = [
-			Math.random() * 5
+			Math.random()
 		];
-		for (let i = 0; i < DNA.brain[0]; i++) DNA.brain.push(Math.random() * 2);
+		for (let i = 0; i < DNA.brain[0]; i++) DNA.brain.push(Math.random() * 4);
 
 		return createEntity(DNA, {
 			energy: 100,
@@ -196,9 +196,7 @@ const Main = new function() {
 	return This;
 }
 
-let startTime = new Date();
 Main.update();
-console.warn("time", new Date() - startTime);
 
 
 // sort creatures on energylevel 

@@ -43,7 +43,7 @@ const Renderer = new function() {
 		dtx.fillStyle = "#555";
 		dtx.font = fontSize + 'px sans-serif';
 
-		dtx.fill();
+		dtx.beginPath();
 		dtx.fillText("Entities: " + Main.entities.length + " (Plants: " + Main.plants + " creatures: " + Main.creatures + ")" , 5, fontSize);
 		dtx.fillText("Average biteIncome: " + Math.round(Main.totalBiteEnergy / Main.bites * 1000) / 1000, 5, fontSize * 2);
 		dtx.fillText("Average energyConsumption (without biteCost): " + Math.round(Main.totalEnergyConsumption / Main.creatures * 1000) / 1000, 5, fontSize * 3);
@@ -52,10 +52,11 @@ const Renderer = new function() {
 		dtx.fillText("Frames: " + Main.updates, 5, fontSize * 6);
 		
 		
-		
 		dtx.fillText("Fps: " + Math.round((Main.updates - prevRenderUpdates) / (new Date() - prevRenderTime) * 10000) / 10, 5, fontSize * 7);
 		prevRenderUpdates 	= Main.updates;
 		prevRenderTime 		= new Date();
+		dtx.closePath();
+		dtx.fill();
 	}
 
 
@@ -72,7 +73,7 @@ const Renderer = new function() {
 		);
 		if (_entity.type == "creature") dtx.fill();
 		if (_entity.type == "plant") dtx.stroke();
-
+		
 
 		dtx.strokeStyle = "rgba(" + _entity.DNA.r * 255 + ", " + _entity.DNA.g * 255 + ", " + _entity.DNA.b * 255 + ", .9)";
 		dtx.fillStyle 	= "rgba(" + _entity.DNA.r * 255 + ", " + _entity.DNA.g * 255 + ", " + _entity.DNA.b * 255 + ", .2)";

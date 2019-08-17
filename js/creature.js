@@ -79,28 +79,29 @@ function _creature(_DNA, _metaData) {
 	const eye = new function() {
 		return {
 			getData: function() {
-				let creatures 		= getAllEntitiesWithinRange();
+				let entities 		= getAllEntitiesWithinRange();
 				let totalEyeAngle 	= (This.DNA.eyeCount - 1) * This.DNA.eyeAngle;
 				let startAngle 		= -totalEyeAngle / 2;
 
-				let results = createArrayWithValues(This.DNA.eyeCount, 1);
-				for (creatur of creatures)
+				let results = createArrayWithValues(This.DNA.eyeCount, 0);
+				for (entity of entities)
 				{
-					let dx = creatur.x - This.x;
-					let dy = creatur.y - This.y;
+					!!This.DNA.eyeCount
+					let dx = entity.x - This.x;
+					let dy = entity.y - This.y;
 					let directAngleToCreature = atanWithDX(dx, dy);
-					let distanceToCreatur = Math.sqrt(dx * dx + dy * dy);
+					let distanceToEntity = Math.sqrt(dx * dx + dy * dy);
 						
 					
 					for (let e = 0; e < This.DNA.eyeCount; e++)
 					{
 						let thisAngle = startAngle + e * This.DNA.eyeAngle + This.angle;
 						let dAngle = Math.abs(thisAngle - directAngleToCreature);
-						let distance = calcDistanceFromEye(dAngle, distanceToCreatur, creatur.DNA.size);
+						let distance = calcDistanceFromEye(dAngle, distanceToEntity, entity.DNA.size);
 						if (isNaN(distance) || distance < 0) distance = This.DNA.eyeRange;
-						
+
 						let percDistance = 1 - distance / This.DNA.eyeRange;
-						if (percDistance < results[e]) results[e] = percDistance;
+						if (percDistance > results[e]) results[e] = percDistance;
 					}
 				}
 				return results;
@@ -122,14 +123,12 @@ function _creature(_DNA, _metaData) {
 		}
 
 		function detectIfInViewingDistance(_otherCreatur) {
-			let maxDistance = This.DNA.eyeRange + _otherCreatur.DNA.size;
+			let maxDistance = This.DNA.eyeRange * !!This.DNA.eyeCount + _otherCreatur.DNA.size;
 
 			let dx = Math.abs(This.x - _otherCreatur.x);
 			let dy = Math.abs(This.y - _otherCreatur.y);
 			let actualDistance = Math.sqrt(dx * dx + dy * dy);
 			if (actualDistance > maxDistance) return false;
-			
-			_otherCreatur.distanceFromCreatur = actualDistance;
 			return _otherCreatur;
 		}
 
