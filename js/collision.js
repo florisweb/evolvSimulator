@@ -4,16 +4,15 @@ const Collision = new function() {
 		getAllEntitiesWithinRange: getAllEntitiesWithinRange,
 		calcFactor: calcFactor,
 		addFactors: addFactors,
-		applyFactor: applyFactor,
-		apply: apply
+		apply: apply,
+		getPointsWithinCircle: getPointsWithinCircle
 	}
 
 	function apply(_entity) {
-		applyFactor(_entity, calcFactor(_entity));
+		let coords = applyFactor(_entity, calcFactor(_entity));
 
-		let coords = setCoordsWithinWorld(_entity.x, _entity.y, _entity.DNA.size);
-		_entity.x = coords.x;
-		_entity.y = coords.y;
+		coords = setCoordsWithinWorld(coords.x, coords.y, _entity.DNA.size);
+		Main.entityGrid.move(_entity, coords.x, coords.y);
 	}
 
 	function setCoordsWithinWorld(_x, _y, _size) {
@@ -28,12 +27,11 @@ const Collision = new function() {
 		let fx = Math.cos(_factor.angle) * _factor.power;
 		let fy = -Math.sin(_factor.angle) * _factor.power;
 
-		_entity.x += fx;
-		_entity.y += fy;
+		return {x: _entity.x + fx, y: _entity.y + fy};
 	}
 
 	function calcFactor(_entity) {
-		let inRange = getAllEntitieFactorsWithinRange(_entity);
+		let inRange = getAllEntityFactorsWithinRange(_entity);
 		let sumFactor = {
 			angle: 0,
 			power: 0
@@ -62,8 +60,10 @@ const Collision = new function() {
 		}
 	}
 
+
 	function getAllEntitiesWithinRange(_self, _range = 0) {
 		let visableEntities = [];
+
 		for (entity of Main.entities)
 		{
 			if (entity.id == _self.id) continue;
@@ -83,8 +83,24 @@ const Collision = new function() {
 		return visableEntities;
 	}
 
+	function getPointsWithinCircle(_x, _y, _range) {
+		let points = [];
+		let minY = _y - _range;
+		let maxY = _y + _range;
+		for (let y = minY; y < maxY; y++) 
+		{
 
-	function getAllEntitieFactorsWithinRange(_self) {
+
+
+		}
+
+
+
+		return points;
+	}
+
+
+	function getAllEntityFactorsWithinRange(_self) {
 		let visableEntities = [];
 		for (entity of Main.entities)
 		{

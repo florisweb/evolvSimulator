@@ -11,7 +11,7 @@ function _plant(_DNA, _metaData) {
 
 	
 	function update() {
-		entityUpdater();
+		if (entityUpdater()) return; // the plant died;
 		
 		This.energy += calcPhotosynthesesGain();
 		This.energy -= calcEnergyConsumption();

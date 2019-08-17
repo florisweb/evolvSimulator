@@ -21,6 +21,7 @@ function _entity(_DNA, _metaData) {
 	this.die = function () {
 		if (Main.settings.logging) console.warn("A entity of type " + this.type + "died:", This);
 		Main.killEntity(this.id);
+		return true;
 	};
 	this.reproduce 	= reproduce;
 

@@ -25,7 +25,8 @@ function _creature(_DNA, _metaData) {
 			Main.running = false;
 		}
 
-		entityUpdater();
+		if (entityUpdater()) return; // the creature died;
+
 		Main.totalAge 		+= This.age;
 		Main.totalEnergy 	+= This.energy;
 		
@@ -83,9 +84,7 @@ function _creature(_DNA, _metaData) {
 		const movementConstant = 10;
 		let rx = Math.cos(This.angle) * _stepSize * movementConstant * This.DNA.speed;
 		let ry = -Math.sin(This.angle) * _stepSize * movementConstant * This.DNA.speed;
-		
-		This.x += rx;
-		This.y += ry;
+		Main.entityGrid.move(This, This.x + rx, This.y + ry)
 	}
 
 

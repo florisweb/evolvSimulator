@@ -22,8 +22,8 @@ const Main = new function() {
 			plantLeafSize: 5,
 			creatureBiteRange: 2,
 
-			plantRange: [0, 0], //[5, 250], // min - max plants
-			creatureRange: [50, 250], // min - max plants
+			plantRange: [5, 250], // min - max plants
+			creatureRange: [10, 250], // min - max plants
 
 			biteConstant: 0.1,
 
@@ -40,6 +40,31 @@ const Main = new function() {
 		},
 
 		entities: [],
+		entityGrid: function() {
+			let grid = [];
+			grid.add = function(_entity) {
+				let x = Math.floor(_entity.x);
+				let y = Math.floor(_entity.y);
+				if (!grid[x]) grid[x] = [];
+				grid[x][y] = _entity;
+			}
+			grid.move = function(_entity, _newX, _newY) {
+				let x = Math.floor(_entity.x);
+				let y = Math.floor(_entity.y);
+				grid[x][y] = 0;
+				
+				_entity.x = _newX;
+				_entity.y = _newY;
+				grid.add(_entity);
+			}
+			grid.killEntity = function(_entity) {
+				let x = Math.floor(_entity.x);
+				let y = Math.floor(_entity.y);
+				grid[x][y] = 0;
+			}
+			return grid;
+		}(),
+
 		plants: 0,
 		creatures: 0,
 
@@ -120,7 +145,8 @@ const Main = new function() {
 			{
 				if (This.entities[i].id != _id) continue;
 				this[This.entities[i].type + "s"]--;
-				This.entities.splice(i, 1);
+				let entity = This.entities.splice(i, 1);
+				This.entityGrid.killEntity(entity[0]);
 				return true;
 			}
 			return false;
@@ -149,7 +175,7 @@ const Main = new function() {
 		for (let i = 0; i < DNA.brain[0]; i++) DNA.brain.push(Math.random() * 2);
 
 		return createEntity(DNA, {
-			energy: 100,
+			energy: 10,
 			angle: 	Math.random() * Math.PI * 2,
 			x: 		Math.round(Math.random() * Renderer.canvas.width),
 			y: 		Math.round(Math.random() * Renderer.canvas.height),
@@ -184,11 +210,12 @@ const Main = new function() {
 		}
 		
 		let entity = new constructor(_DNA, _metaData);
-		Collision.apply(entity);
-
-
 		This[_type + "s"]++; // to keep track of the amount of plants / creatures there are
 		This.entities.push(entity);
+		This.entityGrid.add(entity);
+
+		Collision.apply(entity);
+
 		return entity;
 	}
 
