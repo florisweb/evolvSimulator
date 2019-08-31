@@ -1,18 +1,17 @@
 
 const Renderer = new function() {
-
 	let This = {
 		canvas: $("#worldCanvas")[0],
 		renderCreatur: renderCreatur,
 		rendercreatures: function(_creatures) {
 			for (creatur of _creatures) this.renderCreatur(creatur);
 		},
-		update: function() {
+		update: function(_renderData) {
 			dtx.fillStyle = "#fff";
 			dtx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-			this.rendercreatures(Main.entities);
-			renderNutrientTiles();
-			renderDebugInfo();
+			this.rendercreatures(_renderData.entities);
+			renderNutrientTiles(_renderData.nutrients);
+			// renderDebugInfo();
 		}
 	}
 
@@ -62,23 +61,21 @@ const Renderer = new function() {
 	}
 
 
-	function renderNutrientTiles() {
-		for (let y = 0; y < Main.nutrients.length; y++)
+	function renderNutrientTiles(_nutrients) {
+		for (let y = 0; y < _nutrients.length; y++)
 		{	
-			for (let x = 0; x < Main.nutrients[y].length; x++)
+			for (let x = 0; x < _nutrients[y].length; x++)
 			{
-				renderNutrientTile(x, y);
+				renderNutrientTile(x, y, _nutrients[y][x]);
 			}
 		}
 	}
 
-	function renderNutrientTile(_nx, _ny) {// nutrientTileX and y
-		let nutrientConcentration = Main.nutrients[_ny][_nx];
-
+	function renderNutrientTile(_nx, _ny, _nutrientConcentration) {// nutrientTileX and y
 		let actualX = _nx * Main.settings.nutrients.pxPerTile;
 		let actualY = _ny * Main.settings.nutrients.pxPerTile;
 
-		ctx.fillStyle = "rgba(0, 255, 0, " + (nutrientConcentration) + ")";
+		ctx.fillStyle = "rgba(0, 255, 0, " + _nutrientConcentration + ")";
 		ctx.beginPath();
 		ctx.fillRect(
 			actualX, 
@@ -89,6 +86,8 @@ const Renderer = new function() {
 		ctx.closePath();
 		ctx.fill();
 
+		
+		if (!Main.settings.renderNutrientConcentration) return;
 		ctx.fillStyle = "#0f0";
 		dtx.font = '15px sans-serif';
 		ctx.beginPath();

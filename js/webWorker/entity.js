@@ -20,6 +20,11 @@ function _entity(_DNA, _metaData) {
 	this.update 	= update;
 	this.reproduce 	= reproduce;
 	this.die = function () {
+		Main.nutrients.addByCoords(
+			This.x, 
+			This.y, 
+			Settings.minimumEnergyToBeAlive * Settings.nutrientsPercOnDeath
+		);
 		Main.killEntity(this.id);
 		return true;
 	};
@@ -27,15 +32,15 @@ function _entity(_DNA, _metaData) {
 
 	function update() {
 		This.age++;
-		if (This.energy <= 0) return This.die();
-		if (This.age % Main.settings.performance.checkCollisionFrameCount == 0) Collision.apply(This);
+		if (This.energy <= Settings.minimumEnergyToBeAlive) return This.die();
+		if (This.age % Settings.performance.checkCollisionFrameCount == 0) Collision.apply(This);
 	}
 
 
 	function reproduce(_startDNA, metaData = {}) {
 		let startDNA 	= Object.assign({}, This.DNA);
 		if (_startDNA) 	startDNA = _startDNA;
-		let newDNA	 	= mutateDNA(startDNA, Main.settings.mutationChance, Main.settings.mutationRate);
+		let newDNA	 	= mutateDNA(startDNA, Settings.mutationChance, Settings.mutationRate);
 
 		let angleMutation = Math.PI * .5;
 		metaData.angle 	= This.angle + angleMutation - angleMutation * 2 * Math.random();

@@ -33,17 +33,26 @@
 	<body>
 		<button onclick="Main.running = true; Main.update()">Start</button>
 		<button onclick="Main.running = false">Stop</button>
-		<input type="range" value="1" min="0" max="50" step="1" oninput="Main.frameRate = this.value * this.value">
+		<input type="range" value="1" min="0" max="50" step="1" oninput="Main.settings.renderEveryXFrames = this.value * this.value">
 		<canvas id="worldCanvas" width="1000" height="1000"></canvas>
 
-		<script type="text/javascript" src="js/renderer.js"></script>
 	
 		<script>
 			
 			// temporary so things don't get cached
 			let antiCache = Math.round(Math.random() * 100000000);
-		// $.getScript("js/renderer.js?antiCache=" 									+ antiCache, function() {});
-			$.getScript("js/main.js?antiCache=" 									+ antiCache, function() {});
-		</script>
+			$.getScript("js/webWorker/settings.js?antiCache=" 									+ antiCache, function() {});
+			$.getScript("js/webWorker/collision.js?antiCache=" 									+ antiCache, function() {});
+			$.getScript("js/webWorker/neuralNetwork.js?antiCache=" 								+ antiCache, function() {});
+			$.getScript("js/webWorker/nutrientGrid.js?antiCache=" 								+ antiCache, function() {});
+			$.getScript("js/webWorker/entity.js?antiCache=" 									+ antiCache, function() {});
+			$.getScript("js/webWorker/creature.js?antiCache=" 									+ antiCache, function() {});
+			$.getScript("js/webWorker/plant.js?antiCache=" 										+ antiCache, function() {});
+
+			$.getScript("js/webWorker/main.js?antiCache=" 										+ antiCache, function() {});
+
+			$.getScript("js/webWorker/webWorker.js?antiCache=" 									+ antiCache, function() {});
+		</script>	
+ 	
 	</body>
 </html>	

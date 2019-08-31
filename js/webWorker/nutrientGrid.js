@@ -2,33 +2,43 @@
 
 function createNutrientGrid() {
 	let grid = [];// concentration
-	let surfaceArea = Math.pow(Main.settings.nutrients.pxPerTile, 2);
-	for (let y = 0; y < Renderer.canvas.width / Main.settings.nutrients.pxPerTile; y++)
+	let surfaceArea = Math.pow(Settings.nutrients.pxPerTile, 2);
+	for (let y = 0; y < Main.worldWidth / Settings.nutrients.pxPerTile; y++)
 	{	
 		grid[y] = [];
-		for (let x = 0; x < Renderer.canvas.width / Main.settings.nutrients.pxPerTile; x++)
+		for (let x = 0; x < Main.worldWidth / Settings.nutrients.pxPerTile; x++)
 		{
 			grid[y][x] = .2 * Math.random(); 
 		}
 	}
 
 
+	grid.export = function() {
+		let newGrid = [];
+		for (let y = 0; y < grid.length; y++)
+		{	
+			newGrid[y] = grid[y];
+		}
+		return newGrid;
+	}
+
+
 	grid.addByCoords = function(_x, _y, _energy) {
-		let x = Math.floor(_x / Main.settings.nutrients.pxPerTile);
-		let y = Math.floor(_y / Main.settings.nutrients.pxPerTile);
+		let x = Math.floor(_x / Settings.nutrients.pxPerTile);
+		let y = Math.floor(_y / Settings.nutrients.pxPerTile);
 		if (!grid[y] || !grid[y][x]) return false;
 
 		grid[y][x] += _energy / surfaceArea;
 	}
 
 	grid.eatByCoords = function(_x, _y, _takerArea) { 
-		let x = Math.floor(_x / Main.settings.nutrients.pxPerTile);
-		let y = Math.floor(_y / Main.settings.nutrients.pxPerTile);
+		let x = Math.floor(_x / Settings.nutrients.pxPerTile);
+		let y = Math.floor(_y / Settings.nutrients.pxPerTile);
 		if (!grid[y] || !grid[y][x]) return 0;
 		
 		let totalNutrients = grid[y][x] * surfaceArea;
 		let availableNutrients = grid[y][x] * _takerArea;
-		let eatableNutrients = availableNutrients * Main.settings.nutrients.percNutrientsPerFrame; 
+		let eatableNutrients = availableNutrients * Settings.nutrients.percNutrientsPerFrame; 
 
 		grid[y][x] -= eatableNutrients / totalNutrients;
 		if (grid[y][x] > 1) grid[y][x] = 1;

@@ -42,7 +42,7 @@ function _creature(_DNA, _metaData) {
 		prevActionValues = This.brain.feedForward(inputs);
 
 		let energyConsumption = calcEnergyConsumption();
-		Main.nutrients.addByCoords(This.x, This.y, energyConsumption * Main.settings.nutrients.percWasteToNutrients)
+		Main.nutrients.addByCoords(This.x, This.y, energyConsumption * Settings.nutrients.percWasteToNutrients)
 		This.energy -= energyConsumption;
 		Main.totalEnergyConsumption += energyConsumption;
 
@@ -51,15 +51,15 @@ function _creature(_DNA, _metaData) {
 
 
 	function calcEnergyConsumption() {
-		let energyConsumption 	= Main.settings.energyConsumption.default;
-		energyConsumption 		+= This.DNA.brain.length 							* Main.settings.energyConsumption.neuronConstant;
-		energyConsumption 		+= Math.abs(This.DNA.eyeCount * This.DNA.eyeRange) 	* Main.settings.energyConsumption.eyeConstant;
-		energyConsumption 		+= Math.abs(Math.pow(This.DNA.size, 3))				* Main.settings.energyConsumption.sizeConstant;
-		energyConsumption 		+= This.age 										* Main.settings.energyConsumption.creatureAgeConstant;
+		let energyConsumption 	= Settings.energyConsumption.default;
+		energyConsumption 		+= This.DNA.brain.length 							* Settings.energyConsumption.neuronConstant;
+		energyConsumption 		+= Math.abs(This.DNA.eyeCount * This.DNA.eyeRange) 	* Settings.energyConsumption.eyeConstant;
+		energyConsumption 		+= Math.abs(Math.pow(This.DNA.size, 3))				* Settings.energyConsumption.sizeConstant;
+		energyConsumption 		+= This.age 										* Settings.energyConsumption.creatureAgeConstant;
 		
 		if (!prevActionValues.length) return energyConsumption;
-		energyConsumption += Math.abs(1 - prevActionValues[0]) 						* Main.settings.energyConsumption.turnConstant;
-		energyConsumption += prevActionValues[1] 									* Main.settings.energyConsumption.moveConstant;
+		energyConsumption += Math.abs(1 - prevActionValues[0]) 						* Settings.energyConsumption.turnConstant;
+		energyConsumption += prevActionValues[1] 									* Settings.energyConsumption.moveConstant;
 
 		return energyConsumption;
 	}
@@ -147,7 +147,7 @@ function _creature(_DNA, _metaData) {
 
 	function reproduce() {
 		let newDNA = Object.assign({}, This.DNA);
-		newDNA.brain = mutateBrain(newDNA.brain, Main.settings.mutationChance, Main.settings.mutationRate);
+		newDNA.brain = mutateBrain(newDNA.brain, Settings.mutationChance, Settings.mutationRate);
 		return entityReproducer(newDNA, {type: This.type});
 
 		function mutateBrain(_brainDNA, _mutationChance = 1, _mutationRate = 0.1) {
@@ -167,11 +167,11 @@ function _creature(_DNA, _metaData) {
 
 
 	function bite(_bitePower) {
-		let entities = Collision.getAllEntitiesWithinRange(This, This.DNA.size * Main.settings.creatureBiteRange);
-		let energyPerByte = _bitePower * This.DNA.size * Main.settings.biteConstant;
+		let entities = Collision.getAllEntitiesWithinRange(This, This.DNA.size * Settings.creatureBiteRange);
+		let energyPerByte = _bitePower * This.DNA.size * Settings.biteConstant;
 
 		let startEnergy = This.energy;
-		This.energy -= energyPerByte * 0.05; //1% of the bites energy is used to bite
+		This.energy -= energyPerByte * Settings.energyConsumption.energyPercPerBite; //some of the bites energy is used to bite
 
 		for (entity of entities) 
 		{

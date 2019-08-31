@@ -24,9 +24,9 @@ function _plant(_DNA, _metaData) {
 	}
 
 	function calcEnergyConsumption() {		
-		let energyConsumption 	= Main.settings.energyConsumption.default;
-		energyConsumption 		+= Math.abs(Math.pow(This.DNA.size, 3))				* Main.settings.energyConsumption.sizeConstant;
-		energyConsumption 		+= This.age 										* Main.settings.energyConsumption.plantAgeConstant;
+		let energyConsumption 	= Settings.energyConsumption.default;
+		energyConsumption 		+= Math.abs(Math.pow(This.DNA.size, 3))				* Settings.energyConsumption.sizeConstant;
+		energyConsumption 		+= This.age 										* Settings.energyConsumption.plantAgeConstant;
 
 		return energyConsumption;
 	}
@@ -43,14 +43,14 @@ function _plant(_DNA, _metaData) {
 		let sunPerReaction = solarEfficiency;
 
 
-		let energyPerReaction = 	nutrientsPerReaction / Main.settings.nutrientsPerReaction *
-									sunPerReaction / Main.settings.sunEnergyPerReaction;
+		let energyPerReaction = 	nutrientsPerReaction / Settings.nutrientsPerReaction *
+									sunPerReaction / Settings.sunEnergyPerReaction;
 
 		// console.log(energyPerReaction * photoReactions, solarEfficiency);
 		return energyPerReaction * photoReactions;
 	}
 		function calcLeafSize() {
-			let leafSize = This.DNA.size * Main.settings.plantLeafSize;
+			let leafSize = This.DNA.size * Settings.plantLeafSize;
 			let inRange = Collision.getAllEntitiesWithinRange(This, leafSize);
 			for (entity of inRange) 
 			{
