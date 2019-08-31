@@ -21,7 +21,7 @@ const Main = new function() {
 			creatureBiteRange: 2,
 
 			plantRange: [5, 250], // min - max plants
-			creatureRange: [1, 250], // min - max plants
+			creatureRange: [5, 250], // min - max plants
 
 			biteConstant: 0.1,
 
@@ -136,7 +136,7 @@ const Main = new function() {
 			g: 			Math.random(),
 			b: 			Math.random(),
 
-			eyeRange: 	Renderer.canvas.width * Math.random() * 0.25 * 2,
+			eyeRange: 	Renderer.canvas.width * Math.random() * 0.4,
 			eyeCount: 	Math.round(5 * Math.pow(Math.random(), 2)),
 			eyeAngle: 	Math.PI * Math.pow(Math.random(), 4),
 
@@ -199,7 +199,7 @@ const Main = new function() {
 Main.update();
 
 
-// sort creatures on energylevel 
+// sort creatures by energylevel 
 // Main.entities.sort(function (a, b) {
 // 	if (a.type == "plant") return 1;
 // 	if (a.energy > b.energy) return -1;
@@ -207,7 +207,16 @@ Main.update();
 // 	return 0;
 // });
 
-// sort creatures on brainLength 
+//sort creatures by age
+// Main.entities.sort(function (a, b) {
+// 	if (a.type == "plant") return 1;
+// 	if (a.age > b.age) return -1;
+// 	if (a.age < b.age) return 1;
+// 	return 0;
+// });
+
+
+// sort creatures by brainLength 
 // Main.entities.sort(function (a, b) {
 // 	if (a.type == "plant") return 1;
 // 	if (b.type == "plant") return -1;

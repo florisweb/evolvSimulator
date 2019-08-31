@@ -28,8 +28,8 @@ function _creature(_DNA, _metaData) {
 		{
 			This.angle += (.5 - prevActionValues[0]) * turnConstant;
 			if (prevActionValues[1] > .1) This.move((prevActionValues[1] - .1) / 0.9);
-			// if (prevActionValues[2] > .5 && This.age % 100 == 0) This.reproduce();
-			if (This.energy >= 150 && This.age % 100 == 0) This.reproduce();
+			if (prevActionValues[2] > .5 && This.age % 100 == 0 && This.energy >= 150) This.reproduce();
+			// if (This.energy >= 150 && This.age % 100 == 0) This.reproduce();
 			if (prevActionValues[3] > .5) This.bite((prevActionValues[3] - .5) * 2);
 		}
 
