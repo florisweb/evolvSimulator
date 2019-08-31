@@ -42,6 +42,7 @@ function _creature(_DNA, _metaData) {
 		prevActionValues = This.brain.feedForward(inputs);
 
 		let energyConsumption = calcEnergyConsumption();
+		Main.nutrients.addByCoords(This.x, This.y, energyConsumption * Main.settings.nutrients.percWasteToNutrients)
 		This.energy -= energyConsumption;
 		Main.totalEnergyConsumption += energyConsumption;
 

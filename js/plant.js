@@ -34,11 +34,20 @@ function _plant(_DNA, _metaData) {
 
 	function calcPhotosynthesesGain() {
 		let leafSize = calcLeafSize();
-
 		let surfaceArea = Math.pow(leafSize, 2) / 4 * Math.PI;
-		let gain = surfaceArea * Main.settings.sunEnergyPerPixel * solarEfficiency;
+		
+		let photoReactions = surfaceArea;
+		let totalNutrients = Main.nutrients.eatByCoords(This.x, This.y, surfaceArea);
+		let totalSun = solarEfficiency * surfaceArea;
+		let nutrientsPerReaction = totalNutrients / photoReactions;
+		let sunPerReaction = solarEfficiency;
 
-		return gain;
+
+		let energyPerReaction = 	nutrientsPerReaction / Main.settings.nutrientsPerReaction *
+									sunPerReaction / Main.settings.sunEnergyPerReaction;
+
+		// console.log(energyPerReaction * photoReactions, solarEfficiency);
+		return energyPerReaction * photoReactions;
 	}
 		function calcLeafSize() {
 			let leafSize = This.DNA.size * Main.settings.plantLeafSize;

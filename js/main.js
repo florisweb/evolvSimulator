@@ -14,7 +14,10 @@ const Main = new function() {
 		settings: {
 			renderEveryXFrames: 1,
 			
-			sunEnergyPerPixel: .0005,
+			//photosyntheses
+			sunEnergyPerReaction: .05,
+			nutrientsPerReaction: .1,
+
 			mutationChance: 1,
 			mutationRate: 0.2,
 			plantLeafSize: 5,
@@ -27,7 +30,7 @@ const Main = new function() {
 
 			energyConsumption: {
 				default: 0, // to be kept alive
-				plantAgeConstant: .0002,
+				plantAgeConstant: .00001,
 				creatureAgeConstant: .00001, // degration of the body makes it less efficient
 				sizeConstant: .0001,
 				eyeConstant: .0,
@@ -37,10 +40,18 @@ const Main = new function() {
 			},
 			performance: {
 				checkCollisionFrameCount: 1, // checks the collisions every x frames
+			},
+
+			nutrients: {
+				nutrientsPerUpdate: 1,
+				percWasteToNutrients: .1,
+				pxPerTile: 100,
+				percNutrientsPerFrame: .0005
 			}
 		},
 
 		entities: [],
+		nutrients: [],
 		plants: 0,
 		creatures: 0,
 
@@ -51,6 +62,7 @@ const Main = new function() {
 
 		update: function(_update = true) {
 			this.updates++;
+			this.nutrients.addRandomNutrients(this.settings.nutrients.nutrientsPerUpdate);
 			this.updateEntities();
 
 			for (let p = 0; p < this.settings.plantRange[0] - this.plants; p++) 		this.createRandomPlant();
@@ -196,7 +208,9 @@ const Main = new function() {
 	return This;
 }
 
+Main.nutrients = createNutrientGrid();
 Main.update();
+
 
 
 // sort creatures by energylevel 

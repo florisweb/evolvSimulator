@@ -11,11 +11,13 @@ const Renderer = new function() {
 			dtx.fillStyle = "#fff";
 			dtx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 			this.rendercreatures(Main.entities);
+			renderNutrientTiles();
 			renderDebugInfo();
 		}
 	}
 
 	let dtx	= This.canvas.getContext("2d");
+	let ctx = dtx;
 	
 	dtx.circle = function(x, y, size) {
 		if (size < 0) return;
@@ -57,6 +59,46 @@ const Renderer = new function() {
 		prevRenderTime 		= new Date();
 		dtx.closePath();
 		dtx.fill();
+	}
+
+
+	function renderNutrientTiles() {
+		for (let y = 0; y < Main.nutrients.length; y++)
+		{	
+			for (let x = 0; x < Main.nutrients[y].length; x++)
+			{
+				renderNutrientTile(x, y);
+			}
+		}
+	}
+
+	function renderNutrientTile(_nx, _ny) {// nutrientTileX and y
+		let nutrientConcentration = Main.nutrients[_ny][_nx];
+
+		let actualX = _nx * Main.settings.nutrients.pxPerTile;
+		let actualY = _ny * Main.settings.nutrients.pxPerTile;
+
+		ctx.fillStyle = "rgba(0, 255, 0, " + (nutrientConcentration) + ")";
+		ctx.beginPath();
+		ctx.fillRect(
+			actualX, 
+			actualY, 
+			Main.settings.nutrients.pxPerTile, 
+			Main.settings.nutrients.pxPerTile
+		);
+		ctx.closePath();
+		ctx.fill();
+
+		ctx.fillStyle = "#0f0";
+		dtx.font = '15px sans-serif';
+		ctx.beginPath();
+		ctx.fillText(
+			Math.round(nutrientConcentration * 10000) / 10000,
+			actualX,
+			actualY + Main.settings.nutrients.pxPerTile / 2,
+		);
+		ctx.closePath();
+		ctx.fill();
 	}
 
 

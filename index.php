@@ -45,6 +45,7 @@
 			$.getScript("js/renderer.js?antiCache=" 								+ antiCache, function() {});
 			$.getScript("js/collision.js?antiCache=" 								+ antiCache, function() {});
 			$.getScript("js/neuralNetwork.js?antiCache=" 							+ antiCache, function() {});
+			$.getScript("js/nutrientGrid.js?antiCache=" 							+ antiCache, function() {});
 			$.getScript("js/entity.js?antiCache=" 									+ antiCache, function() {});
 			$.getScript("js/creature.js?antiCache=" 								+ antiCache, function() {});
 			$.getScript("js/plant.js?antiCache=" 									+ antiCache, function() {});
