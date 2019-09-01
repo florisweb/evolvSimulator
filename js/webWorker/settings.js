@@ -16,9 +16,14 @@ const Settings = {
 
 	biteConstant: 0.1,
 
+	reproduction: {
+		plantReproductionFrequency: 1000, // A plant can reproduce every 1000 frames
+		creatureReproductionFrequency: 200, // A plant can reproduce every 1000 frames
+	},
+
 	energyConsumption: {
 		default: 0, // to be kept alive
-		plantAgeConstant: .00001,
+		plantAgeConstant: .00002,
 		creatureAgeConstant: .0001, // degration of the body makes it less efficient
 		sizeConstant: .0001,
 		eyeConstant: .000001,
@@ -33,7 +38,7 @@ const Settings = {
 	},
 
 	nutrients: {
-		nutrientsPerUpdate: 4,
+		nutrientsPerUpdate: 5,
 		percWasteToNutrients: .1,
 		pxPerTile: 50,
 		percNutrientsPerFrame: .0005

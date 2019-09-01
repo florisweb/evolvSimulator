@@ -31,7 +31,7 @@ function _creature(_DNA, _metaData) {
 			if (
 				prevActionValues[2] > 
 				1 - .05 * Math.sqrt(This.energy - Settings.minimumEnergyToBeAlive)
-				&& This.age % 100 == 0
+				&& This.age % Settings.reproduction.creatureReproductionFrequency == 0
 			) This.reproduce();
 
 			if (prevActionValues[3] > .5) This.bite((prevActionValues[3] - .5) * 2);

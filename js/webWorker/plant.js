@@ -20,7 +20,7 @@ function _plant(_DNA, _metaData) {
 		This.energy += calcPhotosynthesesGain();
 		This.energy -= calcEnergyConsumption();
 
-		if (This.age % 1000 == 0 && This.energy > 200) This.reproduce();
+		if (This.age % Settings.reproduction.plantReproductionFrequency == 0 && This.energy > 200) This.reproduce();
 	}
 
 	function calcEnergyConsumption() {		
