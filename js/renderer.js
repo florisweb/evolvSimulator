@@ -82,7 +82,7 @@ const Renderer = new function() {
 		let actualX = _nx * Main.settings.nutrients.pxPerTile;
 		let actualY = _ny * Main.settings.nutrients.pxPerTile;
 
-		ctx.fillStyle = "rgba(0, 255, 0, " + _nutrientConcentration + ")";
+		ctx.fillStyle = "rgba(0, 255, 0, " + (_nutrientConcentration * .5) + ")";
 		ctx.beginPath();
 		ctx.fillRect(
 			actualX, 
