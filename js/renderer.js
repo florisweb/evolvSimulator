@@ -9,8 +9,9 @@ const Renderer = new function() {
 		update: function(_renderData) {
 			dtx.fillStyle = "#fff";
 			dtx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-			this.rendercreatures(_renderData.entities);
 			renderNutrientTiles(_renderData.nutrients);
+			this.rendercreatures(_renderData.entities);
+			
 			// renderDebugInfo();
 		}
 	}
