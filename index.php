@@ -11,13 +11,13 @@
 		<link rel="stylesheet" type="text/css" href="css/component.css">
 		<link rel="stylesheet" type="text/css" href="css/sideBar.css">
 		<link rel="stylesheet" type="text/css" href="css/mainContent/header.css">
-		<link rel="stylesheet" type="text/css" href="css/mainContent/mainContent.css?a=1">
+		<link rel="stylesheet" type="text/css" href="css/mainContent/mainContent.css?a=2">
 		<script type="text/javascript" src="/JS/jQuery.js" asy nc></script>
 
 	</head>	
 	<body>
 		<div id="sideBar">
-			<img class="sideBarBackground" src="images/sideBarBackground/?type=sidebar">
+			<img class="sideBarBackground" src="../todo/images/sideBarBackground/?type=sidebar">
 			<div class="navigationHolder">
 				<div class="header clickable" onclick="MainContent.taskPage.tab.open('Today')">
 					<img src="images/icons/todayIcon.png" class="headerIcon">
@@ -91,7 +91,7 @@
 			
 			// temporary so things don't get cached
 			let antiCache = Math.round(Math.random() * 100000000);
-		// $.getScript("js/renderer.js?antiCache=" 									+ antiCache, function() {});
+			// $.getScript("js/renderer.js?antiCache=" 								+ antiCache, function() {});
 			$.getScript("js/main.js?antiCache=" 									+ antiCache, function() {});
 		</script>
 	</body>

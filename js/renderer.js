@@ -16,6 +16,11 @@ const Renderer = new function() {
 		}
 	}
 
+	This.canvas.height = Math.floor(
+		1000 / This.canvas.offsetWidth * 
+		This.canvas.offsetHeight / 50
+	) * 50;
+
 
 	let dtx	= This.canvas.getContext("2d");
 	let ctx = dtx;
