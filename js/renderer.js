@@ -15,6 +15,7 @@ const Renderer = new function() {
 		}
 	}
 
+
 	let dtx	= This.canvas.getContext("2d");
 	let ctx = dtx;
 	

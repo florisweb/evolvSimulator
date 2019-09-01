@@ -1,6 +1,6 @@
 const Settings = {		
 	//photosyntheses
-	sunEnergyPerReaction: .2,
+	sunEnergyPerReaction: .3,
 	nutrientsPerReaction: .2,
 
 	nutrientsPercOnDeath: .3,

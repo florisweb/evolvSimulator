@@ -6,39 +6,87 @@
 		<meta name="theme-color" content="#636ad5">
 		<link rel="manifest" href="manifest.json">
 
-		<!-- <link rel="stylesheet" type="text/css" href="css/component.css?a=37"> -->
+		
+
+		<link rel="stylesheet" type="text/css" href="css/component.css">
+		<link rel="stylesheet" type="text/css" href="css/sideBar.css">
+		<link rel="stylesheet" type="text/css" href="css/mainContent/header.css">
+		<link rel="stylesheet" type="text/css" href="css/mainContent/mainContent.css?a=1">
 		<script type="text/javascript" src="/JS/jQuery.js" asy nc></script>
 
-		<style>
-			body {
-				margin: 0;
-				padding: 0;
-			}
-			button, input {
-				position: relative;
-				float: left;
-			}
-			input {
-				width: 50vw;
-			}
-
-			#worldCanvas {
-				width: auto;
-				height: 100vh;
-
-				border: 1px solid red;
-			}
-		</style>
 	</head>	
 	<body>
-		<button onclick="Main.startRunning()">Start</button>
-		<button onclick="Main.startRunning(true)">HyperMode</button>
-		<button onclick="Main.stopRunning()">Stop</button>
-		<input type="range" value="1" min="0" max="50" step="1" oninput="Main.frameRate = this.value * this.value">
-		<canvas id="worldCanvas" width="1000" height="1000"></canvas>
+		<div id="sideBar">
+			<img class="sideBarBackground" src="images/sideBarBackground/?type=sidebar">
+			<div class="navigationHolder">
+				<div class="header clickable" onclick="MainContent.taskPage.tab.open('Today')">
+					<img src="images/icons/todayIcon.png" class="headerIcon">
+					<div class="headerText">Today</div>
+				</div>
+				<div class="header clickable" onclick="MainContent.taskPage.tab.open('Inbox')">
+					<img src="images/icons/weekIcon.png" class="headerIcon">
+					<div class="headerText">Inbox</div>
+				</div>
+			</div>
+			<br>
+			<div class="projectListHolder hide">
+				<div class="header clickable" onclick="SideBar.projectList.toggleOpenState()">
+					<img src="images/icons/dropDownIcon.png" class="headerIcon dropDownButton close">
+					<div class="headerText">Projects</div>
+				</div>
+				<div class="projectList hide">
+					<div>
+					</div>
+					<div class="smallTextHolder clickable" onclick="MainContent.createProjectPage.open()"> 
+						<a class="smallText smallTextIcon">+</a>
+						<a class="smallText">Create project</a>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+
+		<div id="mainContent" class="animatePageChange">
+		<!-- 	<div id="mainContentHeader">
+				<div class="header titleHolder userText"></div>
+
+				<div class="functionHolder">
+					<img src="images/icons/optionIcon.png" class="functionItem icon clickable" style="left: -5px">
+					<div class="functionItem backButton clickable hide" onclick='MainContent.taskPage.tab.reopenCurTab()'>
+						<img src="images/icons/dropDownIconDark.png" class="functionItem icon">
+						<a class="functionItem button text">
+							Back
+						</a>
+					</div>
+					<a class="clickable functionItem button bDefault" onclick='MainContent.settingsPage.open(MainContent.curProjectId)'>
+						Share
+					</a>
+					<div class="functionItem memberList userText" onclick='MainContent.settingsPage.open(MainContent.curProjectId)'></div>
+				</div>
+			</div> -->
+
+			<div id="mainContentHolder">
+
+				<div class="mainContentPage hi de">
+					<canvas id="worldCanvas" width="1000" height="1000"></canvas>
+						<div style="position: absolute;">
+						<button onclick="Main.startRunning()">Start</button>
+						<button onclick="Main.startRunning(true)">HyperMode</button>
+						<button onclick="Main.stopRunning()">Stop</button>
+						<input type="range" value="1" min="0" max="50" step="1" oninput="Main.frameRate = this.value * this.value">
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+
+
+
+
+	
 
 		<script type="text/javascript" src="js/renderer.js"></script>
-	
 		<script>
 			
 			// temporary so things don't get cached
