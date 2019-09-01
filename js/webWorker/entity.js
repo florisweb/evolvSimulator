@@ -38,6 +38,12 @@ function _entity(_DNA, _metaData) {
 
 
 	function reproduce(_startDNA, metaData = {}) {
+		switch (This.type) 
+		{
+			case "plant": if (Main.plants >= Settings.plantRange[1]) return false; break;
+			default: if (Main.creatures >= Settings.creatureRange[1]) return false; break;
+		}
+
 		let startDNA 	= Object.assign({}, This.DNA);
 		if (_startDNA) 	startDNA = _startDNA;
 		let newDNA	 	= mutateDNA(startDNA, Settings.mutationChance, Settings.mutationRate);

@@ -115,7 +115,7 @@ const Main = new function() {
 			g: 			Math.random(),
 			b: 			Math.random(),
 
-			eyeRange: 	This.worldWidth * Math.random() * 0.4,
+			eyeRange: 	This.worldWidth * Math.random() * 0.3,
 			eyeCount: 	Math.round(5 * Math.pow(Math.random(), 2)),
 			eyeAngle: 	Math.PI * Math.pow(Math.random(), 4),
 
@@ -154,13 +154,7 @@ const Main = new function() {
 
 	function createEntity(_DNA, _metaData, _type = "plant") {
 		let constructor = _creature;
-		if (_type == "plant")
-		{
-			constructor = _plant;
-			if (This.plants >= Settings.plantRange[1]) return false;
-		} else {
-			if (This.creatures >= Settings.creatureRange[1]) return false;
-		}
+		if (_type == "plant") constructor = _plant;
 		
 		let entity = new constructor(_DNA, _metaData);
 		This[_type + "s"]++; // to keep track of the amount of plants / creatures there are
