@@ -29,7 +29,7 @@ if (window.Worker)
 		{
 			case "getData": Renderer.update(_e.data.result); break;
 			case "getSettings": Main.settings = _e.data.result; break;
-			default: console.warn("Action unknown: ", _e.data.action, _e.data); break;
+			default: console.warn("Feedbackless action: ", _e.data.action, _e.data); break;
 		}
 	}
 }
@@ -42,7 +42,6 @@ const Main = new function() {
 		settings: {},
 		update: update,
 		startRunning: startRunning,
-		startHyperRun: startHyperRun,
 		stopRunning: stopRunning,
 		
 		running: true,
@@ -58,23 +57,18 @@ const Main = new function() {
 		if (this.running) setTimeout(function () {This.update()}, This.frameRate);
 	}
 
+	function startRunning(_hyperMode = false) {
+		let actionName = "startRunning";
+		if (_hyperMode)	actionName = "startHyperRun";
+		WebWorker.postMessage({action: actionName, parameters: {}});
 
-	function startRunning() {
-		WebWorker.postMessage({
-			action: "startRunning", 
-			parameters: {}
-		});
+		This.running = true;
+		This.update();
 	}
 	
-	function startHyperRun() {
-		WebWorker.postMessage({
-			action: "startHyperRun", 
-			parameters: {}
-		});
-	}
-
 
 	function stopRunning() {
+		This.running = false;
 		WebWorker.postMessage({
 			action: "stopRunning", 
 			parameters: {}

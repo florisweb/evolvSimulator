@@ -16,9 +16,11 @@ const actions = {
 	startRunning: 		function () {Main.running = true; Main.update()},
 	startHyperRun: 		function () {Main.running = true; Main.loop(Infinity);},
 	stopRunning: 		function () {Main.running = false;},
+	getMain: 			function () {return JSON.parse(JSON.stringify(Main))},
 	setup: 				setup,
 	getData: 			exportData,
-	getSettings: 		getSettings
+	getSettings: 		function() {return Settings;},
+	writeSettings: 		function(_settings) {Settings = _settings}
 };
 
 
@@ -37,10 +39,9 @@ this.onmessage = function(_e) {
 		catch (e) {
 			console.warn("An error accured", e);
 		}
-		
 	}
 
-	if (result == "E_actionNotFound") return false;
+	if (result == "E_actionNotFound") return console.warn("An unknown error accured, perhaps the function doesn't exist.");
 
 	this.postMessage({
 		action: _e.data.action,
@@ -65,10 +66,6 @@ function exportData() {
 	data.entities = JSON.parse(JSON.stringify(Main.entities));
 
 	return data;
-}
-
-function getSettings() {
-	return Settings;
 }
 
 

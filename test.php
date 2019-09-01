@@ -52,6 +52,25 @@
 			$.getScript("js/webWorker/main.js?antiCache=" 										+ antiCache, function() {});
 
 			$.getScript("js/webWorker/webWorker.js?antiCache=" 									+ antiCache, function() {});
+
+
+
+			
+			$.getScript("js/renderer.js?antiCache=" 											+ antiCache, function() {});
+
+
+
+
+			function start() {
+				function update() {Renderer.update(actions.getData()); var loopTimer = setTimeout(update, 100);};
+				Main.settings = Settings;
+				Main.running = true
+				Main.update();
+				update();
+			}
+				
+
+		
 		</script>	
  	
 	</body>

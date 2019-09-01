@@ -31,8 +31,9 @@
 		</style>
 	</head>	
 	<body>
-		<button onclick="Main.running = true; Main.update()">Start</button>
-		<button onclick="Main.running = false">Stop</button>
+		<button onclick="Main.startRunning()">Start</button>
+		<button onclick="Main.startRunning(true)">HyperMode</button>
+		<button onclick="Main.stopRunning()">Stop</button>
 		<input type="range" value="1" min="0" max="50" step="1" oninput="Main.frameRate = this.value * this.value">
 		<canvas id="worldCanvas" width="1000" height="1000"></canvas>
 

@@ -1,9 +1,9 @@
 const Settings = {		
 	//photosyntheses
-	sunEnergyPerReaction: .1,
-	nutrientsPerReaction: .1,
+	sunEnergyPerReaction: .2,
+	nutrientsPerReaction: .2,
 
-	nutrientsPercOnDeath: .5,
+	nutrientsPercOnDeath: .3,
 	minimumEnergyToBeAlive: 50,
 
 	mutationChance: 1,
@@ -25,7 +25,7 @@ const Settings = {
 		neuronConstant: 0.0,
 		turnConstant: 0.005,
 		moveConstant: .05,
-		energyPercPerBite: .1,
+		energyPercPerBite: .2,
 	},
 
 	performance: {
@@ -33,7 +33,7 @@ const Settings = {
 	},
 
 	nutrients: {
-		nutrientsPerUpdate: 1,
+		nutrientsPerUpdate: 5,
 		percWasteToNutrients: .1,
 		pxPerTile: 100,
 		percNutrientsPerFrame: .0005
