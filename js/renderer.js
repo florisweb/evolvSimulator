@@ -138,9 +138,9 @@ const Renderer = new function() {
 
 		if (_entity.type != "plant") renderEntityAngleArrow(_entity);
 
-		if (_entity.inpData && _entity.type == "creature")
+		if (_entity.type == "creature")
 		{
-			for (let e = 0; e < _entity.DNA.eyeCount; e++) renderCreaturEye(_entity, e, _entity.inpData.eyeData[e]);
+			for (let e = 0; e < _entity.DNA.eyeCount; e++) renderCreaturEye(_entity, e);
 		}
 	}
 
@@ -174,7 +174,7 @@ const Renderer = new function() {
 		dtx.stroke();;
 	}
 
-	function renderCreaturEye(_creatur, _eyeIndex = 0, _eyeDistance = 1) {
+	function renderCreaturEye(_creatur, _eyeIndex = 0) {
 		let totalEyeAngle = (_creatur.DNA.eyeCount - 1) * _creatur.DNA.eyeAngle;
 		let startAngle = -totalEyeAngle / 2;
 		let thisAngle = startAngle + _eyeIndex * _creatur.DNA.eyeAngle + _creatur.angle;
@@ -186,18 +186,6 @@ const Renderer = new function() {
 		dtx.beginPath();
 		dtx.moveTo(_creatur.x, _creatur.y);
 		dtx.lineTo(_creatur.x + relativeEyeX, _creatur.y + relativeEyeY);
-
-		let relativeEyeXDetector = Math.cos(thisAngle) * _creatur.DNA.eyeRange * _eyeDistance;
-		let relativeEyeYDetector = -Math.sin(thisAngle) * _creatur.DNA.eyeRange * _eyeDistance;
-		
-		let eyeDetectorSize = 10;//_creatur.DNA.size / 2;
-		dtx.fillRect(
-			relativeEyeXDetector + _creatur.x - eyeDetectorSize / 2,
-			relativeEyeYDetector + _creatur.y - eyeDetectorSize / 2,
-			eyeDetectorSize,
-			eyeDetectorSize,
-		);
-
 		dtx.closePath();
 		dtx.fill();
 		dtx.stroke();

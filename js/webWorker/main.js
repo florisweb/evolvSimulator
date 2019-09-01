@@ -81,7 +81,7 @@ const Main = new function() {
 		},
 
 		updateEntities: function() {
-			for (entity of this.entities) entity.inpData = entity.update();
+			for (entity of this.entities) entity.update();
 		},
 
 		getEntity: function(_id) {
