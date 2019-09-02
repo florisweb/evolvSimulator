@@ -38,7 +38,7 @@ const Settings = {
 	},
 
 	nutrients: {
-		nutrientsPerUpdate: 5,
+		nutrientsPerUpdate: 10,
 		percWasteToNutrients: .1,
 		pxPerTile: 50,
 		percNutrientsPerFrame: .0005
