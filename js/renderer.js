@@ -20,11 +20,11 @@ const Renderer = new function() {
 	
 	
 	let height = Math.ceil(
-		1000 / This.canvas.offsetWidth * 
+		This.canvas.width / This.canvas.offsetWidth * 
 		This.canvas.offsetHeight / 50
 	) * 50;
 	This.canvas.height 			= height;
-	This.canvas.style.height 	= height / 1000 * This.canvas.offsetWidth + "px";
+	This.canvas.style.height 	= height / This.canvas.width * This.canvas.offsetWidth + "px";
 
 
 
