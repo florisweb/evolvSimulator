@@ -34,7 +34,7 @@
 		<button onclick="Main.running = true; Main.update()">Start</button>
 		<button onclick="Main.running = false">Stop</button>
 		<input type="range" value="1" min="0" max="50" step="1" oninput="Main.settings.renderEveryXFrames = this.value * this.value">
-		<canvas id="worldCanvas" width="1000" height="1000"></canvas>
+		<canvas id="worldCanvas" width="500" height="500"></canvas>
 
 	
 		<script>
@@ -62,6 +62,7 @@
 
 
 			function start() {
+				setup({width: 500, height: 500});
 				function update() {Renderer.update(actions.getData()); var loopTimer = setTimeout(update, 100);};
 				Main.settings = Settings;
 				Main.running = true

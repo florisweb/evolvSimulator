@@ -104,10 +104,10 @@ const Renderer = new function() {
 		
 		if (!Main.settings.renderNutrientConcentration) return;
 		ctx.fillStyle = "#0f0";
-		dtx.font = '15px sans-serif';
+		dtx.font = Main.settings.nutrients.pxPerTile / 5 + 'px sans-serif';
 		ctx.beginPath();
 		ctx.fillText(
-			Math.round(nutrientConcentration * 10000) / 10000,
+			Math.round(_nutrientConcentration * 10000) / 10000,
 			actualX,
 			actualY + Main.settings.nutrients.pxPerTile / 2,
 		);

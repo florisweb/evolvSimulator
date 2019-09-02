@@ -1,7 +1,7 @@
 const Settings = {		
 	//photosyntheses
-	sunEnergyPerReaction: .3,
-	nutrientsPerReaction: .1,
+	sunEnergyPerReaction: .2,
+	nutrientsPerReaction: .05,
 
 	nutrientsPercOnDeath: .3,
 	minimumEnergyToBeAlive: 50,

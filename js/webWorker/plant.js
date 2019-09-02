@@ -9,8 +9,7 @@ function _plant(_DNA, _metaData) {
 	this.update 			= update;
 
 	const solarEfficiency = function() {
-		let s = This.DNA.g * 0.7 - This.DNA.r * .3 - This.DNA.b * .5;
-		return s > 0 ? s : 0;
+		return This.DNA.g * 0.7 - This.DNA.r * .3 - This.DNA.b * .5;
 	}();
 
 
@@ -46,7 +45,6 @@ function _plant(_DNA, _metaData) {
 		let energyPerReaction = 	nutrientsPerReaction / Settings.nutrientsPerReaction *
 									sunPerReaction / Settings.sunEnergyPerReaction;
 
-		// console.log(energyPerReaction * photoReactions, solarEfficiency);
 		return energyPerReaction * photoReactions;
 	}
 }
