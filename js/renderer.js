@@ -2,13 +2,15 @@
 const Renderer = new function() {
 	let This = {
 		canvas: $("#worldCanvas")[0],
-		renderCreatur: renderCreatur,
+		renderCreature: renderCreature,
 		rendercreatures: function(_creatures) {
-			for (creatur of _creatures) this.renderCreatur(creatur);
+			for (creatur of _creatures) this.renderCreature(creatur);
 		},
 		update: function(_renderData) {
 			dtx.fillStyle = "#fff";
+			dtx.beginPath();
 			dtx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+			dtx.closePath();
 			renderNutrientTiles(_renderData.nutrients);
 			this.rendercreatures(_renderData.entities);
 			
@@ -115,9 +117,8 @@ const Renderer = new function() {
 
 
 
-	function renderCreatur(_entity) {
+	function renderCreature(_entity) {
 		// draw the energy bubble
-		
 		dtx.fillStyle 	= "rgba(" + _entity.DNA.r * 255 + ", " + _entity.DNA.g * 255 + ", " + _entity.DNA.b * 255 + ", 0.1)";
 		dtx.strokeStyle = "rgba(" + _entity.DNA.r * 255 + ", " + _entity.DNA.g * 255 + ", " + _entity.DNA.b * 255 + ", 0.1)";
 		dtx.circle(
@@ -177,7 +178,7 @@ const Renderer = new function() {
 		dtx.moveTo(rx2 + _entity.x, ry2 + _entity.y);
 		dtx.lineTo(rxArrowL + rx2 + _entity.x, ryArrowL + ry2 + _entity.y);
 		dtx.closePath();
-		dtx.stroke();;
+		dtx.stroke();
 	}
 
 	function renderCreaturEye(_creatur, _eyeIndex = 0) {
@@ -188,7 +189,7 @@ const Renderer = new function() {
 		let relativeEyeX = Math.cos(thisAngle) * _creatur.DNA.eyeRange;
 		let relativeEyeY = -Math.sin(thisAngle) * _creatur.DNA.eyeRange;
 		
-		dtx.lineWidth = 1;
+		dtx.lineWidth = .5;
 		dtx.beginPath();
 		dtx.moveTo(_creatur.x, _creatur.y);
 		dtx.lineTo(_creatur.x + relativeEyeX, _creatur.y + relativeEyeY);

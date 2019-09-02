@@ -27,7 +27,10 @@ if (window.Worker)
 	WebWorker.onmessage = function(_e) {
 		switch (_e.data.action) 
 		{
-			case "getData": Renderer.update(_e.data.result); break;
+			case "getData": 
+				Renderer.update(_e.data.result); 
+				if (Main.running) requestAnimationFrame(function () {Main.update()});
+			break;
 			case "getSettings": Main.settings = _e.data.result; break;
 			default: console.warn("Feedbackless action: ", _e.data.action, _e.data); break;
 		}
@@ -53,8 +56,6 @@ const Main = new function() {
 			action: "getData", 
 			parameters: {}
 		});
-		// if (this.running && _update) requestAnimationFrame(function () {Main.update()});
-		if (this.running) setTimeout(function () {This.update()}, This.frameRate);
 	}
 
 	function startRunning(_hyperMode = false) {
