@@ -57,6 +57,7 @@ this.onmessage = function(_e) {
 function setup(_parameters) {
 	Main.worldWidth = _parameters.width;
 	Main.worldHeight = _parameters.height
+	Main.nutrients = createNutrientGrid();
 	Main.update();
 }
 

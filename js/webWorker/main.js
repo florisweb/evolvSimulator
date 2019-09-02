@@ -169,7 +169,6 @@ const Main = new function() {
 	return This;
 }
 
-Main.nutrients = createNutrientGrid();
 
 
 

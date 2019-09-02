@@ -3,7 +3,7 @@
 function createNutrientGrid() {
 	let grid = [];// concentration
 	let surfaceArea = Math.pow(Settings.nutrients.pxPerTile, 2);
-	for (let y = 0; y < Main.worldWidth / Settings.nutrients.pxPerTile; y++)
+	for (let y = 0; y < Main.worldHeight / Settings.nutrients.pxPerTile; y++)
 	{	
 		grid[y] = [];
 		for (let x = 0; x < Main.worldWidth / Settings.nutrients.pxPerTile; x++)
