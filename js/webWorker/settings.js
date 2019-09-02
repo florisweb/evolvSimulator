@@ -18,7 +18,7 @@ const Settings = {
 
 	reproduction: {
 		plantReproductionFrequency: 1000, // A plant can reproduce every 1000 frames
-		creatureReproductionFrequency: 200, // A plant can reproduce every 1000 frames
+		creatureReproductionFrequency: 300, // A plant can reproduce every 1000 frames
 	},
 
 	energyConsumption: {
@@ -38,7 +38,7 @@ const Settings = {
 	},
 
 	nutrients: {
-		nutrientsPerUpdate: 10,
+		nutrientsPerUpdate: 8,
 		percWasteToNutrients: .1,
 		pxPerTile: 20,
 		percNutrientsPerFrame: .0005

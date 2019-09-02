@@ -115,7 +115,7 @@ const Main = new function() {
 			g: 			Math.random(),
 			b: 			Math.random(),
 
-			eyeRange: 	This.worldWidth * Math.random() * 0.3,
+			eyeRange: 	This.worldWidth * Math.random() * .1,
 			eyeCount: 	Math.round(5 * Math.pow(Math.random(), 2)),
 			eyeAngle: 	Math.PI * Math.pow(Math.random(), 4),
 

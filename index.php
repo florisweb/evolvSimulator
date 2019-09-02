@@ -73,7 +73,7 @@
 						<button onclick="Main.startRunning()">Start</button>
 						<button onclick="Main.startRunning(true)">HyperMode</button>
 						<button onclick="Main.stopRunning()">Stop</button>
-						<input type="range" value="1" min="0" max="50" step="1" oninput="Main.frameRate = this.value * this.value">
+						<input type="range" value="1" min="1" max="50" step="1" oninput="Main.frameRate = this.value * this.value">
 					</div>
 				</div>
 

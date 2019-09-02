@@ -49,7 +49,7 @@ const Main = new function() {
 		
 		running: true,
 		updates: 0,
-		frameRate: 10,
+		frameRate: 1,
 	}
 
 	function update() {
