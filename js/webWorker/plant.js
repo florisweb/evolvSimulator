@@ -33,8 +33,8 @@ function _plant(_DNA, _metaData) {
 
 
 	function calcPhotosynthesesGain() {
-		let leafSize = calcLeafSize();
-		let surfaceArea = Math.pow(leafSize, 2) / 4 * Math.PI;
+		let leafSize = This.DNA.size;
+		let surfaceArea = Math.pow(This.DNA.size, 2) / 4 * Math.PI;
 		
 		let photoReactions = surfaceArea;
 		let totalNutrients = Main.nutrients.eatByCoords(This.x, This.y, surfaceArea);
@@ -49,17 +49,5 @@ function _plant(_DNA, _metaData) {
 		// console.log(energyPerReaction * photoReactions, solarEfficiency);
 		return energyPerReaction * photoReactions;
 	}
-		function calcLeafSize() {
-			let leafSize = This.DNA.size * Settings.plantLeafSize;
-			let inRange = Collision.getAllEntitiesWithinRange(This, leafSize);
-			for (entity of inRange) 
-			{
-				if (entity.type == "creature") continue;
-				if (leafSize < entity.distance) continue;
-				leafSize = entity.distance;
-			}
-			return leafSize;
-		}
-
 }
 

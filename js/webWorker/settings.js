@@ -8,7 +8,6 @@ const Settings = {
 
 	mutationChance: 1,
 	mutationRate: 0.2,
-	plantLeafSize: 5,
 	creatureBiteRange: 2,
 
 	plantRange: [5, 150], // min - max plants
@@ -38,9 +37,9 @@ const Settings = {
 	},
 
 	nutrients: {
-		nutrientsPerUpdate: 8,
+		nutrientsPerUpdate: 5,
 		percWasteToNutrients: .1,
-		pxPerTile: 20,
+		pxPerTile: 30,
 		percNutrientsPerFrame: .0005
 	}
 }
