@@ -28,7 +28,7 @@ if (window.Worker)
 		switch (_e.data.action) 
 		{
 			case "getData": 
-				Renderer.update(_e.data.result); 
+				if (Main.updates % Main.frameRate == 0) Renderer.update(_e.data.result); 
 				if (Main.running) requestAnimationFrame(function () {Main.update()});
 			break;
 			case "getSettings": Main.settings = _e.data.result; break;
@@ -48,10 +48,12 @@ const Main = new function() {
 		stopRunning: stopRunning,
 		
 		running: true,
+		updates: 0,
 		frameRate: 10,
 	}
 
 	function update() {
+		This.updates++
 	 	WebWorker.postMessage({
 			action: "getData", 
 			parameters: {}
