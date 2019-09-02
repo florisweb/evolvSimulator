@@ -82,7 +82,14 @@
 		top: 0;
 		width: 100%;
 	}
-
+	#populationGraph {
+		position: absolute;
+		left: 0;
+		float: bottom;
+		bottom: 0;
+		width: 100%;
+		height: 25vh;
+	}
 
 
 

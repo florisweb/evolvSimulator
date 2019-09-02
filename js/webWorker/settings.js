@@ -1,7 +1,7 @@
 const Settings = {		
 	//photosyntheses
-	sunEnergyPerReaction: .2,
-	nutrientsPerReaction: .05,
+	sunEnergyPerReaction: .25,
+	nutrientsPerReaction: .1,
 
 	nutrientsPercOnDeath: .3,
 	minimumEnergyToBeAlive: 50,
@@ -37,9 +37,9 @@ const Settings = {
 	},
 
 	nutrients: {
-		nutrientsPerUpdate: 5,
+		nutrientsPerUpdate: 4,
 		percWasteToNutrients: .1,
-		pxPerTile: 30,
+		pxPerTile: 40,
 		percNutrientsPerFrame: .0005
 	}
 }

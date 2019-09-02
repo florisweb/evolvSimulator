@@ -65,7 +65,13 @@ function exportData() {
 	let data = {};
 	data.nutrients = Main.nutrients.export();
 	data.entities = JSON.parse(JSON.stringify(Main.entities));
-
+	data.statistics = {
+		graphLines: [
+			Main.creatures,
+			Main.plants,
+		]
+	}
+	
 	return data;
 }
 
