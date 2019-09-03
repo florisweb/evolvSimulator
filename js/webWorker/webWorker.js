@@ -68,10 +68,10 @@ function exportData() {
 	data.statistics = {
 		frames: Main.updates,
 		graphLines: [
+			Main.averageEnergy,
 			Main.creatures,
 			Main.plants,
-			Main.updates / 2500,
-			Main.averageEnergy
+			Main.updates / 2500
 		]
 	}
 	

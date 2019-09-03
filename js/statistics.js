@@ -13,10 +13,10 @@ const Statistics = new function() {
 	
 	let prefGraphLines = [];
 	let colours = [
+		"#fa0",
 		"#f00",
 		"#0f0",
-		"#00f",
-		"#a0f"
+		"#00f"
 	];
 
 	let lastFrame = 0;
