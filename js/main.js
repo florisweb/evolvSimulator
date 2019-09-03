@@ -55,7 +55,7 @@ const Main = new function() {
 		startRunning: startRunning,
 		stopRunning: stopRunning,
 		
-		running: true,
+		running: false,
 		updates: 0,
 		frameRate: 1,
 	}

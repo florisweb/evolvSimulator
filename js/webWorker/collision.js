@@ -118,7 +118,7 @@ const Collision = new function() {
 
 			if (distance <= 0) continue;
 			visableEntities.push({
-				power: distance,
+				power: distance + Math.pow(.1, 5),
 				angle: atanWithDX(dx, dy) + Math.PI
 			});
 		}

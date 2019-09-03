@@ -68,7 +68,7 @@
 			<div id="mainContentHolder">
 
 				<div class="mainContentPage hi de">
-					<canvas id="worldCanvas" width="1500" height="1000"></canvas>
+					<canvas id="worldCanvas" width="3000" height="2000"></canvas>
 					<div style="position: absolute;">
 						<button onclick="Main.startRunning()">Start</button>
 						<button onclick="Main.startRunning(true)">HyperMode</button>

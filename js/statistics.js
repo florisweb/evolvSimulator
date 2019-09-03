@@ -27,20 +27,19 @@ const Statistics = new function() {
 
 	function update(_data) {
 		let framesSinceLastUpdate = _data.frames - lastFrame;
-		let cursorShift = framesSinceLastUpdate / This.settings.updateEveryXFrames * 10;;
+		
+		let cursorShift = framesSinceLastUpdate / This.settings.updateEveryXFrames * 10;
 		drawCursorX 	+= cursorShift;
 		
 		if (drawCursorX > This.canvas.width)
 		{
-			// shift everything to the left:
 			shiftCanvas(1);
 			canvasShift += cursorShift;
 		}
 
-
 		drawGraphLines(_data.graphLines);
 
-		lastFrame = _data.frames;
+		lastFrame 		= _data.frames;
 		prevDrawCursorX = drawCursorX;
 	}
 
@@ -70,7 +69,6 @@ const Statistics = new function() {
 		// now clear the right-most pixels:
 		ctx.clearRect(ctx.canvas.width - _px, 0, _px, ctx.canvas.height);
 	}
-
 
 
 	function mapY(_value) {
