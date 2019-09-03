@@ -11,7 +11,7 @@
 		<link rel="stylesheet" type="text/css" href="css/component.css">
 		<link rel="stylesheet" type="text/css" href="css/sideBar.css">
 		<link rel="stylesheet" type="text/css" href="css/mainContent/header.css">
-		<link rel="stylesheet" type="text/css" href="css/mainContent/mainContent.css?a=7">
+		<link rel="stylesheet" type="text/css" href="css/mainContent/mainContent.css?a=8">
 		<script type="text/javascript" src="/JS/jQuery.js" asy nc></script>
 
 	</head>	
@@ -68,7 +68,7 @@
 			<div id="mainContentHolder">
 
 				<div class="mainContentPage hi de">
-					<canvas id="worldCanvas" width="3000" height="2000"></canvas>
+					<canvas id="worldCanvas" width="1500" height="1000"></canvas>
 					<div style="position: absolute;">
 						<button onclick="Main.startRunning()">Start</button>
 						<button onclick="Main.startRunning(true)">HyperMode</button>
@@ -77,6 +77,7 @@
 					</div>
 
 					<canvas id="populationGraph" width="1500" height="300"></canvas>
+					<canvas id="entityDisplayCanvas" width="100" height="100"></canvas>
 				</div>
 
 			</div>
@@ -93,6 +94,7 @@
 			
 			// temporary so things don't get cached
 			let antiCache = Math.round(Math.random() * 100000000);
+			$.getScript("js/infoMenu.js?antiCache=" 								+ antiCache, function() {});
 			$.getScript("js/statistics.js?antiCache=" 								+ antiCache, function() {});
 			$.getScript("js/main.js?antiCache=" 									+ antiCache, function() {});
 		</script>

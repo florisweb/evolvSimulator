@@ -48,6 +48,9 @@ if (window.Worker)
 
 
 
+
+
+
 const Main = new function() {
 	let This = {
 		settings: {},

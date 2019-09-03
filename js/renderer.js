@@ -2,11 +2,13 @@
 const Renderer = new function() {
 	let This = {
 		canvas: $("#worldCanvas")[0],
-		renderCreature: renderCreature,
+		renderEntity: renderEntity,
 		rendercreatures: function(_creatures) {
-			for (creatur of _creatures) this.renderCreature(creatur);
+			for (creatur of _creatures) this.renderEntity(creatur);
 		},
 		update: function(_renderData) {
+			renderData = _renderData;
+
 			dtx.fillStyle = "#fff";
 			dtx.beginPath();
 			dtx.fillRect(0, 0, this.canvas.width, this.canvas.height);
@@ -15,29 +17,66 @@ const Renderer = new function() {
 			this.rendercreatures(_renderData.entities);
 			
 			// renderDebugInfo();
-		}
+		},
+
 	}
 
-
-	
-	
 	let height = Math.ceil(
 		This.canvas.width / This.canvas.offsetWidth * 
 		This.canvas.offsetHeight / 50
 	) * 50;
 	This.canvas.height 			= height;
 	This.canvas.style.height 	= height / This.canvas.width * This.canvas.offsetWidth + "px";
-
-
-
 	let dtx	= This.canvas.getContext("2d");
 	let ctx = dtx;
-	
-	dtx.circle = function(x, y, size) {
+	let renderData = {};
+
+	This.canvas.onclick = function(_e) {
+		let x = _e.offsetX / This.canvas.offsetWidth * This.canvas.width;
+		let y = _e.offsetY / This.canvas.offsetHeight * This.canvas.height;
+
+		let entities = getAllEntitiesWithinRange(x, y, 50);
+		if (!entities) return;
+
+		InfoMenu.open(entities[0]);
+	}
+
+
+	function getAllEntitiesWithinRange(_x, _y, _range = 0) {
+		let visableEntities = [];
+
+		for (entity of renderData.entities)
+		{
+			let maxDistance = entity.DNA.size + _range;
+			let dx = entity.x - _x;
+			let dy = entity.y - _y;
+			let directDistance = Math.sqrt(dx * dx + dy * dy);
+
+			let distance = maxDistance - directDistance;
+
+			if (distance <= 0) continue;
+			entity.distance = distance;
+			visableEntities.push(entity);
+		}
+		
+		visableEntities.sort(function(a, b) {
+			if (a.distance < b.distance) return -1;
+			if (a.distance > b.distance) return 1;
+			return 0;
+		});
+
+		return visableEntities;
+	}
+
+
+
+
+
+	ctx.constructor.prototype.circle = function(x, y, size) {
 		if (size < 0) return;
 
-		dtx.beginPath();
-		dtx.ellipse(
+		this.beginPath();
+		this.ellipse(
 			x, 
 			y, 
 			size,
@@ -46,7 +85,7 @@ const Renderer = new function() {
 			0,
 			2 * Math.PI
 		);
-		dtx.closePath();
+		this.closePath();
 	}
 
 	
@@ -117,41 +156,42 @@ const Renderer = new function() {
 
 
 
-	function renderCreature(_entity) {
+	function renderEntity(_entity, _ctx) {
+		if (!_ctx) _ctx = ctx;
 		// draw the energy bubble
-		dtx.fillStyle 	= "rgba(" + _entity.DNA.r * 255 + ", " + _entity.DNA.g * 255 + ", " + _entity.DNA.b * 255 + ", 0.1)";
-		dtx.strokeStyle = "rgba(" + _entity.DNA.r * 255 + ", " + _entity.DNA.g * 255 + ", " + _entity.DNA.b * 255 + ", 0.1)";
-		dtx.circle(
+		_ctx.fillStyle 	= "rgba(" + _entity.DNA.r * 255 + ", " + _entity.DNA.g * 255 + ", " + _entity.DNA.b * 255 + ", 0.1)";
+		_ctx.strokeStyle = "rgba(" + _entity.DNA.r * 255 + ", " + _entity.DNA.g * 255 + ", " + _entity.DNA.b * 255 + ", 0.1)";
+		_ctx.circle(
 			_entity.x, 
 			_entity.y, 
 			_entity.DNA.size + Math.sqrt(4 * _entity.energy / Math.PI)
 		);
-		if (_entity.type == "creature") dtx.fill();
-		if (_entity.type == "plant") dtx.stroke();
+		if (_entity.type == "creature") ctx.fill();
+		if (_entity.type == "plant") ctx.stroke();
 		
 
-		dtx.strokeStyle = "rgba(" + _entity.DNA.r * 255 + ", " + _entity.DNA.g * 255 + ", " + _entity.DNA.b * 255 + ", .9)";
-		dtx.fillStyle 	= "rgba(" + _entity.DNA.r * 255 + ", " + _entity.DNA.g * 255 + ", " + _entity.DNA.b * 255 + ", .2)";
-		dtx.lineWidth = 2;
-		dtx.circle(
+		_ctx.strokeStyle = "rgba(" + _entity.DNA.r * 255 + ", " + _entity.DNA.g * 255 + ", " + _entity.DNA.b * 255 + ", .9)";
+		_ctx.fillStyle 	= "rgba(" + _entity.DNA.r * 255 + ", " + _entity.DNA.g * 255 + ", " + _entity.DNA.b * 255 + ", .2)";
+		_ctx.lineWidth = 2;
+		_ctx.circle(
 			_entity.x, 
 			_entity.y, 
 			_entity.DNA.size
 		);
-		dtx.stroke();
-		dtx.fill();
+		_ctx.stroke();
+		_ctx.fill();
 
 
 
-		if (_entity.type != "plant") renderEntityAngleArrow(_entity);
+		if (_entity.type != "plant") renderEntityAngleArrow(_entity, _ctx);
 
 		if (_entity.type == "creature")
 		{
-			for (let e = 0; e < _entity.DNA.eyeCount; e++) renderCreaturEye(_entity, e);
+			for (let e = 0; e < _entity.DNA.eyeCount; e++) renderCreaturEye(_entity, e, _ctx);
 		}
 	}
 
-	function renderEntityAngleArrow(_entity) {
+	function renderEntityAngleArrow(_entity, ctx) {
 		let arrowSize = _entity.DNA.size / 2;
 
 		let rx1 = Math.cos(_entity.angle + Math.PI) * arrowSize;
@@ -167,21 +207,21 @@ const Renderer = new function() {
 		let rxArrowL = Math.cos(_entity.angle + arrowAngle) * arrowSize;
 		let ryArrowL = -Math.sin(_entity.angle + arrowAngle) * arrowSize;
 		
-		dtx.lineWidth = 3;
-		dtx.beginPath();
-		dtx.moveTo(rx1 + _entity.x, ry1 + _entity.y);
-		dtx.lineTo(rx2 + _entity.x, ry2 + _entity.y);
+		ctx.lineWidth = 3;
+		ctx.beginPath();
+		ctx.moveTo(rx1 + _entity.x, ry1 + _entity.y);
+		ctx.lineTo(rx2 + _entity.x, ry2 + _entity.y);
 
-		dtx.moveTo(rx2 + _entity.x, ry2 + _entity.y);
-		dtx.lineTo(rxArrowR + rx2 + _entity.x, ryArrowR + ry2 + _entity.y);
+		ctx.moveTo(rx2 + _entity.x, ry2 + _entity.y);
+		ctx.lineTo(rxArrowR + rx2 + _entity.x, ryArrowR + ry2 + _entity.y);
 
-		dtx.moveTo(rx2 + _entity.x, ry2 + _entity.y);
-		dtx.lineTo(rxArrowL + rx2 + _entity.x, ryArrowL + ry2 + _entity.y);
-		dtx.closePath();
-		dtx.stroke();
+		ctx.moveTo(rx2 + _entity.x, ry2 + _entity.y);
+		ctx.lineTo(rxArrowL + rx2 + _entity.x, ryArrowL + ry2 + _entity.y);
+		ctx.closePath();
+		ctx.stroke();
 	}
 
-	function renderCreaturEye(_creatur, _eyeIndex = 0) {
+	function renderCreaturEye(_creatur, _eyeIndex = 0, ctx) {
 		let totalEyeAngle = (_creatur.DNA.eyeCount - 1) * _creatur.DNA.eyeAngle;
 		let startAngle = -totalEyeAngle / 2;
 		let thisAngle = startAngle + _eyeIndex * _creatur.DNA.eyeAngle + _creatur.angle;
@@ -189,14 +229,18 @@ const Renderer = new function() {
 		let relativeEyeX = Math.cos(thisAngle) * _creatur.DNA.eyeRange;
 		let relativeEyeY = -Math.sin(thisAngle) * _creatur.DNA.eyeRange;
 		
-		dtx.lineWidth = .5;
-		dtx.beginPath();
-		dtx.moveTo(_creatur.x, _creatur.y);
-		dtx.lineTo(_creatur.x + relativeEyeX, _creatur.y + relativeEyeY);
-		dtx.closePath();
-		dtx.fill();
-		dtx.stroke();
+		ctx.lineWidth = .5;
+		ctx.beginPath();
+		ctx.moveTo(_creatur.x, _creatur.y);
+		ctx.lineTo(_creatur.x + relativeEyeX, _creatur.y + relativeEyeY);
+		ctx.closePath();
+		ctx.fill();
+		ctx.stroke();
 	}
+
+
+
+
 
 	return This;
 }
