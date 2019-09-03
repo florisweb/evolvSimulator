@@ -10,14 +10,14 @@ let Settings = {
 	mutationRate: 0.2,
 	creatureBiteRange: 2,
 
-	plantRange: [5, 200], // min - max plants
-	creatureRange: [20, 200], // min - max plants
+	plantRange: [10, 500], // min - max plants
+	creatureRange: [10, 500], // min - max plants
 
 	biteConstant: 0.1,
 
 	reproduction: {
-		plantReproductionFrequency: 1000, // A plant can reproduce every 1000 frames
-		creatureReproductionFrequency: 300, // A plant can reproduce every 1000 frames
+		plantReproductionFrequency: 1, // A plant can reproduce every 1000 frames
+		creatureReproductionFrequency: 1, // A plant can reproduce every 1000 frames
 	},
 
 	energyConsumption: {
@@ -37,10 +37,10 @@ let Settings = {
 	},
 
 	nutrients: {
-		nutrientsPerUpdate: 1.5,
+		nutrientsPerUpdate: .3,
 		percWasteToNutrients: .1,
 		pxPerTile: 40,
-		percNutrientsPerFrame: .0005
+		percNutrientsPerFrame: .001
 	}
 }
 

@@ -36,7 +36,7 @@ const Statistics = new function() {
 		{
 			canvasShift += cursorShift;
 			let dShift = canvasShift - prefCanvasShift;
-			console.log(dShift);
+			
 			if (dShift >= 1) 
 			{
 				shiftCanvas(Math.floor(dShift));
@@ -81,7 +81,7 @@ const Statistics = new function() {
 
 
 	function mapY(_value) {
-		return _value / 200 * This.canvas.height; // 200 is max population size
+		return _value / 500 * This.canvas.height; // 200 is max population size
 	}
 	return This;
 }

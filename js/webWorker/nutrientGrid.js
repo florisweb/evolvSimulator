@@ -8,7 +8,7 @@ function createNutrientGrid() {
 		grid[y] = [];
 		for (let x = 0; x < Main.worldWidth / Settings.nutrients.pxPerTile; x++)
 		{
-			grid[y][x] = .2 * Math.random(); 
+			grid[y][x] = .5 * Math.random(); 
 		}
 	}
 
