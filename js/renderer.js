@@ -35,7 +35,7 @@ const Renderer = new function() {
 		let x = _e.offsetX / This.canvas.offsetWidth * This.canvas.width;
 		let y = _e.offsetY / This.canvas.offsetHeight * This.canvas.height;
 
-		let entities = getAllEntitiesWithinRange(x, y, 50);
+		let entities = getAllEntitiesWithinRange(x, y, 5);
 		if (!entities) return;
 
 		InfoMenu.open(entities[0]);
@@ -157,17 +157,24 @@ const Renderer = new function() {
 
 
 	function renderEntity(_entity, _ctx) {
+		if (
+			InfoMenu.openState &&
+			InfoMenu.curEntityId == _entity.id &&
+			!_ctx
+		) InfoMenu.renderEntityToWindow(_entity);
+	
 		if (!_ctx) _ctx = ctx;
+
 		// draw the energy bubble
-		_ctx.fillStyle 	= "rgba(" + _entity.DNA.r * 255 + ", " + _entity.DNA.g * 255 + ", " + _entity.DNA.b * 255 + ", 0.1)";
-		_ctx.strokeStyle = "rgba(" + _entity.DNA.r * 255 + ", " + _entity.DNA.g * 255 + ", " + _entity.DNA.b * 255 + ", 0.1)";
+		_ctx.fillStyle 	= "rgba(" + _entity.DNA.r * 255 + ", " + _entity.DNA.g * 255 + ", " + _entity.DNA.b * 255 + ", .1)";
+		_ctx.strokeStyle = "rgba(" + _entity.DNA.r * 255 + ", " + _entity.DNA.g * 255 + ", " + _entity.DNA.b * 255 + ", .1)";
 		_ctx.circle(
 			_entity.x, 
 			_entity.y, 
 			_entity.DNA.size + Math.sqrt(4 * _entity.energy / Math.PI)
 		);
-		if (_entity.type == "creature") ctx.fill();
-		if (_entity.type == "plant") ctx.stroke();
+		if (_entity.type == "creature") _ctx.fill();
+		if (_entity.type == "plant") _ctx.stroke();
 		
 
 		_ctx.strokeStyle = "rgba(" + _entity.DNA.r * 255 + ", " + _entity.DNA.g * 255 + ", " + _entity.DNA.b * 255 + ", .9)";

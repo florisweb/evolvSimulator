@@ -68,7 +68,6 @@ function exportData() {
 	data.statistics = {
 		frames: Main.updates,
 		graphLines: [
-			Main.averageEnergy,
 			Main.creatures,
 			Main.plants
 		]

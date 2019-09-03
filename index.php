@@ -11,7 +11,8 @@
 		<link rel="stylesheet" type="text/css" href="css/component.css">
 		<link rel="stylesheet" type="text/css" href="css/sideBar.css">
 		<link rel="stylesheet" type="text/css" href="css/mainContent/header.css">
-		<link rel="stylesheet" type="text/css" href="css/mainContent/mainContent.css?a=8">
+		<link rel="stylesheet" type="text/css" href="css/infoMenu.css?a=2">
+		<link rel="stylesheet" type="text/css" href="css/mainContent/mainContent.css?a=10">
 		<script type="text/javascript" src="/JS/jQuery.js" asy nc></script>
 
 	</head>	
@@ -68,7 +69,9 @@
 			<div id="mainContentHolder">
 
 				<div class="mainContentPage hi de">
-					<canvas id="worldCanvas" width="1500" height="1000"></canvas>
+					<div id="worldScrollHolder">
+						<canvas id="worldCanvas" width="1500" height="1000"></canvas>
+					</div>
 					<div style="position: absolute;">
 						<button onclick="Main.startRunning()">Start</button>
 						<button onclick="Main.startRunning(true)">HyperMode</button>
@@ -76,14 +79,25 @@
 						<input type="range" value="1" min="1" max="10" step=".1" oninput="Main.frameRate = parseInt(this.value)">
 					</div>
 
-					<canvas id="populationGraph" width="1500" height="300"></canvas>
-					<canvas id="entityDisplayCanvas" width="100" height="100"></canvas>
+					
 				</div>
 
 			</div>
 		</div>
 
+		<div id="infoMenu">
+			<!-- <div class="infoMenuPage">
+				<div class="headerText preventTextOverflow">PROJECTS</div>
+				<img class="exitIcon" src="images/exitIcon.png" onclick="InfoMenu.close()">
+				<div id="projectListHolder"></div>
+			</div> -->
 
+
+			<div class="infoMenuPage">
+				<canvas id="entityDisplayCanvas" width="100" height="100"></canvas>
+				<canvas id="populationGraph" width="1000" height="400"></canvas>
+			</div>
+		</div>
 
 
 

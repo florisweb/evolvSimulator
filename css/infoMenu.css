@@ -1,0 +1,51 @@
+
+
+#infoMenu {
+	position: absolute;
+	float: right;
+	right: 0;
+	top: 0;
+
+	width: 390px;
+	height: 100vh;
+	
+
+	box-shadow: 0 -5px 30px 5px rgba(50, 50, 50, 0.3);
+	background: rgba(30, 30, 32, 0.8);
+	-webkit-backdrop-filter: blur(40px);
+	backdrop-filter: blur(40px);
+
+	z-index: 1000;
+	transition: right 0.3s;
+
+	overflow: hidden;
+}
+
+#infoMenu.hide {
+	right: -390px;
+}
+
+
+
+#entityDisplayCanvas {
+	position: relative;
+	
+	width: 200px;
+	height: auto;
+	
+	background: rgba(255, 255, 255, 0.3);
+}
+
+#populationGraph {
+	position: absolute;
+	left: 0;
+	float: bottom;
+	bottom: 0;
+
+	width: 100%;
+	height: 250px;
+	
+	background: rgba(0, 0, 0, 0.05);
+	pointer-events: none;
+}
+

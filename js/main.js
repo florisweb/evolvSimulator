@@ -36,6 +36,7 @@ if (window.Worker)
 				) Statistics.update(_e.data.result.statistics);
 
 
+
 				if (Main.updates % Main.frameRate == 0) Renderer.update(_e.data.result); 
 				if (Main.running) requestAnimationFrame(function () {Main.update()});
 			break;

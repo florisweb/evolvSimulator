@@ -14,7 +14,6 @@ const Statistics = new function() {
 	
 	let prefGraphLines = [];
 	let colours = [
-		"#fa0",
 		"#f00",
 		"#0f0",
 		"#00f"
@@ -24,18 +23,28 @@ const Statistics = new function() {
 	let drawCursorX = 0;
 	let prefDrawCursorX = 0;
 	let canvasShift = 0;
+	let prefCanvasShift = 0;
 
 	function update(_data) {
 		let framesSinceLastUpdate = _data.frames - lastFrame;
 		
-		let cursorShift = framesSinceLastUpdate / This.settings.updateEveryXFrames * 10;
+		let cursorShift = framesSinceLastUpdate / This.settings.updateEveryXFrames * 30;
 		drawCursorX 	+= cursorShift;
+		
 		
 		if (drawCursorX > This.canvas.width)
 		{
-			shiftCanvas(1);
 			canvasShift += cursorShift;
+			let dShift = canvasShift - prefCanvasShift;
+			console.log(dShift);
+			if (dShift >= 1) 
+			{
+				shiftCanvas(Math.floor(dShift));
+				prefCanvasShift += Math.floor(dShift);
+			}
 		}
+
+
 
 		drawGraphLines(_data.graphLines);
 
