@@ -3,6 +3,7 @@ const Statistics = new function() {
 	let This = {
 		canvas: $("#populationGraph")[0],
 		update: update,
+		shiftCanvas: shiftCanvas,
 		settings: {
 			updateEveryXFrames: 500
 		}
@@ -22,23 +23,25 @@ const Statistics = new function() {
 	let lastFrame = 0;
 	let drawCursorX = 0;
 	let prefDrawCursorX = 0;
+	let canvasShift = 0;
 
 	function update(_data) {
 		let framesSinceLastUpdate = _data.frames - lastFrame;
-		drawCursorX += framesSinceLastUpdate / This.settings.updateEveryXFrames * 10;
+		let cursorShift = framesSinceLastUpdate / This.settings.updateEveryXFrames * 10;;
+		drawCursorX 	+= cursorShift;
+		
+		if (drawCursorX > This.canvas.width)
+		{
+			// shift everything to the left:
+			shiftCanvas(1);
+			canvasShift += cursorShift;
+		}
+
 
 		drawGraphLines(_data.graphLines);
 
 		lastFrame = _data.frames;
 		prevDrawCursorX = drawCursorX;
-
-
-		if (drawCursorX > This.canvas.width)
-		{
-			drawCursorX = 0;
-			prefDrawCursorX = 0;
-			ctx.clearRect(0, 0, This.canvas.width, This.canvas.height);
-		}
 	}
 
 	function drawGraphLines(_graphLineValues) {
@@ -51,15 +54,21 @@ const Statistics = new function() {
 	}
 
 	function drawLine(_from, _to, _colour) {
-		if (drawCursorX == 0) return;
 		let startY = This.canvas.height - mapY(_from);
 		let endY = This.canvas.height - mapY(_to);
 		ctx.strokeStyle = _colour;
 		ctx.beginPath();
-		ctx.moveTo(prevDrawCursorX, startY);
-		ctx.lineTo(drawCursorX, endY);
+		ctx.moveTo(prevDrawCursorX - canvasShift, startY);
+		ctx.lineTo(drawCursorX - canvasShift, endY);
 		ctx.closePath();
 		ctx.stroke();
+	}
+
+	function shiftCanvas(_px) {
+		var imageData = ctx.getImageData(_px, 0, ctx.canvas.width - _px, ctx.canvas.height);
+		ctx.putImageData(imageData, 0, 0);
+		// now clear the right-most pixels:
+		ctx.clearRect(ctx.canvas.width - _px, 0, _px, ctx.canvas.height);
 	}
 
 

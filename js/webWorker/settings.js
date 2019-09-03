@@ -1,4 +1,4 @@
-const Settings = {		
+let Settings = {		
 	//photosyntheses
 	sunEnergyPerReaction: .25,
 	nutrientsPerReaction: .1,
