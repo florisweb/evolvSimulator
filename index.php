@@ -11,7 +11,7 @@
 		<link rel="stylesheet" type="text/css" href="css/component.css">
 		<link rel="stylesheet" type="text/css" href="css/sideBar.css">
 		<link rel="stylesheet" type="text/css" href="css/mainContent/header.css">
-		<link rel="stylesheet" type="text/css" href="css/mainContent/mainContent.css?a=5">
+		<link rel="stylesheet" type="text/css" href="css/mainContent/mainContent.css?a=6">
 		<script type="text/javascript" src="/JS/jQuery.js" asy nc></script>
 
 	</head>	
@@ -76,7 +76,7 @@
 						<input type="range" value="1" min="1" max="10" step=".1" oninput="Main.frameRate = parseInt(this.value)">
 					</div>
 
-					<canvas id="populationGraph" width="1000" height="100"></canvas>
+					<canvas id="populationGraph" width="1500" height="300"></canvas>
 				</div>
 
 			</div>

@@ -28,7 +28,7 @@ if (window.Worker)
 		switch (_e.data.action) 
 		{
 			case "getData": 
-				if (Main.updates % Statistics.settings.addPopulationBarEveryXFrames == 0) Statistics.addPopulationLines(_e.data.result.statistics.graphLines)
+				if (Main.updates % Statistics.settings.addPopulationLineEveryXFrames == 0) Statistics.addPopulationLines(_e.data.result.statistics.graphLines)
 				if (Main.updates % Main.frameRate == 0) Renderer.update(_e.data.result); 
 				if (Main.running) requestAnimationFrame(function () {Main.update()});
 			break;

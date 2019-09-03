@@ -4,7 +4,7 @@ const Statistics = new function() {
 		canvas: $("#populationGraph")[0],
 		addPopulationLines: addPopulationLines,
 		settings: {
-			addPopulationBarEveryXFrames: 10
+			addPopulationLineEveryXFrames: 20
 		}
 	}
 
