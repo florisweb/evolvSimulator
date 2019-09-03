@@ -10,6 +10,7 @@ const Main = new function() {
 		bites: 0,
 		totalBiteEnergy: 0,
 		totalEnergy: 0,
+		averageEnergy: 0,
 		totalAge: 0,
 
 		worldWidth: 1000,
@@ -36,6 +37,7 @@ const Main = new function() {
 			for (let p = 0; p < Settings.plantRange[0] - this.plants; p++) 			this.createRandomPlant();
 			for (let c = 0; c < Settings.creatureRange[0] - this.creatures; c++) 	this.createRandomCreature();
 			
+			This.averageEnergy				= This.totalEnergy / This.creatures;
 			This.totalEnergyConsumption 	= 0;
 			This.totalBiteEnergy 			= 0;
 			This.bites 						= 0;

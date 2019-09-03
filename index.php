@@ -11,7 +11,7 @@
 		<link rel="stylesheet" type="text/css" href="css/component.css">
 		<link rel="stylesheet" type="text/css" href="css/sideBar.css">
 		<link rel="stylesheet" type="text/css" href="css/mainContent/header.css">
-		<link rel="stylesheet" type="text/css" href="css/mainContent/mainContent.css?a=6">
+		<link rel="stylesheet" type="text/css" href="css/mainContent/mainContent.css?a=7">
 		<script type="text/javascript" src="/JS/jQuery.js" asy nc></script>
 
 	</head>	

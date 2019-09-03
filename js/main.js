@@ -28,7 +28,14 @@ if (window.Worker)
 		switch (_e.data.action) 
 		{
 			case "getData": 
-				if (Main.updates % Statistics.settings.addPopulationLineEveryXFrames == 0) Statistics.addPopulationLines(_e.data.result.statistics.graphLines)
+				// console.log(_e.data.result.statistics.frames);
+				let frames = _e.data.result.statistics.frames;
+				let updateEveryXFrames = Statistics.settings.updateEveryXFrames;
+				if (
+					Math.floor(frames / updateEveryXFrames / 10) * updateEveryXFrames * 10 % updateEveryXFrames == 0
+				) Statistics.update(_e.data.result.statistics);
+
+
 				if (Main.updates % Main.frameRate == 0) Renderer.update(_e.data.result); 
 				if (Main.running) requestAnimationFrame(function () {Main.update()});
 			break;

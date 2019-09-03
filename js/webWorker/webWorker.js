@@ -66,9 +66,12 @@ function exportData() {
 	data.nutrients = Main.nutrients.export();
 	data.entities = JSON.parse(JSON.stringify(Main.entities));
 	data.statistics = {
+		frames: Main.updates,
 		graphLines: [
 			Main.creatures,
 			Main.plants,
+			Main.updates / 2500,
+			Main.averageEnergy
 		]
 	}
 	
