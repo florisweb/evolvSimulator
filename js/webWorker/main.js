@@ -12,6 +12,7 @@ const Main = new function() {
 		totalEnergy: 0,
 		averageEnergy: 0,
 		totalAge: 0,
+		totalNutrients: 0,
 
 		worldWidth: 1000,
 		worldHeight: 1000,

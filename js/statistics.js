@@ -28,7 +28,7 @@ const Statistics = new function() {
 	function update(_data) {
 		let framesSinceLastUpdate = _data.frames - lastFrame;
 		
-		let cursorShift = framesSinceLastUpdate / This.settings.updateEveryXFrames * 30;
+		let cursorShift = framesSinceLastUpdate / This.settings.updateEveryXFrames * 50;
 		drawCursorX 	+= cursorShift;
 		
 		
@@ -81,7 +81,7 @@ const Statistics = new function() {
 
 
 	function mapY(_value) {
-		return _value / 500 * This.canvas.height; // 200 is max population size
+		return _value / 1000 * This.canvas.height; // 200 is max population size
 	}
 	return This;
 }

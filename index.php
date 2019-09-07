@@ -70,7 +70,8 @@
 
 				<div class="mainContentPage hi de">
 					<div id="worldScrollHolder">
-						<canvas id="worldCanvas" width="1500" height="1000"></canvas>
+						<canvas id="worldCanvas" width="1000" height="750"></canvas>
+						<!-- 1500 1000 -->
 					</div>
 					<div style="position: absolute;">
 						<button onclick="Main.startRunning()">Start</button>

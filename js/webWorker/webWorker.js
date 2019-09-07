@@ -69,7 +69,8 @@ function exportData() {
 		frames: Main.updates,
 		graphLines: [
 			Main.creatures,
-			Main.plants
+			Main.plants,
+			Main.totalNutrients / Main.nutrients.length / Main.nutrients[0].length * 1000,
 		]
 	}
 	

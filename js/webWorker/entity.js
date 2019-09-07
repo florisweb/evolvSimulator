@@ -33,7 +33,6 @@ function _entity(_DNA, _metaData) {
 	function update() {
 		This.age++;
 		if (This.energy <= Settings.minimumEnergyToBeAlive) return This.die();
-		if (This.age % Settings.performance.checkCollisionFrameCount == 0) Collision.apply(This);
 	}
 
 

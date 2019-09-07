@@ -11,6 +11,7 @@ function _plant(_DNA, _metaData) {
 	const solarEfficiency = function() {
 		return This.DNA.g * 0.7 - This.DNA.r * .3 - This.DNA.b * .5;
 	}();
+	Collision.apply(This);
 
 
 	function update() {
