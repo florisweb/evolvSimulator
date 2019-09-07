@@ -1,33 +1,16 @@
 
 
-
-
-
-
 #mainContent {
 	position: absolute;
-	right: 0;
+	left: 0;
 	top: 0;
 
-	width: calc(100vw - 300px - 25px);
-	height: calc(100vh);
-	padding-right: 25px;
+	width: calc(100vw - 390px);
+	height: 100vh;
 
 	background: #fff;
 	transition: opacity 0.3s;
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -80,7 +63,7 @@
 		position: absolute;
 		left: 0;
 		top: 0;
-		width: calc(100% - 385px);
+		width: 100%;
 		height: 100vh;
 		overflow: auto;
 	}

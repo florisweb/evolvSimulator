@@ -9,43 +9,14 @@
 		
 
 		<link rel="stylesheet" type="text/css" href="css/component.css">
-		<link rel="stylesheet" type="text/css" href="css/sideBar.css">
 		<link rel="stylesheet" type="text/css" href="css/mainContent/header.css">
 		<link rel="stylesheet" type="text/css" href="css/infoMenu.css?a=2">
-		<link rel="stylesheet" type="text/css" href="css/mainContent/mainContent.css?a=10">
+		<link rel="stylesheet" type="text/css" href="css/mainContent/mainContent.css?a=11">
 		<script type="text/javascript" src="/JS/jQuery.js" asy nc></script>
 
 	</head>	
 	<body>
-		<div id="sideBar">
-			<img class="sideBarBackground" src="../todo/images/sideBarBackground/?type=sidebar">
-			<div class="navigationHolder">
-				<div class="header clickable" onclick="MainContent.taskPage.tab.open('Today')">
-					<img src="images/icons/todayIcon.png" class="headerIcon">
-					<div class="headerText">Today</div>
-				</div>
-				<div class="header clickable" onclick="MainContent.taskPage.tab.open('Inbox')">
-					<img src="images/icons/weekIcon.png" class="headerIcon">
-					<div class="headerText">Inbox</div>
-				</div>
-			</div>
-			<br>
-			<div class="projectListHolder hide">
-				<div class="header clickable" onclick="SideBar.projectList.toggleOpenState()">
-					<img src="images/icons/dropDownIcon.png" class="headerIcon dropDownButton close">
-					<div class="headerText">Projects</div>
-				</div>
-				<div class="projectList hide">
-					<div>
-					</div>
-					<div class="smallTextHolder clickable" onclick="MainContent.createProjectPage.open()"> 
-						<a class="smallText smallTextIcon">+</a>
-						<a class="smallText">Create project</a>
-					</div>
-				</div>
-				
-			</div>
-		</div>
+	
 
 		<div id="mainContent" class="animatePageChange">
 		<!-- 	<div id="mainContentHeader">
