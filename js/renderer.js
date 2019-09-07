@@ -171,7 +171,7 @@ const Renderer = new function() {
 		_ctx.circle(
 			_entity.x, 
 			_entity.y, 
-			_entity.DNA.size + Math.sqrt(4 * _entity.energy / Math.PI)
+			_entity.DNA.size + Math.sqrt(4 * (_entity.energy - Main.settings.minimumEnergyToBeAlive) / Math.PI)
 		);
 		if (_entity.type == "creature") _ctx.fill();
 		if (_entity.type == "plant") _ctx.stroke();
