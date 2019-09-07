@@ -16,6 +16,7 @@ function _plant(_DNA, _metaData) {
 
 	function update() {
 		if (entityUpdater()) return; // the plant died;
+		if (This.age % (Settings.performance.checkCollisionFrameCount * 100) == 0) Collision.apply(This);
 		
 		This.energy += calcPhotosynthesesGain();
 		This.energy -= calcEnergyConsumption();

@@ -13,7 +13,7 @@ let Settings = {
 	plantRange: [10, 2500], // min - max plants
 	creatureRange: [10, 2500], // min - max plants
 
-	biteConstant: 0.1,
+	biteConstant: 0.2,
 
 	reproduction: {
 		plantReproductionFrequency: 1, // A plant can reproduce every 1000 frames
