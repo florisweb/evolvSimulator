@@ -1,13 +1,13 @@
 
-
-importScripts("settings.js");
-importScripts("collision.js");
-importScripts("neuralNetwork.js");
-importScripts("nutrientGrid.js");
-importScripts("entity.js");
-importScripts("creature.js");
-importScripts("plant.js");
-importScripts("main.js");
+const antiCache = Math.round(Math.random() * 100000);
+importScripts("settings.js?a="		+ antiCache);
+importScripts("collision.js?a=" 	+ antiCache);
+importScripts("neuralNetwork.js?a=" + antiCache);
+importScripts("nutrientGrid.js?a=" 	+ antiCache);
+importScripts("entity.js?a=" 		+ antiCache);
+importScripts("creature.js?a=" 		+ antiCache);
+importScripts("plant.js?a=" 		+ antiCache);
+importScripts("main.js?a="		 	+ antiCache);
 
 
 
