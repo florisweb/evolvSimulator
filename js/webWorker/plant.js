@@ -9,7 +9,14 @@ function _plant(_DNA, _metaData) {
 	this.update 			= update;
 
 	const solarEfficiency = function() {
-		return This.DNA.g * 0.7 - This.DNA.r * .3 - This.DNA.b * .5;
+		let climate = Main.map.climate.getByCoords(This.x, This.y);
+		if (!climate) return 0;
+		let difference = 0;
+		difference += Math.abs(This.DNA.r - climate.r);
+		difference += Math.abs(This.DNA.g - climate.g);
+		difference += Math.abs(This.DNA.b - climate.b);
+
+		return 1 - difference / 2;
 	}();
 	Collision.apply(This);
 
@@ -37,7 +44,7 @@ function _plant(_DNA, _metaData) {
 		let surfaceArea = Math.pow(This.DNA.size, 2) / 4 * Math.PI;
 		
 		let photoReactions = surfaceArea;
-		let totalNutrients = Main.nutrients.eatByCoords(This.x, This.y, surfaceArea);
+		let totalNutrients = Main.map.nutrients.eatByCoords(This.x, This.y, surfaceArea);
 		let totalSun = solarEfficiency * surfaceArea;
 		let nutrientsPerReaction = totalNutrients / photoReactions;
 		let sunPerReaction = solarEfficiency;

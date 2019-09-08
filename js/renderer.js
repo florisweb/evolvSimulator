@@ -13,7 +13,7 @@ const Renderer = new function() {
 			dtx.beginPath();
 			dtx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 			dtx.closePath();
-			renderNutrientTiles(_renderData.nutrients);
+			renderMapTiles(_renderData.map);
 			this.rendercreatures(_renderData.entities);
 			
 			// renderDebugInfo();
@@ -38,7 +38,7 @@ const Renderer = new function() {
 		let entities = getAllEntitiesWithinRange(x, y, 5);
 		if (!entities) return;
 
-		InfoMenu.open(entities[0]);
+		// InfoMenu.open(entities[0]);
 	}
 
 
@@ -115,21 +115,25 @@ const Renderer = new function() {
 	}
 
 
-	function renderNutrientTiles(_nutrients) {
-		for (let y = 0; y < _nutrients.length; y++)
+	function renderMapTiles(_map) {
+		for (let y = 0; y < _map.nutrients.length; y++)
 		{	
-			for (let x = 0; x < _nutrients[y].length; x++)
+			for (let x = 0; x < _map.nutrients[y].length; x++)
 			{
-				renderNutrientTile(x, y, _nutrients[y][x]);
+				let nutrients = _map.nutrients[y][x];
+				let climate = _map.climate[y][x];
+				renderMapTile(x, y, nutrients, climate);
 			}
 		}
 	}
 
-	function renderNutrientTile(_nx, _ny, _nutrientConcentration) {// nutrientTileX and y
+	function renderMapTile(_nx, _ny, _nutrientConcentration, _climate) {// nutrientTileX and y
 		let actualX = _nx * Main.settings.nutrients.pxPerTile;
 		let actualY = _ny * Main.settings.nutrients.pxPerTile;
 
-		ctx.fillStyle = "rgba(0, 255, 0, " + (_nutrientConcentration * .5) + ")";
+
+		ctx.fillStyle = "rgba(" + _climate.r * 255 + ", " + _climate.g * 255 + ", " + _climate.b * 255 + ", " + (_nutrientConcentration * .5) + ")";
+		// ctx.fillStyle = "rgb(" + _climate.r * 255 + ", " + _climate.g * 255 + ", " + _climate.b * 255 + ")";
 		ctx.beginPath();
 		ctx.fillRect(
 			actualX, 
@@ -157,11 +161,11 @@ const Renderer = new function() {
 
 
 	function renderEntity(_entity, _ctx) {
-		if (
-			InfoMenu.openState &&
-			InfoMenu.curEntityId == _entity.id &&
-			!_ctx
-		) InfoMenu.renderEntityToWindow(_entity);
+		// if (
+		// 	InfoMenu.openState &&
+		// 	InfoMenu.curEntityId == _entity.id &&
+		// 	!_ctx
+		// ) InfoMenu.renderEntityToWindow(_entity);
 	
 		if (!_ctx) _ctx = ctx;
 

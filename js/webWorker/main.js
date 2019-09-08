@@ -18,7 +18,7 @@ const Main = new function() {
 		worldHeight: 1000,
 
 		entities: [],
-		nutrients: [],
+		map: {},
 		plants: 0,
 		creatures: 0,
 
@@ -32,7 +32,7 @@ const Main = new function() {
 
 		update: function(_update = true) {
 			this.updates++;
-			this.nutrients.addRandomNutrients(Settings.nutrients.nutrientsPerUpdate);
+			this.map.nutrients.addRandomNutrients(Settings.nutrients.nutrientsPerUpdate);
 			this.updateEntities();
 
 			for (let p = 0; p < Settings.plantRange[0] - this.plants; p++) 			this.createRandomPlant();

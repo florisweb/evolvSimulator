@@ -34,7 +34,7 @@
 		<button onclick="Main.running = true; Main.update()">Start</button>
 		<button onclick="Main.running = false">Stop</button>
 		<input type="range" value="1" min="0" max="50" step="1" oninput="Main.settings.renderEveryXFrames = this.value * this.value">
-		<canvas id="worldCanvas" width="500" height="500"></canvas>
+		<canvas id="worldCanvas" width="1000" height="750"></canvas>
 
 	
 		<script>
@@ -44,7 +44,11 @@
 			$.getScript("js/webWorker/settings.js?antiCache=" 									+ antiCache, function() {});
 			$.getScript("js/webWorker/collision.js?antiCache=" 									+ antiCache, function() {});
 			$.getScript("js/webWorker/neuralNetwork.js?antiCache=" 								+ antiCache, function() {});
-			$.getScript("js/webWorker/nutrientGrid.js?antiCache=" 								+ antiCache, function() {});
+			
+			$.getScript("js/webWorker/map/nutrientGrid.js?antiCache=" 							+ antiCache, function() {});
+			$.getScript("js/webWorker/map/climateGrid.js?antiCache=" 							+ antiCache, function() {});
+			$.getScript("js/webWorker/map/map.js?antiCache=" 									+ antiCache, function() {});
+
 			$.getScript("js/webWorker/entity.js?antiCache=" 									+ antiCache, function() {});
 			$.getScript("js/webWorker/creature.js?antiCache=" 									+ antiCache, function() {});
 			$.getScript("js/webWorker/plant.js?antiCache=" 										+ antiCache, function() {});
@@ -62,7 +66,7 @@
 
 
 			function start() {
-				setup({width: 500, height: 500});
+				setup({width: 1000, height: 750});
 				function update() {Renderer.update(actions.getData()); var loopTimer = setTimeout(update, 100);};
 				Main.settings = Settings;
 				Main.running = true

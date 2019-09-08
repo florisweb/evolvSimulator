@@ -1,6 +1,6 @@
 let Settings = {		
 	//photosyntheses
-	sunEnergyPerReaction: .1, //.3
+	sunEnergyPerReaction: .03, //.3
 	nutrientsPerReaction: .3, // .15
 
 	nutrientsPercOnDeath: .3,
@@ -40,7 +40,7 @@ let Settings = {
 		nutrientsPerUpdate: .5,
 		percWasteToNutrients: .1,
 		pxPerTile: 40,
-		percNutrientsPerFrame: .005
+		percNutrientsPerFrame: .001
 	}
 }
 

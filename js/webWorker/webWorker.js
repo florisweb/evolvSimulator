@@ -1,13 +1,17 @@
 
 const antiCache = Math.round(Math.random() * 100000);
-importScripts("settings.js?a="		+ antiCache);
-importScripts("collision.js?a=" 	+ antiCache);
-importScripts("neuralNetwork.js?a=" + antiCache);
-importScripts("nutrientGrid.js?a=" 	+ antiCache);
-importScripts("entity.js?a=" 		+ antiCache);
-importScripts("creature.js?a=" 		+ antiCache);
-importScripts("plant.js?a=" 		+ antiCache);
-importScripts("main.js?a="		 	+ antiCache);
+importScripts("settings.js?a="			+ antiCache);
+importScripts("collision.js?a=" 		+ antiCache);
+importScripts("neuralNetwork.js?a="		+ antiCache);
+
+importScripts("map/nutrientGrid.js?a=" 	+ antiCache);
+importScripts("map/climateGrid.js?a=" 	+ antiCache);
+importScripts("map/map.js?a=" 			+ antiCache);
+
+importScripts("entity.js?a=" 			+ antiCache);
+importScripts("creature.js?a=" 			+ antiCache);
+importScripts("plant.js?a=" 			+ antiCache);
+importScripts("main.js?a="		 		+ antiCache);
 
 
 
@@ -55,22 +59,22 @@ this.onmessage = function(_e) {
 
 
 function setup(_parameters) {
-	Main.worldWidth = _parameters.width;
-	Main.worldHeight = _parameters.height
-	Main.nutrients = createNutrientGrid();
+	Main.worldWidth		= _parameters.width;
+	Main.worldHeight 	= _parameters.height
+	Main.map 			= createMap();
 	Main.update();
 }
 
 function exportData() {
 	let data = {};
-	data.nutrients = Main.nutrients.export();
+	data.map = JSON.parse(JSON.stringify(Main.map));
 	data.entities = JSON.parse(JSON.stringify(Main.entities));
 	data.statistics = {
 		frames: Main.updates,
 		graphLines: [
 			Main.creatures,
 			Main.plants,
-			Main.totalNutrients / Main.nutrients.length / Main.nutrients[0].length * 1000,
+			Main.totalNutrients / Main.map.nutrients.length / Main.map.nutrients[0].length * 1000,
 		]
 	}
 	

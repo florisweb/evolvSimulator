@@ -20,7 +20,7 @@ function _entity(_DNA, _metaData) {
 	this.update 	= update;
 	this.reproduce 	= reproduce;
 	this.die = function () {
-		Main.nutrients.addByCoords(
+		Main.map.nutrients.addByCoords(
 			This.x, 
 			This.y, 
 			Settings.minimumEnergyToBeAlive * Settings.nutrientsPercOnDeath
