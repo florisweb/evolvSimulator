@@ -10,8 +10,8 @@ let Settings = {
 	mutationRate: 0.2,
 	creatureBiteRange: 1.5,
 
-	plantRange: [20, 500], // min - max plants
-	creatureRange: [20, 2500], // min - max plants
+	plantRange: [20, 1000], // min - max plants
+	creatureRange: [20, 1000], // min - max plants
 
 	biteConstant: 0.2,
 
@@ -25,7 +25,7 @@ let Settings = {
 		plantAgeConstant: .00003,
 		creatureAgeConstant: .0001, // degration of the body makes it less efficient
 		sizeConstant: .001,
-		eyeConstant: .000001,
+		eyeConstant: .00000,
 		neuronConstant: 0.0,
 		turnConstant: 0.005,
 		moveConstant: .025,

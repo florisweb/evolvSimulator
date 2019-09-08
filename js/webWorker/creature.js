@@ -88,10 +88,9 @@ function _creature(_DNA, _metaData) {
 				let totalEyeAngle 	= (This.DNA.eyeCount - 1) * This.DNA.eyeAngle;
 				let startAngle 		= -totalEyeAngle / 2;
 
-				let results = createArrayWithValues(This.DNA.eyeCount, 0);
+				let results = createArrayWithValues(This.DNA.eyeCount, [0]);
 				for (entity of entities)
 				{
-					!!This.DNA.eyeCount
 					let dx = entity.x - This.x;
 					let dy = entity.y - This.y;
 					let directAngleToCreature = atanWithDX(dx, dy);
@@ -106,12 +105,26 @@ function _creature(_DNA, _metaData) {
 						if (isNaN(distance) || distance < 0) distance = This.DNA.eyeRange;
 
 						let percDistance = 1 - distance / This.DNA.eyeRange;
-						if (percDistance > results[e]) results[e] = percDistance;
+						let obj = [
+							percDistance,
+							entity.DNA.r,
+							entity.DNA.g,
+							entity.DNA.b
+						];
+						
+						if (percDistance > results[e][0]) results[e] = obj;
 					}
 				}
-				return results;
+
+				let finalResult = [];	
+				for (let i = 0; i < results.length; i++) {
+					finalResult = finalResult.concat(results[i]);
+				}
+
+				return finalResult;
 			}
 		}
+
 
 		function getAllEntitiesWithinRange() {
 			let visableEntities = [];
@@ -198,7 +211,8 @@ function _creature(_DNA, _metaData) {
 	function createBrain(_brainDNA) {
 		const outputNeurons = 4;
 
-		let brainStructure = [1 + Math.abs(Math.round(This.DNA.eyeCount))]; // inputs [energy + eyes]
+		let brainStructure = [1 + Math.abs(Math.round(This.DNA.eyeCount)) * 4]; // inputs [energy + eyes [distance, r, g, b]]
+		// let brainStructure = [1 + Math.abs(Math.round(This.DNA.eyeCount))]; // inputs [energy + eyes [distance, r, g, b]]
 		let layers = Math.abs(Math.round(_brainDNA[0]));
 
 		let newBrainDNA = Object.assign([], _brainDNA);
@@ -244,7 +258,6 @@ function _creature(_DNA, _metaData) {
 			console.warn("Brain-error", This, supposedBrainDNASize, newBrainDNA.length, brainStructure);
 			Main.running = false;
 		}
-
 
 		let brain = new NeuralNetwork(brainStructure);
 		let brainData = Object.assign([], newBrainDNA).splice(layers + 1, newBrainDNA.length);
