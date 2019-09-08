@@ -19,8 +19,7 @@ function _creature(_DNA, _metaData) {
 	let prevActionValues = [];                   
 	function update() {
 		if (entityUpdater()) return; // the creature died
-		if (This.age % Settings.performance.checkCollisionFrameCount == 0) Collision.apply(This);
-		
+				
 		Main.totalAge 		+= This.age;
 		Main.totalEnergy 	+= This.energy;
 		
