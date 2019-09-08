@@ -105,6 +105,7 @@ const Collision = new function() {
 
 	function getAllEntityFactorsWithinRange(_self) {
 		let visableEntities = [];
+		const ownMass = Math.pow(_self.DNA.size, 3); // 5
 		for (entity of Main.entities)
 		{
 			if (entity.id == _self.id) continue;
@@ -115,10 +116,16 @@ const Collision = new function() {
 			let directDistance = Math.sqrt(dx * dx + dy * dy);
 
 			let distance = maxDistance - directDistance;
-
 			if (distance <= 0) continue;
+			let power = distance;
+
+			if (entity.type != "plant" && _self.type == "plant") power *= .001; // Plants can't really be pushed
+
+			let entityMass = Math.pow(entity.DNA.size, 3);
+			power *= entityMass / ownMass;
+			
 			visableEntities.push({
-				power: distance + Math.pow(.1, 5),
+				power: power,
 				angle: atanWithDX(dx, dy) + Math.PI
 			});
 		}

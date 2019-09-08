@@ -71,7 +71,7 @@ function _creature(_DNA, _metaData) {
 
 	let prevAngle = 0;
 	function move(_stepSize = 1) {
-		const movementConstant = 10;
+		const movementConstant = 5;
 		let rx = Math.cos(This.angle) * _stepSize * movementConstant * This.DNA.speed;
 		let ry = -Math.sin(This.angle) * _stepSize * movementConstant * This.DNA.speed;
 		This.x += rx;

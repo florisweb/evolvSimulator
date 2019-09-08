@@ -25,7 +25,7 @@ const Main = new function() {
 
 
 		running: false,
-		frameRate: 1,
+		frameRate: 5,
 
 
 
