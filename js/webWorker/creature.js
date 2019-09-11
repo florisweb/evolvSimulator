@@ -88,7 +88,7 @@ function _creature(_DNA, _metaData) {
 				let totalEyeAngle 	= (This.DNA.eyeCount - 1) * This.DNA.eyeAngle;
 				let startAngle 		= -totalEyeAngle / 2;
 
-				let results = createArrayWithValues(This.DNA.eyeCount, [0]);
+				let results = createArrayWithValues(This.DNA.eyeCount, [0, 0, 0, 0]);
 				for (entity of entities)
 				{
 					let dx = entity.x - This.x;

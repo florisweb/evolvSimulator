@@ -43,15 +43,13 @@ function _plant(_DNA, _metaData) {
 		let leafSize = This.DNA.size;
 		let surfaceArea = Math.pow(This.DNA.size, 2) / 4 * Math.PI;
 		
-		let photoReactions = surfaceArea;
-		let totalNutrients = Main.map.nutrients.eatByCoords(This.x, This.y, surfaceArea);
-		let totalSun = solarEfficiency * surfaceArea;
-		let nutrientsPerReaction = totalNutrients / photoReactions;
-		let sunPerReaction = solarEfficiency;
+		let photoReactions 			= surfaceArea;
+		let totalNutrients 			= Main.map.nutrients.eatByCoords(This.x, This.y, surfaceArea);
+		let totalSun 				= solarEfficiency * surfaceArea;
+		let nutrientsPerReaction 	= totalNutrients / photoReactions;
 
-
-		let energyPerReaction = 	nutrientsPerReaction / Settings.nutrientsPerReaction *
-									sunPerReaction / Settings.sunEnergyPerReaction;
+		let energyPerReaction 		= 	nutrientsPerReaction / Settings.nutrientsPerReaction *
+										solarEfficiency / Settings.sunEnergyPerReaction;
 
 		return energyPerReaction * photoReactions;
 	}
