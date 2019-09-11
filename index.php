@@ -11,6 +11,7 @@
 		<link rel="stylesheet" type="text/css" href="css/component.css">
 		<link rel="stylesheet" type="text/css" href="css/mainContent/header.css">
 		<link rel="stylesheet" type="text/css" href="css/infoMenu.css?a=2">
+		<link rel="stylesheet" type="text/css" href="css/familyTree.css?a=2">
 		<link rel="stylesheet" type="text/css" href="css/mainContent/mainContent.css?a=11">
 		<script type="text/javascript" src="/JS/jQuery.js" asy nc></script>
 
@@ -56,6 +57,9 @@
 			</div>
 		</div>
 
+
+
+
 		<div id="infoMenu">
 			<!-- <div class="infoMenuPage">
 				<div class="headerText preventTextOverflow">PROJECTS</div>
@@ -71,6 +75,10 @@
 		</div>
 
 
+		<div id="familyTreeMenu" class="hide">
+			<canvas id="familyTreeCanvas" width="10000" height="2000"></canvas>
+		</div>
+
 
 	
 
@@ -80,6 +88,7 @@
 			// temporary so things don't get cached
 			let antiCache = Math.round(Math.random() * 100000000);
 			$.getScript("js/infoMenu.js?antiCache=" 								+ antiCache, function() {});
+			$.getScript("js/familyTree.js?antiCache=" 								+ antiCache, function() {});
 			$.getScript("js/statistics.js?antiCache=" 								+ antiCache, function() {});
 			$.getScript("js/main.js?antiCache=" 									+ antiCache, function() {});
 		</script>

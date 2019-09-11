@@ -5,6 +5,7 @@ function _entity(_DNA, _metaData) {
 	this.id 		= newId();
 	this.age 		= 0;
 	this.parent 	= false;
+	this.children	= [];
 
 	this.energy 	= _metaData.energy;
 
@@ -63,6 +64,7 @@ function _entity(_DNA, _metaData) {
 
 		let newEntity 		= Main.createEntity(newDNA, metaData, metaData.type);
 		newEntity.parent 	= This;
+		This.children.push(newEntity.id);
 		return newEntity;
 	}
 
