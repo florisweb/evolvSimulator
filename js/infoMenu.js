@@ -5,19 +5,17 @@ const InfoMenu = new function() {
 		open: open,
 		openState: false,
 		renderEntityToWindow: renderEntity,
-		curEntityId: false
+		curEntity: false
 	}
 
 	let ctx	= This.canvas.getContext("2d");
 	
-	let curEntity;
 	function open(_entity) {
 		if (!_entity) return;
 		This.openState 		= true;
-		curEntity 			= _entity;
-		This.curEntityId 	= _entity.id;
+		This.curEntity 		= _entity;
 		
-		renderEntity(curEntity);
+		renderEntity(This.curEntity);
 	}
 
 

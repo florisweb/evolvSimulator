@@ -1,7 +1,7 @@
 let Settings = {		
 	//photosyntheses
 	// energy/nutrient = 1 / nutrientsPerReaction * [-.5, 1] / sunEnergyPerReaction 
-	sunEnergyPerReaction: .001, //.1
+	sunEnergyPerReaction: .1, //.1
 	nutrientsPerReaction: .2, // .15
 
 	nutrientsPercOnDeath: .2,

@@ -38,7 +38,7 @@ const Renderer = new function() {
 		let entities = getAllEntitiesWithinRange(x, y, 5);
 		if (!entities) return;
 
-		// InfoMenu.open(entities[0]);
+		InfoMenu.open(entities[0]);
 	}
 
 
@@ -133,7 +133,6 @@ const Renderer = new function() {
 
 
 		ctx.fillStyle = "rgba(" + _climate.r * 255 + ", " + _climate.g * 255 + ", " + _climate.b * 255 + ", " + (_nutrientConcentration * .5) + ")";
-		// ctx.fillStyle = "rgb(" + _climate.r * 255 + ", " + _climate.g * 255 + ", " + _climate.b * 255 + ")";
 		ctx.beginPath();
 		ctx.fillRect(
 			actualX, 
@@ -161,11 +160,11 @@ const Renderer = new function() {
 
 
 	function renderEntity(_entity, _ctx) {
-		// if (
-		// 	InfoMenu.openState &&
-		// 	InfoMenu.curEntityId == _entity.id &&
-		// 	!_ctx
-		// ) InfoMenu.renderEntityToWindow(_entity);
+		if (
+			InfoMenu.openState &&
+			InfoMenu.curEntityId == _entity.id &&
+			!_ctx
+		) InfoMenu.renderEntityToWindow(_entity);
 	
 		if (!_ctx) _ctx = ctx;
 

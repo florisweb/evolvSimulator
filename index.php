@@ -11,7 +11,7 @@
 		<link rel="stylesheet" type="text/css" href="css/component.css">
 		<link rel="stylesheet" type="text/css" href="css/mainContent/header.css">
 		<link rel="stylesheet" type="text/css" href="css/infoMenu.css?a=2">
-		<link rel="stylesheet" type="text/css" href="css/familyTree.css?a=2">
+		<link rel="stylesheet" type="text/css" href="css/familyTree.css?a=3">
 		<link rel="stylesheet" type="text/css" href="css/mainContent/mainContent.css?a=11">
 		<script type="text/javascript" src="/JS/jQuery.js" asy nc></script>
 
@@ -70,12 +70,14 @@
 
 			<div class="infoMenuPage">
 				<canvas id="entityDisplayCanvas" width="100" height="100"></canvas>
+
+				<button onclick="FamilyTree.open(InfoMenu.curEntity)">Open FamilyTree</button>
 				<canvas id="populationGraph" width="1000" height="400"></canvas>
 			</div>
 		</div>
 
 
-		<div id="familyTreeMenu" class="hide">
+		<div id="familyTreeMenu" class="hide" onclick="FamilyTree.close()">
 			<canvas id="familyTreeCanvas" width="10000" height="2000"></canvas>
 		</div>
 

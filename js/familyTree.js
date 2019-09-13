@@ -1,13 +1,21 @@
 
 const FamilyTree = new function() {
 	let This = {
+		HTML: {
+			Self: $("#familyTreeMenu")[0],
+		},
 		canvas: $("#familyTreeCanvas")[0],
 		renderFamilyTree: renderFamilyTreeByEntity,
 		
+		open: open,
+		close: close,
+
+
 		settings: {
-			rowHeight: 100,
+			rowHeight: 60,
 			boxWidth: 40,
 			startY: 50,
+			xScale: 1.5,
 		}
 	}
 
@@ -15,14 +23,33 @@ const FamilyTree = new function() {
 
 	
 
-	function renderFamilyTreeByEntity(_entity, _maxDepth = 5) {
+	function open(_entity) {
+		if (!_entity) return false;
+
+
+		renderFamilyTreeByEntity(_entity, 10);
+		This.HTML.Self.classList.remove("hide");
+	}
+
+	
+	function close() {
+		This.HTML.Self.classList.add("hide");
+	}
+
+
+	function renderFamilyTreeByEntity(_entity, _maxDepth) {
 		ctx.clearRect(0, 0, This.canvas.width, This.canvas.height);
 
 		_entity.isTargetEntity = true;
 		let masterParent = getMasterParent(_entity, _maxDepth - 1);
 		assignChildWidthToEntities(masterParent, _maxDepth);
+		
+
 		This.canvas.width = masterParent.childWidth * This.settings.boxWidth * 1.1;
-		This.canvas.style.width = This.canvas.width + "px";
+		
+		let canvasLeft = (window.innerWidth - This.canvas.width * This.settings.xScale) / 2;
+		This.canvas.style.width = This.canvas.width * This.settings.xScale + "px";
+		This.canvas.style.left = (canvasLeft > 0 ? canvasLeft : 0) + "px";
 
 		renderFamilyTree(masterParent, 0, This.canvas.width / 2, _maxDepth);
 
@@ -39,11 +66,22 @@ const FamilyTree = new function() {
 		{
 			let childId = _entity.children[i];
 			let child = Main.getEntityById(childId);
-			if (!child) continue;
+			if (!child) child = {
+				children: [], 
+				dead: true, 
+				id: childId,
+				DNA: {
+					size: 20,
+				},
+				r: 100,
+				g: 100,
+				b: 100
+			};
 
 			childWidth += assignChildWidthToEntities(child, _maxDepth - 1);
 		}
 
+		if (!childWidth) childWidth = 1;
 		_entity.childWidth = childWidth;
 
 		if (_entity.children.length == 0) return 1;
@@ -63,22 +101,24 @@ const FamilyTree = new function() {
 			let child = Main.getEntityById(childId);
 			if (!child) continue;
 
-			passedChildWidth += child.childWidth * .5;
-
-			let rx = passedChildWidth * This.settings.boxWidth;
+			let rx = (passedChildWidth + child.childWidth * .5) * This.settings.boxWidth;
 			renderLineToEntity(
 				_x, 
 				_depth * This.settings.rowHeight + This.settings.startY, 
 				startX + rx, 
 				(_depth + 1) * This.settings.rowHeight + This.settings.startY,
-				child.isTargetEntity ? "#fff" : "#f00"
+				child.isTargetEntity ? "#fff" : "rgba(255, 255, 255, .7)",
+				true
 			);
+		
 
 			renderFamilyTree(child, _depth + 1, startX + rx, _maxDepth - 1);
 
-			passedChildWidth += child.childWidth * .5;
+			passedChildWidth += child.childWidth;
 		}
 		
+		console.log("Render: " + _entity.id, _entity.childWidth, _depth);
+
 		renderEntity(_entity, _x, _depth * This.settings.rowHeight + This.settings.startY);
 	}
 
@@ -92,26 +132,9 @@ const FamilyTree = new function() {
 
 			actualChildWidth += child.childWidth;
 		}
+
 		return actualChildWidth;
 	}
-
-	function getLastChildWidth(_childIDs) {
-		let arr = Object.assign([], _childIDs);
-		while (arr.length > 0)
-		{
-			let lastChildId = arr[arr.length - 1];
-			let child = Main.getEntityById(lastChildId);
-			if (!child) 
-			{
-				arr.splice(arr.length - 1, 1);
-				continue;
-			}
-			return child.childWidth;
-
-		}
-		return 0;
-	}
-
 
 
 	function getMasterParent(_entity, _maxDepth) {
@@ -121,12 +144,18 @@ const FamilyTree = new function() {
 	}
 
 
-	function renderLineToEntity(_x1, _y1, _x2, _y2, _color) {
+	function renderLineToEntity(_x1, _y1, _x2, _y2, _color, _dotted = false) {
 		ctx.strokeStyle = _color;
 		ctx.beginPath();
+
+		// let lineDash = [];
+		// if (_dotted) lineDash = [5, 5];
+		ctx.setLineDash([5, 5]);
+		
 		ctx.moveTo(_x1, _y1);
 		ctx.lineTo(_x2, _y1);
 
+		ctx.setLineDash([5, 5]);
 		ctx.moveTo(_x2, _y1);
 		ctx.lineTo(_x2, _y2);
 		ctx.closePath();
@@ -134,10 +163,11 @@ const FamilyTree = new function() {
 	}
 
 	function renderEntity(_entity, _x, _y) {
+		ctx.setLineDash([]);
 		let entity 	= Object.assign({}, _entity);
 		entity.x 	= _x;
 		entity.y 	= _y;
-		
+		if (_entity.dead) console.warn(_entity);
 		Renderer.renderEntity(entity, ctx);
 	}
 
