@@ -9,6 +9,7 @@ const FamilyTree = new function() {
 		
 		open: open,
 		close: close,
+		loopRender: loopRender,
 
 
 		settings: {
@@ -16,16 +17,18 @@ const FamilyTree = new function() {
 			boxWidth: 30,
 			startY: 50,
 			xScale: 1.5,
+			maxDepth: Infinity
 		}
 	}
 
 	let ctx = This.canvas.getContext("2d");
 
+	let curEntity;
 	function open(_entity) {
 		if (!_entity) return false;
+		curEntity = _entity;
 
-
-		renderFamilyTreeByEntity(_entity, Infinity);
+		renderFamilyTreeByEntity(curEntity, This.settings.maxDepth);
 		This.HTML.Self.classList.remove("hide");
 	}
 
@@ -34,8 +37,15 @@ const FamilyTree = new function() {
 		This.HTML.Self.classList.add("hide");
 	}
 
+	function loopRender() {
+		if (curEntity.energy <= 50) return This.close();
+		renderFamilyTreeByEntity(curEntity, This.settings.maxDepth);
+		setTimeout(loopRender, 1000);
+	}
+
 
 	function renderFamilyTreeByEntity(_entity, _maxDepth) {
+		if (!_entity) return false;
 		ctx.clearRect(0, 0, This.canvas.width, This.canvas.height);
 
 		_entity.isTargetEntity = true;
