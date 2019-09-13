@@ -43,7 +43,7 @@ const FamilyTree = new function() {
 		assignChildWidthToEntities(masterParent, _maxDepth);
 		
 
-		This.canvas.width = masterParent.childWidth * This.settings.boxWidth * 1.1;
+		This.canvas.width = masterParent.childWidth * This.settings.boxWidth + 100;
 		
 		let canvasLeft = (window.innerWidth - This.canvas.width * This.settings.xScale) / 2;
 		This.canvas.style.width = This.canvas.width * This.settings.xScale + "px";
