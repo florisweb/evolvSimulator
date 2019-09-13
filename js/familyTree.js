@@ -12,8 +12,8 @@ const FamilyTree = new function() {
 
 
 		settings: {
-			rowHeight: 60,
-			boxWidth: 40,
+			rowHeight: 50,
+			boxWidth: 30,
 			startY: 50,
 			xScale: 1.5,
 		}
@@ -21,13 +21,11 @@ const FamilyTree = new function() {
 
 	let ctx = This.canvas.getContext("2d");
 
-	
-
 	function open(_entity) {
 		if (!_entity) return false;
 
 
-		renderFamilyTreeByEntity(_entity, 10);
+		renderFamilyTreeByEntity(_entity, Infinity);
 		This.HTML.Self.classList.remove("hide");
 	}
 
@@ -66,17 +64,7 @@ const FamilyTree = new function() {
 		{
 			let childId = _entity.children[i];
 			let child = Main.getEntityById(childId);
-			if (!child) child = {
-				children: [], 
-				dead: true, 
-				id: childId,
-				DNA: {
-					size: 20,
-				},
-				r: 100,
-				g: 100,
-				b: 100
-			};
+			if (!child) continue;
 
 			childWidth += assignChildWidthToEntities(child, _maxDepth - 1);
 		}
@@ -117,7 +105,7 @@ const FamilyTree = new function() {
 			passedChildWidth += child.childWidth;
 		}
 		
-		console.log("Render: " + _entity.id, _entity.childWidth, _depth);
+		console.log("Render: " + _entity.id, _entity, !!_entity.parent);
 
 		renderEntity(_entity, _x, _depth * This.settings.rowHeight + This.settings.startY);
 	}
@@ -140,6 +128,8 @@ const FamilyTree = new function() {
 	function getMasterParent(_entity, _maxDepth) {
 		if (!_entity.parent) return _entity;
 		if (_maxDepth <= 0) return _entity;
+		let entity = Main.getEntityById(_entity.parent.id);
+		if (!entity) return _entity;
 		return getMasterParent(_entity.parent, _maxDepth - 1);
 	}
 
@@ -167,7 +157,7 @@ const FamilyTree = new function() {
 		let entity 	= Object.assign({}, _entity);
 		entity.x 	= _x;
 		entity.y 	= _y;
-		if (_entity.dead) console.warn(_entity);
+
 		Renderer.renderEntity(entity, ctx);
 	}
 
