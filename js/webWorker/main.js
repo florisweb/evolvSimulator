@@ -187,10 +187,11 @@ const Main = new function() {
 			 y: 		_entity.y,
 		};
 
-		createEntity(
+		let entity = createEntity(
 			_entity.DNA,
 			metaData
 		);
+		entity.parent = _entity.parent;
 	}
 
 
