@@ -1,12 +1,8 @@
 
-
-
-
-
 const WorldSaver = new function() {
 	let This = {
 		setup: setup,
-		getWorlds: getWorlds,
+		getWorld: getWorld,
 
 		exportWorld: exportWorld,
 		importWorld: importWorld,
@@ -16,64 +12,51 @@ const WorldSaver = new function() {
 		},
 	}
 
-	function importWorld(_world) {
-		if (!_world) return false;
+	function importWorld() {
+		let world = getWorld();
+		if (!world) return false;
 		
-		Renderer.canvas.width 	= _world.metaData.width;
-		Renderer.canvas.height 	= _world.metaData.height;
+		Renderer.canvas.width 	= world.metaData.width;
+		Renderer.canvas.height 	= world.metaData.height;
 
 		WebWorker.postMessage({
 			action: "importWorld", 
-			parameters: _world,
+			parameters: world,
 		});
 	}
 
 
 
 
-
-
-
-
-
 	let curWorld;
-	async function exportWorld(_title) {
-		let worldAdress = curWorld && curWorld.id ? curWorld.id : newId();
-		let world = await createWorldExport(_title);
-		world.id = worldAdress;
+	async function exportWorld() {
+		let world = await createWorldExport();
 
-		writeWorld(world, worldAdress);
+		writeWorld(world);
 	}
 
-	function writeWorld(_world, _adress) {
-		let worldList = getWorlds();
-		worldList[_adress] = _world;
-
+	function writeWorld(_world) {
 		localStorage.setItem(
 			"evolutionSimulator_worlds", 
-			JSON.stringify(worldList)
+			JSON.stringify(_world)
 		);
 	}
 
-	function getWorlds() {
+	function getWorld() {
 		let worldListData = localStorage.getItem("evolutionSimulator_worlds");
-		let worldList = {};
+		let world = {};
 		try {
-			worldList = JSON.parse(worldListData);	
+			world = JSON.parse(worldListData);	
 		}
 		catch (_e) {}
-		
-		if (!worldList) worldList = {};
-		return worldList;
+		return world;
 	}
-
 
 
 
 	let resolveExportPromise;
-	function createWorldExport(_title) {
+	function createWorldExport() {
 		let world = {
-			title: _title,
 			metaData: {
 				width: Renderer.canvas.width,
 				height: Renderer.canvas.height,
@@ -114,10 +97,20 @@ const WorldSaver = new function() {
 					curWorld.data.entities 				= result.entities;
 					curWorld.metaData.statistics.frames = result.statistics.frames;
 
-					resolveExportPromise(curWorld);
+					resolveExportPromise(
+						minifyWorldData(
+							curWorld
+						)
+					);
 				break;
 			}
 		});
+	}
+
+
+
+	function minifyWorldData(_world) {
+		return _world;
 	}
 	
 
