@@ -47,7 +47,7 @@ if (window.Worker)
 
 
 
-
+WorldSaver.setup();
 
 
 
@@ -106,3 +106,10 @@ const Main = new function() {
 
 	return This;
 }
+
+
+
+
+
+function newId() {return parseInt(Math.round(Math.random() * 100000000) + "" + Math.round(Math.random() * 100000000));}
+

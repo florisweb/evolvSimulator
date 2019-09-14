@@ -1,7 +1,7 @@
 let Settings = {		
 	//photosyntheses
 	// energy/nutrient = 1 / nutrientsPerReaction * [-.5, 1] / sunEnergyPerReaction 
-	sunEnergyPerReaction: .05, //.1
+	sunEnergyPerReaction: .1, //.1
 	nutrientsPerReaction: .2, // .15
 
 	nutrientsPercOnDeath: .2,
@@ -9,7 +9,7 @@ let Settings = {
 
 	mutationChance: 1,
 	mutationRate: .2,
-	creatureBiteRange: 1.5,
+	creatureBiteRange: 1.3,
 
 	plantRange: [20, 1000], // min - max plants
 	creatureRange: [20, 1000], // min - max plants
@@ -25,11 +25,11 @@ let Settings = {
 		default: 0, // to be kept alive
 		plantAgeConstant: .00003,
 		creatureAgeConstant: .0001, // degration of the body makes it less efficient
-		sizeConstant: .0015,
+		sizeConstant: .003,
 		eyeConstant: .00000,
 		neuronConstant: 0.0,
 		turnConstant: 0.005,
-		moveConstant: .025,
+		moveConstant: .03,
 		energyPercPerBite: .25,
 	},
 
@@ -44,4 +44,3 @@ let Settings = {
 		percNutrientsPerFrame: .001
 	}
 }
-

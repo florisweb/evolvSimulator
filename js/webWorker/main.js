@@ -23,12 +23,10 @@ const Main = new function() {
 		creatures: 0,
 
 
-
 		running: false,
 		frameRate: 5,
 
-
-
+		importEntities: importEntities,
 
 		update: function(_update = true) {
 			this.updates++;
@@ -135,7 +133,8 @@ const Main = new function() {
 			angle: 	Math.random() * Math.PI * 2,
 			x: 		Math.round(Math.random() * Main.worldWidth),
 			y: 		Math.round(Math.random() * Main.worldHeight),
-		}, "creature");
+			type: 	"creature"
+		});
 	}
 
 	function createRandomPlant() {
@@ -151,22 +150,49 @@ const Main = new function() {
 			angle: 	Math.random() * Math.PI * 2,
 			x: 		Math.round(Math.random() * Main.worldWidth),
 			y: 		Math.round(Math.random() * Main.worldHeight),
-		}, "plant");
+			type: 	"plant"
+		});
 	}
 
 
-	function createEntity(_DNA, _metaData, _type = "plant") {
+	function createEntity(_DNA, _metaData) {
 		let constructor = _creature;
-		if (_type == "plant") constructor = _plant;
-		
+		if (_metaData.type == "plant") constructor = _plant;
+
 		let entity = new constructor(_DNA, _metaData);
-		This[_type + "s"]++; // to keep track of the amount of plants / creatures there are
+		This[_metaData.type + "s"]++; // to keep track of the amount of plants / creatures there are
 		This.entities.push(entity);
 
 		Collision.apply(entity);
 
 		return entity;
 	}
+
+
+
+
+	function importEntities(_entities) {
+		for (entity of _entities)
+		{
+			importEntity(entity);
+		}
+	}
+
+	function importEntity(_entity) {
+		let metaData = {
+			 energy: 	_entity.energy,
+			 type: 		_entity.type,
+			 angle: 	_entity.angle,
+			 x: 		_entity.x,
+			 y: 		_entity.y,
+		};
+
+		createEntity(
+			_entity.DNA,
+			metaData
+		);
+	}
+
 
 
 	return This;

@@ -49,8 +49,10 @@ function _entity(_DNA, _metaData) {
 		if (_startDNA) 	startDNA = _startDNA;
 		let newDNA	 	= mutateDNA(startDNA, Settings.mutationChance, Settings.mutationRate);
 
+
 		let angleMutation = Math.PI * .5;
 		metaData.angle 	= This.angle + angleMutation - angleMutation * 2 * Math.random();
+		metaData.type 	= This.type;
 
 		let distance	= (newDNA.size + This.DNA.size) * 4;
 		let rx 			=  Math.cos(This.angle) * distance;
@@ -62,7 +64,7 @@ function _entity(_DNA, _metaData) {
 		metaData.energy	= This.energy * .5;
 		This.energy 	*= .5;
 
-		let newEntity 		= Main.createEntity(newDNA, metaData, metaData.type);
+		let newEntity 		= Main.createEntity(newDNA, metaData);
 		newEntity.parent 	= This;
 		This.children.push(newEntity.id);
 		return newEntity;

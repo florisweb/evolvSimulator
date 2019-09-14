@@ -78,7 +78,7 @@
 
 
 		<div id="familyTreeMenu" class="hide" onclick="FamilyTree.close()">
-			<canvas id="familyTreeCanvas" width="10000" height="2000"></canvas>
+			<canvas id="familyTreeCanvas"></canvas>
 		</div>
 
 
@@ -89,6 +89,7 @@
 			
 			// temporary so things don't get cached
 			let antiCache = Math.round(Math.random() * 100000000);
+			$.getScript("js/worldSaver.js?antiCache=" 								+ antiCache, function() {});
 			$.getScript("js/infoMenu.js?antiCache=" 								+ antiCache, function() {});
 			$.getScript("js/familyTree.js?antiCache=" 								+ antiCache, function() {});
 			$.getScript("js/statistics.js?antiCache=" 								+ antiCache, function() {});

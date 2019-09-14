@@ -1,34 +1,39 @@
 
 
-function createClimateGrid() {
-	let grid = [];
-	let surfaceArea = Math.pow(Settings.nutrients.pxPerTile, 2);
+function createClimateGrid(_grid) {
+	let surfaceArea 	= Math.pow(Settings.nutrients.pxPerTile, 2);
 	const climateChangeConstant = .2;
+	
+	let grid 	= _grid;
+	if (!grid) 	grid = createGrid();
 
-	for (let y = 0; y < Main.worldHeight / Settings.nutrients.pxPerTile; y++)
-	{	
-		grid[y] = [];
-		for (let x = 0; x < Main.worldWidth / Settings.nutrients.pxPerTile; x++)
-		{
-			let climate = getAverageClimateOfNeighbourTiles(x, y);
-			if (x == 0 && y == 0)
+
+	function createGrid() {
+		grid = [];
+		for (let y = 0; y < Main.worldHeight / Settings.nutrients.pxPerTile; y++)
+		{	
+			grid[y] = [];
+			for (let x = 0; x < Main.worldWidth / Settings.nutrients.pxPerTile; x++)
 			{
-				climate = {
+				let climate = getAverageClimateOfNeighbourTiles(x, y);
+				if (x == 0 && y == 0) climate = {
 					r: Math.random(),
 					g: Math.random(),
 					b: Math.random(),
 				}
+			
+
+				let mapRange = climateChangeConstant;
+				climate.r += mapRange - 2 * mapRange * Math.random();
+				climate.g += mapRange - 2 * mapRange * Math.random();
+				climate.b += mapRange - 2 * mapRange * Math.random();
+
+				grid[y][x] = climate;
 			}
-
-
-			let mapRange = climateChangeConstant;
-			climate.r += mapRange - 2 * mapRange * Math.random();
-			climate.g += mapRange - 2 * mapRange * Math.random();
-			climate.b += mapRange - 2 * mapRange * Math.random();
-
-			grid[y][x] = climate;
 		}
+		return grid;
 	}
+
 
 	function getAverageClimateOfNeighbourTiles(_x, _y) {
 		let neighbourCount = 0;

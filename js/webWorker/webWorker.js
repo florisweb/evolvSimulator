@@ -24,7 +24,10 @@ const actions = {
 	setup: 				setup,
 	getData: 			exportData,
 	getSettings: 		function() {return Settings;},
-	writeSettings: 		function(_settings) {Settings = _settings}
+	writeSettings: 		function(_settings) {Settings = _settings},
+
+	exportWorld: 		exportData,
+	importWorld: 		importData
 };
 
 
@@ -41,7 +44,7 @@ this.onmessage = function(_e) {
 			result = actions[action](data.parameters);
 		}
 		catch (e) {
-			console.warn("An error accured", e);
+			console.error("An error accured", e);
 		}
 	}
 
@@ -80,6 +83,17 @@ function exportData() {
 	
 	return data;
 }
+
+
+
+function importData(_world) {
+	Main.worldWidth 	= _world.metaData.width;
+	Main.worldHeight 	= _world.metaData.height;
+	Main.map.importMap(_world.data.map);
+	Main.importEntities(_world.data.entities);
+}
+
+
 
 
 

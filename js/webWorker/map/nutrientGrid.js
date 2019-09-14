@@ -1,16 +1,23 @@
 
 
-function createNutrientGrid() {
-	let grid = [];// concentration
+function createNutrientGrid(_grid) {
+	let grid 	= _grid;
+	if (!grid) 	grid = createGrid();
+	
 	let surfaceArea = Math.pow(Settings.nutrients.pxPerTile, 2);
-	for (let y = 0; y < Main.worldHeight / Settings.nutrients.pxPerTile; y++)
-	{	
-		grid[y] = [];
-		for (let x = 0; x < Main.worldWidth / Settings.nutrients.pxPerTile; x++)
-		{
-			grid[y][x] = .3 * Math.random(); 
-			Main.totalNutrients += grid[y][x];
+
+	function createGrid() {
+		let grid = [];
+		for (let y = 0; y < Main.worldHeight / Settings.nutrients.pxPerTile; y++)
+		{	
+			grid[y] = [];
+			for (let x = 0; x < Main.worldWidth / Settings.nutrients.pxPerTile; x++)
+			{
+				grid[y][x] = .3 * Math.random(); 
+				Main.totalNutrients += grid[y][x];
+			}
 		}
+		return grid;
 	}
 
 

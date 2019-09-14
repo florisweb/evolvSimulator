@@ -165,7 +165,7 @@ function _creature(_DNA, _metaData) {
 	function reproduce() {
 		let newDNA = Object.assign({}, This.DNA);
 		newDNA.brain = mutateBrain(newDNA.brain, Settings.mutationChance, Settings.mutationRate);
-		entityReproducer(newDNA, {type: This.type});
+		entityReproducer(newDNA);
 
 		function mutateBrain(_brainDNA, _mutationChance = 1, _mutationRate = 0.1) {
 			let newBrainDNA = [];
