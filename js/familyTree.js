@@ -13,20 +13,23 @@ const FamilyTree = new function() {
 
 
 		settings: {
-			rowHeight: 50,
+			rowHeight: 40,
 			boxWidth: 30,
-			startY: 50,
+			startY: 40,
 			xScale: 1.5,
-			maxDepth: Infinity
+			maxDepth: Infinity,
+			maxWidth: 5000
 		}
 	}
 
 	let ctx = This.canvas.getContext("2d");
-
 	let curEntity;
+	let highestDepth = 0;
+
 	function open(_entity) {
 		if (!_entity) return false;
 		curEntity = _entity;
+
 
 		renderFamilyTreeByEntity(curEntity, This.settings.maxDepth);
 		This.HTML.Self.classList.remove("hide");
@@ -46,18 +49,26 @@ const FamilyTree = new function() {
 
 	function renderFamilyTreeByEntity(_entity, _maxDepth) {
 		if (!_entity) return false;
+		highestDepth = 0;
 		ctx.clearRect(0, 0, This.canvas.width, This.canvas.height);
 
 		_entity.isTargetEntity = true;
 		let masterParent = getMasterParent(_entity, _maxDepth - 1);
 		assignChildWidthToEntities(masterParent, _maxDepth);
 		
-
-		This.canvas.width = masterParent.childWidth * This.settings.boxWidth + 100;
 		
-		let canvasLeft = (window.innerWidth - This.canvas.width * This.settings.xScale) / 2;
-		This.canvas.style.width = This.canvas.width * This.settings.xScale + "px";
-		This.canvas.style.left = (canvasLeft > 0 ? canvasLeft : 0) + "px";
+		This.canvas.width 		= masterParent.childWidth * This.settings.boxWidth + 100;
+		This.canvas.height 		= (highestDepth + 1) * This.settings.rowHeight + This.settings.startY + 100;
+		let canvasLeft 			= (window.innerWidth - This.canvas.width * This.settings.xScale) / 2;
+		let canvasWidth 		= This.canvas.width * This.settings.xScale;
+		This.canvas.style.width = (canvasWidth > This.settings.maxWidth ? This.settings.maxWidth : canvasWidth) + "px";
+		This.canvas.style.left 	= (canvasLeft > 0 ? canvasLeft : 0) + "px";
+
+		for (entity of Main.data.entities)
+		{
+			addDeadFamily(entity);
+		}
+
 
 		renderFamilyTree(masterParent, 0, This.canvas.width / 2, _maxDepth);
 
@@ -66,9 +77,10 @@ const FamilyTree = new function() {
 	
 
 
-	function assignChildWidthToEntities(_entity, _maxDepth) {
+	function assignChildWidthToEntities(_entity, _maxDepth, _curDepth = 0) {
 		if (_maxDepth <= 0) return 1;
-
+		if (_curDepth > highestDepth) highestDepth = _curDepth;
+		
 		let childWidth = 0;
 		for (let i = 0; i < _entity.children.length; i++)
 		{
@@ -76,7 +88,7 @@ const FamilyTree = new function() {
 			let child = Main.getEntityById(childId);
 			if (!child) continue;
 
-			childWidth += assignChildWidthToEntities(child, _maxDepth - 1);
+			childWidth += assignChildWidthToEntities(child, _maxDepth - 1, _curDepth + 1);
 		}
 
 		if (!childWidth) childWidth = 1;
@@ -105,8 +117,7 @@ const FamilyTree = new function() {
 				_depth * This.settings.rowHeight + This.settings.startY, 
 				startX + rx, 
 				(_depth + 1) * This.settings.rowHeight + This.settings.startY,
-				child.isTargetEntity ? "#fff" : "rgba(255, 255, 255, .7)",
-				true
+				isParentOf(child, curEntity) ? "rgb(255, 255, 255)" : "rgb(150, 150, 150)"
 			);
 		
 
@@ -115,8 +126,6 @@ const FamilyTree = new function() {
 			passedChildWidth += child.childWidth;
 		}
 		
-		console.log("Render: " + _entity.id, _entity, !!_entity.parent);
-
 		renderEntity(_entity, _x, _depth * This.settings.rowHeight + This.settings.startY);
 	}
 
@@ -138,37 +147,72 @@ const FamilyTree = new function() {
 	function getMasterParent(_entity, _maxDepth) {
 		if (!_entity.parent) return _entity;
 		if (_maxDepth <= 0) return _entity;
-		let entity = Main.getEntityById(_entity.parent.id);
-		if (!entity) return _entity;
 		return getMasterParent(_entity.parent, _maxDepth - 1);
 	}
 
+	function isParentOf(_entity, _target) {
+		if (!_target || !_entity) return false;
+		if (_target.id == _entity.id) return true;
+		return isParentOf(_entity, _target.parent);
+	}
 
-	function renderLineToEntity(_x1, _y1, _x2, _y2, _color, _dotted = false) {
-		ctx.strokeStyle = _color;
+
+
+	function addDeadFamily(_entity) {
+		if (!_entity.parent) return false;
+
+		let parent = _entity.parent;
+		addDeadFamily(parent);
+
+		let found = Main.getEntityById(parent.id);
+		if (found) return true;
+		parent.isDead = true;
+		Main.data.entities.push(parent);
+	}
+
+
+
+
+	function renderLineToEntity(_x1, _y1, _x2, _y2, _colour) {
+		ctx.strokeStyle = _colour;
 		ctx.beginPath();
-
-		// let lineDash = [];
-		// if (_dotted) lineDash = [5, 5];
-		ctx.setLineDash([5, 5]);
-		
 		ctx.moveTo(_x1, _y1);
 		ctx.lineTo(_x2, _y1);
-
-		ctx.setLineDash([5, 5]);
+	
 		ctx.moveTo(_x2, _y1);
-		ctx.lineTo(_x2, _y2);
+		ctx.lineTo(_x2, _y2);	
 		ctx.closePath();
 		ctx.stroke();
 	}
 
+
 	function renderEntity(_entity, _x, _y) {
-		ctx.setLineDash([]);
 		let entity 	= Object.assign({}, _entity);
 		entity.x 	= _x;
 		entity.y 	= _y;
-
 		Renderer.renderEntity(entity, ctx);
+
+
+		if (_entity.id == curEntity.id) 
+		{
+			let size = 30;
+			ctx.strokeStyle = "rgba(255, 255, 255, .6)";
+			ctx.beginPath();
+			ctx.strokeRect(_x - size / 2, _y - size / 2, size, size);
+			ctx.closePath();
+			ctx.stroke();
+		}
+
+		
+		if (_entity.isDead) 
+		{
+			
+			ctx.fillStyle = "rgb(255, 255, 255)";
+			ctx.beginPath();
+			ctx.fillText("RIP", _x - 8, _y + _entity.DNA.size + 10);
+			ctx.closePath();
+			ctx.fill();
+		}
 	}
 
 	return This;
