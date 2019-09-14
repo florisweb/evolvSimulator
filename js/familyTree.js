@@ -3,14 +3,13 @@ const FamilyTree = new function() {
 	let This = {
 		HTML: {
 			Self: $("#familyTreeMenu")[0],
+			canvas: $("#familyTreeCanvas")[0],
 		},
 		canvas: $("#familyTreeCanvas")[0],
 		renderFamilyTree: renderFamilyTreeByEntity,
 		
 		open: open,
 		close: close,
-		loopRender: loopRender,
-
 
 		settings: {
 			rowHeight: 40,
@@ -38,14 +37,10 @@ const FamilyTree = new function() {
 	
 	function close() {
 		This.HTML.Self.classList.add("hide");
+		This.HTML.canvas.width = 1;
+		This.HTML.canvas.height = 1;
+		This.HTML.canvas.style.width = "1px";
 	}
-
-	function loopRender() {
-		if (curEntity.energy <= 50) return This.close();
-		renderFamilyTreeByEntity(curEntity, This.settings.maxDepth);
-		setTimeout(loopRender, 1000);
-	}
-
 
 	function renderFamilyTreeByEntity(_entity, _maxDepth) {
 		if (!_entity) return false;
