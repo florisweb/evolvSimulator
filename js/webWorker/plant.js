@@ -44,7 +44,7 @@ function _plant(_DNA, _metaData) {
 		let surfaceArea = Math.pow(This.DNA.size, 2) / 4 * Math.PI;
 		
 		let photoReactions 			= surfaceArea;
-		let totalNutrients 			= Main.map.nutrients.eatByCoords(This.x, This.y, surfaceArea);
+		let totalNutrients 			= Main.map.nutrients.eatByCoords(This.x, This.y, surfaceArea, This.DNA.rootEfficiency);
 		let totalSun 				= solarEfficiency * surfaceArea;
 		let nutrientsPerReaction 	= totalNutrients / photoReactions;
 

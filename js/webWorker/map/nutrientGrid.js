@@ -48,6 +48,8 @@ function createNutrientGrid(_grid) {
 		let availableNutrients = grid[y][x] * _takerArea;
 		let eatableNutrients = availableNutrients * Settings.nutrients.percNutrientsPerFrame; 
 
+		if (eatableNutrients > totalNutrients) eatableNutrients = totalNutrients;
+
 		Main.totalNutrients -= eatableNutrients / totalNutrients;
 		grid[y][x] -= eatableNutrients / totalNutrients;
 		if (grid[y][x] > 1) grid[y][x] = 1;

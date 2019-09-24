@@ -25,6 +25,7 @@ const Renderer = new function() {
 		This.canvas.width / This.canvas.offsetWidth * 
 		This.canvas.offsetHeight / 50
 	) * 50;
+
 	This.canvas.height 			= height;
 	This.canvas.style.height 	= height / This.canvas.width * This.canvas.offsetWidth + "px";
 	let dtx	= This.canvas.getContext("2d");
@@ -193,12 +194,25 @@ const Renderer = new function() {
 
 
 
+
 		if (_entity.type != "plant") renderEntityAngleArrow(_entity, _ctx);
 
-		if (_entity.type == "creature")
-		{
-			for (let e = 0; e < _entity.DNA.eyeCount; e++) renderCreaturEye(_entity, e, _ctx);
-		}
+		if (_entity.type != "creature") return;
+		
+		for (let e = 0; e < _entity.DNA.eyeCount; e++) renderCreaturEye(_entity, e, _ctx);
+
+		let brainOuputs = _entity.brain.layers[_entity.brain.layers.length - 1].a;
+		let lineWidth = brainOuputs[3] * 5;
+		_ctx.strokeStyle = "rgba(255, 0, 0, .5)";
+		_ctx.lineWidth = lineWidth;
+		_ctx.beginPath();
+		_ctx.circle(
+			_entity.x, 
+			_entity.y, 
+			_entity.DNA.size + lineWidth
+		);
+		_ctx.closePath();
+		_ctx.stroke();
 	}
 
 	function renderEntityAngleArrow(_entity, ctx) {

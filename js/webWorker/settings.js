@@ -1,8 +1,8 @@
 let Settings = {		
 	//photosyntheses
 	// energy/nutrient = 1 / nutrientsPerReaction * [-.5, 1] / sunEnergyPerReaction 
-	sunEnergyPerReaction: .1, //.1
-	nutrientsPerReaction: .2, // .15
+	sunEnergyPerReaction: .05, //.1
+	nutrientsPerReaction: .25, // .15
 
 	nutrientsPercOnDeath: .2,
 	minimumEnergyToBeAlive: 50,
@@ -30,7 +30,7 @@ let Settings = {
 		neuronConstant: 0.0,
 		turnConstant: 0.005,
 		moveConstant: .03,
-		energyPercPerBite: .25,
+		energyPercPerBite: .3,
 	},
 
 	performance: {
@@ -41,6 +41,6 @@ let Settings = {
 		nutrientsPerUpdate: 1,
 		percWasteToNutrients: .05,
 		pxPerTile: 40,
-		percNutrientsPerFrame: .001
+		percNutrientsPerFrame: .002,
 	}
 }
