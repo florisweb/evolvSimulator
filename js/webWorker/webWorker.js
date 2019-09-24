@@ -1,5 +1,8 @@
 
 const antiCache = Math.round(Math.random() * 100000);
+importScripts("seedGenerator.js?a="		+ antiCache);
+Seed.setSeed("hey there");
+
 importScripts("settings.js?a="			+ antiCache);
 importScripts("collision.js?a=" 		+ antiCache);
 importScripts("neuralNetwork.js?a="		+ antiCache);

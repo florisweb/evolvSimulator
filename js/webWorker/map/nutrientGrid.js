@@ -13,7 +13,7 @@ function createNutrientGrid(_grid) {
 			grid[y] = [];
 			for (let x = 0; x < Main.worldWidth / Settings.nutrients.pxPerTile; x++)
 			{
-				grid[y][x] = .3 * Math.random(); 
+				grid[y][x] = .3 * Seed.random(); 
 				Main.totalNutrients += grid[y][x];
 			}
 		}
@@ -62,9 +62,9 @@ function createNutrientGrid(_grid) {
 		let nutrientsLeft = _totalNutrients;
 		while (nutrientsLeft > 0)
 		{
-			let x = Math.floor(Math.random() * grid[0].length);
-			let y = Math.floor(Math.random() * grid.length);
-			let nutrients = _totalNutrients * .1 * Math.random();
+			let x = Math.floor(Seed.random() * grid[0].length);
+			let y = Math.floor(Seed.random() * grid.length);
+			let nutrients = _totalNutrients * .1 * Seed.random();
 			if (nutrients > nutrientsLeft) nutrients = nutrientsLeft;
 			nutrientsLeft -= nutrients;
 

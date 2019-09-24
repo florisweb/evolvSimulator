@@ -17,16 +17,16 @@ function createClimateGrid(_grid) {
 			{
 				let climate = getAverageClimateOfNeighbourTiles(x, y);
 				if (x == 0 && y == 0) climate = {
-					r: Math.random(),
-					g: Math.random(),
-					b: Math.random(),
+					r: Seed.random(),
+					g: Seed.random(),
+					b: Seed.random(),
 				}
 			
 
 				let mapRange = climateChangeConstant;
-				climate.r += mapRange - 2 * mapRange * Math.random();
-				climate.g += mapRange - 2 * mapRange * Math.random();
-				climate.b += mapRange - 2 * mapRange * Math.random();
+				climate.r += mapRange - 2 * mapRange * Seed.random();
+				climate.g += mapRange - 2 * mapRange * Seed.random();
+				climate.b += mapRange - 2 * mapRange * Seed.random();
 
 				grid[y][x] = climate;
 			}

@@ -49,7 +49,7 @@ function NeuralNetwork(_structure) {
 
 	function createRandomArray(_arrLength) {
 		let arr = [];
-		for (let i = 0; i < _arrLength; i++) arr.push(1 - Math.random() * 2);
+		for (let i = 0; i < _arrLength; i++) arr.push(1 - Seed.random() * 2);
 		return arr;
 	}
 

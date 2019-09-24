@@ -51,7 +51,7 @@ function _entity(_DNA, _metaData) {
 
 
 		let angleMutation = Math.PI * .5;
-		metaData.angle 	= This.angle + angleMutation - angleMutation * 2 * Math.random();
+		metaData.angle 	= This.angle + angleMutation - angleMutation * 2 * Seed.random();
 		metaData.type 	= This.type;
 
 		let distance	= (newDNA.size + This.DNA.size) * 4;
@@ -77,9 +77,9 @@ function _entity(_DNA, _metaData) {
 			newDNA[genName] = _startDNA[genName];
 			
 			if (typeof _startDNA[genName] != "number") continue;
-			if (_mutationChance < Math.random()) continue;
+			if (_mutationChance < Seed.random()) continue;
 			
-			newDNA[genName] += _mutationRate - _mutationRate * 2 * Math.random();
+			newDNA[genName] += _mutationRate - _mutationRate * 2 * Seed.random();
 		}
 
 		return newDNA;

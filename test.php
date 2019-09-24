@@ -42,6 +42,7 @@
 			// temporary so things don't get cached
 			let antiCache = Math.round(Math.random() * 100000000);
 			$.getScript("js/webWorker/settings.js?antiCache=" 									+ antiCache, function() {});
+			$.getScript("js/webWorker/seedGenerator.js?antiCache=" 								+ antiCache, function() {});
 			$.getScript("js/webWorker/collision.js?antiCache=" 									+ antiCache, function() {});
 			$.getScript("js/webWorker/neuralNetwork.js?antiCache=" 								+ antiCache, function() {});
 			

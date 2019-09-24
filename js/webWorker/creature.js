@@ -172,9 +172,9 @@ function _creature(_DNA, _metaData) {
 			
 			for (let n = 0; n < _brainDNA.length; n++)
 			{
-				if (_mutationChance < Math.random()) continue;
+				if (_mutationChance < Seed.random()) continue;
 				let neuronValue = _brainDNA[n];
-				newBrainDNA[n] = neuronValue + _mutationRate - _mutationRate * 2 * Math.random();
+				newBrainDNA[n] = neuronValue + _mutationRate - _mutationRate * 2 * Seed.random();
 			}
 
 			return newBrainDNA;
@@ -238,14 +238,14 @@ function _creature(_DNA, _metaData) {
 				curBrainIndex++;
 				if (!newBrainDNA[curBrainIndex])
 				{
-					newBrainDNA[curBrainIndex] = 1 - Math.random() * 2;
+					newBrainDNA[curBrainIndex] = 1 - Seed.random() * 2;
 				}
 			
 				for (let w = 0; w < prevLayerLength; w++)
 				{
 					curBrainIndex++;
 					if (newBrainDNA[curBrainIndex]) continue;
-					newBrainDNA[curBrainIndex] = 1 - Math.random() * 2;
+					newBrainDNA[curBrainIndex] = 1 - Seed.random() * 2;
 				}
 			}	
 		}

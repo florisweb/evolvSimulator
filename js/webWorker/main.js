@@ -110,46 +110,46 @@ const Main = new function() {
 
 	function createRandomCreature() {
 		let DNA = {
-			size: 		(Math.random() + .1) * 10,
-			speed: 		Math.random() + .1,
-			r: 			Math.random(),
-			g: 			Math.random(),
-			b: 			Math.random(),
+			size: 		(Seed.random() + .1) * 10,
+			speed: 		Seed.random() + .1,
+			r: 			Seed.random(),
+			g: 			Seed.random(),
+			b: 			Seed.random(),
 
-			eyeRange: 	This.worldWidth * Math.random() * .2,
-			eyeCount: 	Math.round(5 * Math.pow(Math.random(), 2)),
-			eyeAngle: 	Math.PI * Math.pow(Math.random(), 4),
+			eyeRange: 	This.worldWidth * Seed.random() * .2,
+			eyeCount: 	Math.round(5 * Math.pow(Seed.random(), 2)),
+			eyeAngle: 	Math.PI * Math.pow(Seed.random(), 4),
 
 			brain: 		[]
 		};
 
 		DNA.brain = [
-			Math.random()
+			Seed.random()
 		];
-		for (let i = 0; i < DNA.brain[0]; i++) DNA.brain.push(Math.random() * 4);
+		for (let i = 0; i < DNA.brain[0]; i++) DNA.brain.push(Seed.random() * 4);
 
 		return createEntity(DNA, {
 			energy: 100,
-			angle: 	Math.random() * Math.PI * 2,
-			x: 		Math.round(Math.random() * Main.worldWidth),
-			y: 		Math.round(Math.random() * Main.worldHeight),
+			angle: 	Seed.random() * Math.PI * 2,
+			x: 		Math.round(Seed.random() * Main.worldWidth),
+			y: 		Math.round(Seed.random() * Main.worldHeight),
 			type: 	"creature"
 		});
 	}
 
 	function createRandomPlant() {
 		let DNA = {
-			size: 		(Math.random() * 1.5 + .5) * 10,
-			r: 			Math.random(),
-			g: 			Math.random(),
-			b: 			Math.random()
+			size: 		(Seed.random() * 1.5 + .5) * 10,
+			r: 			Seed.random(),
+			g: 			Seed.random(),
+			b: 			Seed.random()
 		};
 
 		return createEntity(DNA, {
 			energy: 100,
-			angle: 	Math.random() * Math.PI * 2,
-			x: 		Math.round(Math.random() * Main.worldWidth),
-			y: 		Math.round(Math.random() * Main.worldHeight),
+			angle: 	Seed.random() * Math.PI * 2,
+			x: 		Math.round(Seed.random() * Main.worldWidth),
+			y: 		Math.round(Seed.random() * Main.worldHeight),
 			type: 	"plant"
 		});
 	}
@@ -206,4 +206,4 @@ const Main = new function() {
 
 
 
-function newId() {return parseInt(Math.round(Math.random() * 100000000) + "" + Math.round(Math.random() * 100000000));}
+function newId() {return parseInt(Math.round(Seed.random() * 100000000) + "" + Math.round(Seed.random() * 100000000));}
