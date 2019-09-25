@@ -33,7 +33,7 @@ function _entity(_DNA, _metaData) {
 
 	function update() {
 		This.age++;
-		if (This.energy <= Settings.minimumEnergyToBeAlive) return This.die();
+		if (This.energy <= Settings.minimumEnergyToBeAlive) return This.die();		
 		if (This.age % Settings.performance.checkCollisionFrameCount == 0) Collision.apply(This);
 	}
 
@@ -49,7 +49,6 @@ function _entity(_DNA, _metaData) {
 		if (_startDNA) 	startDNA = _startDNA;
 		let newDNA	 	= mutateDNA(startDNA, Settings.mutationChance, Settings.mutationRate);
 
-
 		let angleMutation = Math.PI * .5;
 		metaData.angle 	= This.angle + angleMutation - angleMutation * 2 * Seed.random();
 		metaData.type 	= This.type;
@@ -59,7 +58,6 @@ function _entity(_DNA, _metaData) {
 		let ry 			= -Math.sin(This.angle) * distance;
 		metaData.x 		= This.x + rx;
 		metaData.y 		= This.y + ry;
-
 		
 		metaData.energy	= This.energy * .5;
 		This.energy 	*= .5;
@@ -67,6 +65,7 @@ function _entity(_DNA, _metaData) {
 		let newEntity 		= Main.createEntity(newDNA, metaData);
 		newEntity.parent 	= This;
 		This.children.push(newEntity.id);
+
 		return newEntity;
 	}
 

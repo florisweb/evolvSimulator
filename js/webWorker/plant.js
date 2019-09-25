@@ -9,7 +9,7 @@ function _plant(_DNA, _metaData) {
 	this.update 			= update;
 
 	const solarEfficiency = function() {
-		let climate = Main.map.climate.getByCoords(This.x, This.y);
+		let climate = Main.map.climate.getByCoords(This.x, This.y);		
 		if (!climate) return 0;
 		let difference = 0;
 		difference += Math.abs(This.DNA.r - climate.r);
@@ -18,7 +18,6 @@ function _plant(_DNA, _metaData) {
 
 		return 1 - difference / 2;
 	}();
-	Collision.apply(This);
 
 
 	function update() {

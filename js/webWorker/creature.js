@@ -19,7 +19,7 @@ function _creature(_DNA, _metaData) {
 	let prevActionValues = [];                   
 	function update() {
 		if (entityUpdater()) return; // the creature died
-				
+
 		Main.totalAge 		+= This.age;
 		Main.totalEnergy 	+= This.energy;
 		
