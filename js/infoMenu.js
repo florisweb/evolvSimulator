@@ -5,7 +5,8 @@ const InfoMenu = new function() {
 		open: open,
 		update: update,
 		openState: true,
-		curEntity: false
+		curEntity: false,
+		searchMenu: new InfoMenu_searchMenu
 	}
 
 	let HTML = {
@@ -16,6 +17,7 @@ const InfoMenu = new function() {
 				energy: 		$("#entityInfoMenu .textHolder .text")[1].children[1],
 				age: 			$("#entityInfoMenu .textHolder .text")[2].children[1],
 				generation: 	$("#entityInfoMenu .textHolder .text")[3].children[1],
+				children: 		$("#entityInfoMenu .textHolder .text")[4].children[1],
 			}
 		}
 	}
@@ -48,7 +50,7 @@ const InfoMenu = new function() {
 		
 		HTML.entityMenu.entityInfo.energy.innerHTML		 	= Math.round(This.curEntity.energy * 10) / 10;
 		HTML.entityMenu.entityInfo.age.innerHTML 			= This.curEntity.age;
-		
+		HTML.entityMenu.entityInfo.children.innerHTML 		= This.curEntity.children.length;
 	}
 
 
@@ -72,6 +74,48 @@ const InfoMenu = new function() {
 
 
 	
+
+	return This;
+}
+
+
+function InfoMenu_searchMenu() {
+	let HTML = {
+		listHolder: entityListHolder,
+	}
+
+	let This = {
+		createSearchItem: createSearchItem,
+	}
+
+
+
+
+	function createSearchItem(_entity) {
+		let html = document.createElement("div");
+		html.className = "entityItem";
+		html.innerHTML = 	"<canvas class='entityPreviewCanvas' width='60' height='60'></canvas>" + 
+							"<div class='text titleHolder'>50 energy</div>";
+							
+							
+
+		HTML.listHolder.append(html);
+		renderEntityToCanvas(_entity, html.children[0]);
+	}
+
+
+	function renderEntityToCanvas(_entity, _canvas) {
+		let ctx		= _canvas.getContext("2d");
+		let entity 	= Object.assign({}, _entity);
+		entity.x 	= _canvas.width / 2;
+		entity.y 	= _canvas.height / 2;
+		
+		Renderer.renderEntity(entity, ctx);
+	}
+
+
+
+
 
 	return This;
 }

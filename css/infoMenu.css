@@ -6,9 +6,8 @@
 	right: 0;
 	top: 0;
 
-	width: 340px;
-	height: calc(100vh - 20px * 2);
-	padding: 20px;
+	width: 380px;
+	height: 100vh;
 	
 
 	box-shadow: 0 -5px 30px 5px rgba(50, 50, 50, 0.3);
@@ -30,26 +29,91 @@
 
 
 
-#entityInfoMenu {
-	height: 150px;
+
+#infoMenu .infoMenuPage {
+	position: absolute;
+	float: left;
+	top: 0;
+	left: 0;
+
+	width: calc(100% - 20px * 2);
+	height: calc(100% - 20px);
+	padding: 20px;
+	padding-bottom: 0;
+	overflow: auto;
+
+	transition: all 0.5s;
 }
-	
-	.textHolder {
-		position: relative;
-		float: left;
+
+#infoMenu .infoMenuPage.hide {
+	transition: all 0.2s;
+	top: 40px;
+	opacity: 0;
+	pointer-events: none;
+}
+
+	/*EntityInfoPage*/
+	#entityInfoMenu {
+		height: 150px;
 	}
+		
+		.textHolder {
+			position: relative;
+			float: left;
+		}
 
 
-	#entityDisplayCanvas {
+		#entityDisplayCanvas {
+			position: relative;
+			float: right;
+			right: 0;
+			
+			width: 150px;
+			height: auto;
+			
+			background: rgba(255, 255, 255, 0.3);
+		}
+
+
+
+
+	/*SearchPage*/
+	.infoMenuPage #entityListHolder {
 		position: relative;
-		float: right;
-		right: 0;
-		
-		width: 150px;
-		height: auto;
-		
-		background: rgba(255, 255, 255, 0.3);
+		width: 100%;
+		height: calc(100% - 50px);
+		overflow: auto;
 	}
+
+		#entityListHolder .entityItem {
+			position: relative;
+			width: 100%;
+			height: 50px;
+			border-top: 1px solid #555;
+		}
+
+			.entityItem .entityPreviewCanvas {
+				position: relative;
+				left: 0;
+				float: left;
+				
+				width: auto;
+				height: 50px;
+				background: rgba(255, 255, 255, .01);
+			}
+
+			.entityItem .titleHolder {
+				position: relative;
+				float: left;
+				left: 10px;
+				height: 20px;
+				width: calc(100% - 80px);
+				padding: 15px 5px;
+			}
+
+
+
+
 
 
 

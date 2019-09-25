@@ -10,7 +10,7 @@
 
 		<link rel="stylesheet" type="text/css" href="css/component.css">
 		<link rel="stylesheet" type="text/css" href="css/mainContent/header.css">
-		<link rel="stylesheet" type="text/css" href="css/infoMenu.css?a=4">
+		<link rel="stylesheet" type="text/css" href="css/infoMenu.css?a=6">
 		<link rel="stylesheet" type="text/css" href="css/familyTree.css?a=4">
 		<link rel="stylesheet" type="text/css" href="css/mainContent/mainContent.css?a=12">
 		<script type="text/javascript" src="/JS/jQuery.js" asy nc></script>
@@ -61,14 +61,14 @@
 
 
 		<div id="infoMenu">
-			<!-- <div class="infoMenuPage">
+			<div class="infoMenuPage">
 				<div class="headerText preventTextOverflow">PROJECTS</div>
 				<img class="exitIcon" src="images/exitIcon.png" onclick="InfoMenu.close()">
-				<div id="projectListHolder"></div>
-			</div> -->
+				<div id="entityListHolder"></div>
+			</div>
 
 
-			<div class="infoMenuPage">
+			<div class="infoMenuPage hide">
 				<div class="header">
 					<div class="text">
 						<strong>Frame</strong>
@@ -98,7 +98,12 @@
 							<strong>Generation</strong>
 							: 
 							<a>0</a>
-						</div>	
+						</div>
+						<div class="text">
+							<strong>Children</strong>
+							: 
+							<a>0</a>
+						</div>
 					</div>
 				
 					<canvas id="entityDisplayCanvas" width="100" height="100"></canvas>
