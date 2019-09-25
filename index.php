@@ -10,9 +10,9 @@
 
 		<link rel="stylesheet" type="text/css" href="css/component.css">
 		<link rel="stylesheet" type="text/css" href="css/mainContent/header.css">
-		<link rel="stylesheet" type="text/css" href="css/infoMenu.css?a=3">
+		<link rel="stylesheet" type="text/css" href="css/infoMenu.css?a=4">
 		<link rel="stylesheet" type="text/css" href="css/familyTree.css?a=4">
-		<link rel="stylesheet" type="text/css" href="css/mainContent/mainContent.css?a=11">
+		<link rel="stylesheet" type="text/css" href="css/mainContent/mainContent.css?a=12">
 		<script type="text/javascript" src="/JS/jQuery.js" asy nc></script>
 
 	</head>	
@@ -69,12 +69,20 @@
 
 
 			<div class="infoMenuPage">
+				<div class="header">
+					<div class="text">
+						<strong>Frame</strong>
+						: 
+						<a>0</a>
+					</div>
+				</div>
+				<br>
 				<div id="entityInfoMenu"> 
 					<div class="textHolder">
 						<div class="text">
 							<strong>Type</strong>
 							: 
-							<a>Plant</a>
+							<a>plant</a>
 						</div>
 						<div class="text">
 							<strong>Energy</strong>
@@ -84,12 +92,12 @@
 						<div class="text">
 							<strong>Age</strong>
 							: 
-							<a>100</a>
+							<a>0</a>
 						</div>
 						<div class="text">
 							<strong>Generation</strong>
 							: 
-							<a>100</a>
+							<a>0</a>
 						</div>	
 					</div>
 				
