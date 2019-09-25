@@ -3,11 +3,13 @@ const InfoMenu = new function() {
 	let This = {
 		canvas: $("#entityDisplayCanvas")[0],
 		open: open,
-		openState: false,
+		update: update,
+		openState: true,
 		curEntity: false
 	}
 
 	let HTML = {
+		frameHolder: $(".infoMenuPage .header .text")[0].children[1],
 		entityMenu: {
 			entityInfo: {
 				type: 			$("#entityInfoMenu .textHolder .text")[0].children[1],
@@ -27,28 +29,23 @@ const InfoMenu = new function() {
 	
 		HTML.entityMenu.entityInfo.type.innerHTML = This.curEntity.type;
 	
-		statusLoop();
+		update();
 	}
 
-
-
-	function statusLoop() {
-		let entity = Main.getEntityById(This.curEntity.id);
-		
-		if (!entity) return;
+	function update() {
 		if (!This.openState) return;
 
+		HTML.frameHolder.innerHTML = Main.data.statistics.frames;
+		
+
+		let entity = Main.getEntityById(This.curEntity.id);
+		if (!entity) return;
 
 		This.curEntity = entity;
 		renderEntity(This.curEntity);
-
+		
 		HTML.entityMenu.entityInfo.energy.innerHTML = Math.round(This.curEntity.energy * 10) / 10;
 		HTML.entityMenu.entityInfo.age.innerHTML 	= This.curEntity.age;
-		// HTML.entityMenu.entityInfo.energy.innerHTML = This.curEntity.energy;
-
-
-
-		requestAnimationFrame(statusLoop);
 	}
 
 

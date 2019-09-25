@@ -33,7 +33,10 @@ if (window.Worker)
 				let updateEveryXFrames = Statistics.settings.updateEveryXFrames;
 				if (
 					Math.floor(frames / updateEveryXFrames / 10) * updateEveryXFrames * 10 % updateEveryXFrames == 0
-				) Statistics.update(_e.data.result.statistics);
+				) {
+					Statistics.update(_e.data.result.statistics);
+					InfoMenu.update();
+				}
 
 
 				if (Main.updates % Main.frameRate == 0) Renderer.update(_e.data.result); 
