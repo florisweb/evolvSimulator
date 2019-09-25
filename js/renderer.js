@@ -1,13 +1,14 @@
 
 const Renderer = new function() {
 	let This = {
+		renderData: false,
 		canvas: $("#worldCanvas")[0],
 		renderEntity: renderEntity,
 		rendercreatures: function(_creatures) {
 			for (creatur of _creatures) this.renderEntity(creatur);
 		},
 		update: function(_renderData) {
-			renderData = _renderData;
+			This.renderData = _renderData;
 
 			dtx.fillStyle = "#fff";
 			dtx.beginPath();
@@ -18,8 +19,8 @@ const Renderer = new function() {
 			
 			// renderDebugInfo();
 		},
-
 	}
+
 
 	let height = Math.ceil(
 		This.canvas.width / This.canvas.offsetWidth * 
@@ -30,7 +31,6 @@ const Renderer = new function() {
 	This.canvas.style.height 	= height / This.canvas.width * This.canvas.offsetWidth + "px";
 	let dtx	= This.canvas.getContext("2d");
 	let ctx = dtx;
-	let renderData = {};
 
 	This.canvas.onclick = function(_e) {
 		let x = _e.offsetX / This.canvas.offsetWidth * This.canvas.width;
@@ -46,7 +46,7 @@ const Renderer = new function() {
 	function getAllEntitiesWithinRange(_x, _y, _range = 0) {
 		let visableEntities = [];
 
-		for (entity of renderData.entities)
+		for (entity of This.renderData.entities)
 		{
 			let maxDistance = entity.DNA.size + _range;
 			let dx = entity.x - _x;
@@ -160,7 +160,7 @@ const Renderer = new function() {
 
 
 
-	function renderEntity(_entity, _ctx) {
+	function renderEntity(_entity, _ctx, _renderSettings = {}) {
 		if (
 			InfoMenu.openState &&
 			InfoMenu.curEntityId == _entity.id &&
@@ -201,18 +201,24 @@ const Renderer = new function() {
 		
 		for (let e = 0; e < _entity.DNA.eyeCount; e++) renderCreaturEye(_entity, e, _ctx);
 
-		let brainOuputs = _entity.brain.layers[_entity.brain.layers.length - 1].a;
-		let lineWidth = brainOuputs[3] * 5;
-		_ctx.strokeStyle = "rgba(255, 0, 0, .5)";
-		_ctx.lineWidth = lineWidth;
-		_ctx.beginPath();
-		_ctx.circle(
-			_entity.x, 
-			_entity.y, 
-			_entity.DNA.size + lineWidth
-		);
-		_ctx.closePath();
-		_ctx.stroke();
+
+		if (_renderSettings.renderBiteIndicator !== false)
+		{
+			let brainOuputs = _entity.brain.layers[_entity.brain.layers.length - 1].a;
+			let lineWidth = brainOuputs[3] * 5;
+			_ctx.strokeStyle = "rgba(255, 0, 0, .5)";
+			_ctx.lineWidth = lineWidth;
+			_ctx.beginPath();
+			_ctx.circle(
+				_entity.x, 
+				_entity.y, 
+				_entity.DNA.size + lineWidth
+			);
+			_ctx.closePath();
+			_ctx.stroke();
+
+			_ctx.lineWidth = 1;
+		}
 	}
 
 	function renderEntityAngleArrow(_entity, ctx) {
