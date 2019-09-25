@@ -1,14 +1,13 @@
 
 const Renderer = new function() {
 	let This = {
-		renderData: false,
 		canvas: $("#worldCanvas")[0],
 		renderEntity: renderEntity,
 		rendercreatures: function(_creatures) {
 			for (creatur of _creatures) this.renderEntity(creatur);
 		},
 		update: function(_renderData) {
-			This.renderData = _renderData;
+			renderData = _renderData;
 
 			dtx.fillStyle = "#fff";
 			dtx.beginPath();
@@ -16,10 +15,9 @@ const Renderer = new function() {
 			dtx.closePath();
 			renderMapTiles(_renderData.map);
 			this.rendercreatures(_renderData.entities);
-			
-			// renderDebugInfo();
 		},
 	}
+	let renderData = {};
 
 
 	let height = Math.ceil(
@@ -46,7 +44,7 @@ const Renderer = new function() {
 	function getAllEntitiesWithinRange(_x, _y, _range = 0) {
 		let visableEntities = [];
 
-		for (entity of This.renderData.entities)
+		for (entity of renderData.entities)
 		{
 			let maxDistance = entity.DNA.size + _range;
 			let dx = entity.x - _x;
@@ -161,12 +159,6 @@ const Renderer = new function() {
 
 
 	function renderEntity(_entity, _ctx, _renderSettings = {}) {
-		if (
-			InfoMenu.openState &&
-			InfoMenu.curEntityId == _entity.id &&
-			!_ctx
-		) InfoMenu.renderEntityToWindow(_entity);
-	
 		if (!_ctx) _ctx = ctx;
 
 		// draw the energy bubble
