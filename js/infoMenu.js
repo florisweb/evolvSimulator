@@ -27,8 +27,10 @@ const InfoMenu = new function() {
 		This.openState 		= true;
 		This.curEntity 		= _entity;
 	
-		HTML.entityMenu.entityInfo.type.innerHTML = This.curEntity.type;
-	
+
+
+		HTML.entityMenu.entityInfo.type.innerHTML		 	= This.curEntity.type;
+		HTML.entityMenu.entityInfo.generation.innerHTML 	= This.curEntity.generation;
 		update();
 	}
 
@@ -44,8 +46,9 @@ const InfoMenu = new function() {
 		This.curEntity = entity;
 		renderEntity(This.curEntity);
 		
-		HTML.entityMenu.entityInfo.energy.innerHTML = Math.round(This.curEntity.energy * 10) / 10;
-		HTML.entityMenu.entityInfo.age.innerHTML 	= This.curEntity.age;
+		HTML.entityMenu.entityInfo.energy.innerHTML		 	= Math.round(This.curEntity.energy * 10) / 10;
+		HTML.entityMenu.entityInfo.age.innerHTML 			= This.curEntity.age;
+		
 	}
 
 
