@@ -13,7 +13,7 @@ function _entity(_DNA, _metaData) {
 	this.angle 		= _metaData.angle;
 	this.x 			= _metaData.x;
 	this.y	 		= _metaData.y; 
-
+	this.generation	= _metaData.generation;
 
 
 	this.DNA 		= _DNA;
@@ -45,22 +45,23 @@ function _entity(_DNA, _metaData) {
 			default: if (Main.creatures >= Settings.creatureRange[1]) return false; break;
 		}
 
-		let startDNA 	= Object.assign({}, This.DNA);
-		if (_startDNA) 	startDNA = _startDNA;
-		let newDNA	 	= mutateDNA(startDNA, Settings.mutationChance, Settings.mutationRate);
+		let startDNA 		= Object.assign({}, This.DNA);
+		if (_startDNA) 		startDNA = _startDNA;
+		let newDNA	 		= mutateDNA(startDNA, Settings.mutationChance, Settings.mutationRate);
 
-		let angleMutation = Math.PI * .5;
-		metaData.angle 	= This.angle + angleMutation - angleMutation * 2 * Seed.random();
-		metaData.type 	= This.type;
+		let angleMutation 	= Math.PI * .5;
+		metaData.angle 		= This.angle + angleMutation - angleMutation * 2 * Seed.random();
+		metaData.type 		= This.type;
 
-		let distance	= (newDNA.size + This.DNA.size) * 4;
-		let rx 			=  Math.cos(This.angle) * distance;
-		let ry 			= -Math.sin(This.angle) * distance;
-		metaData.x 		= This.x + rx;
-		metaData.y 		= This.y + ry;
+		let distance		= (newDNA.size + This.DNA.size) * 4;
+		let rx 				=  Math.cos(This.angle) * distance;
+		let ry 				= -Math.sin(This.angle) * distance;
+		metaData.x 			= This.x + rx;
+		metaData.y 			= This.y + ry;
+		metaData.generation = This.generation + 1;
 		
-		metaData.energy	= This.energy * .5;
-		This.energy 	*= .5;
+		metaData.energy		= This.energy * .5;
+		This.energy 		*= .5;
 
 		let newEntity 		= Main.createEntity(newDNA, metaData);
 		newEntity.parent 	= This;

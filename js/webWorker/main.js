@@ -24,7 +24,7 @@ const Main = new function() {
 
 
 		running: false,
-		frameRate: 5,
+		frameRate: 1,
 
 		importEntities: importEntities,
 
@@ -129,11 +129,12 @@ const Main = new function() {
 		for (let i = 0; i < DNA.brain[0]; i++) DNA.brain.push(Seed.random() * 4);
 
 		return createEntity(DNA, {
-			energy: 100,
-			angle: 	Seed.random() * Math.PI * 2,
-			x: 		Math.round(Seed.random() * Main.worldWidth),
-			y: 		Math.round(Seed.random() * Main.worldHeight),
-			type: 	"creature"
+			energy: 	100,
+			angle: 		Seed.random() * Math.PI * 2,
+			x: 			Math.round(Seed.random() * Main.worldWidth),
+			y: 			Math.round(Seed.random() * Main.worldHeight),
+			generation: 0,
+			type: 		"creature"
 		});
 	}
 
@@ -146,11 +147,12 @@ const Main = new function() {
 		};
 
 		return createEntity(DNA, {
-			energy: 100,
-			angle: 	Seed.random() * Math.PI * 2,
-			x: 		Math.round(Seed.random() * Main.worldWidth),
-			y: 		Math.round(Seed.random() * Main.worldHeight),
-			type: 	"plant"
+			energy: 	100,
+			angle: 		Seed.random() * Math.PI * 2,
+			x: 			Math.round(Seed.random() * Main.worldWidth),
+			y: 			Math.round(Seed.random() * Main.worldHeight),
+			generation: 0,
+			type: 		"plant"
 		});
 	}
 
