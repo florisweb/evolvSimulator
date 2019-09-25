@@ -6,8 +6,9 @@
 	right: 0;
 	top: 0;
 
-	width: 390px;
-	height: 100vh;
+	width: 340px;
+	height: calc(100vh - 20px * 2);
+	padding: 20px;
 	
 
 	box-shadow: 0 -5px 30px 5px rgba(50, 50, 50, 0.3);
@@ -27,14 +28,39 @@
 
 
 
-#entityDisplayCanvas {
-	position: relative;
-	
-	width: 200px;
-	height: auto;
-	
-	background: rgba(255, 255, 255, 0.3);
+
+
+#entityInfoMenu {
+	border: 1px solid red;
+	height: 150px;
+
 }
+	
+	.textHolder {
+		position: relative;
+		float: left;
+		border: 1px solid red;
+	}
+
+
+	#entityDisplayCanvas {
+		position: relative;
+		float: right;
+		right: 0;
+		
+		width: 150px;
+		height: auto;
+		
+		background: rgba(255, 255, 255, 0.3);
+	}
+
+
+
+
+
+
+
+
 
 #populationGraph {
 	position: absolute;

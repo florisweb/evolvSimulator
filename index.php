@@ -10,7 +10,7 @@
 
 		<link rel="stylesheet" type="text/css" href="css/component.css">
 		<link rel="stylesheet" type="text/css" href="css/mainContent/header.css">
-		<link rel="stylesheet" type="text/css" href="css/infoMenu.css?a=2">
+		<link rel="stylesheet" type="text/css" href="css/infoMenu.css?a=3">
 		<link rel="stylesheet" type="text/css" href="css/familyTree.css?a=4">
 		<link rel="stylesheet" type="text/css" href="css/mainContent/mainContent.css?a=11">
 		<script type="text/javascript" src="/JS/jQuery.js" asy nc></script>
@@ -69,7 +69,32 @@
 
 
 			<div class="infoMenuPage">
-				<canvas id="entityDisplayCanvas" width="100" height="100"></canvas>
+				<div id="entityInfoMenu"> 
+					<div class="textHolder">
+						<div class="text">
+							<strong>Type</strong>
+							: 
+							<a>Plant</a>
+						</div>
+						<div class="text">
+							<strong>Energy</strong>
+							: 
+							<a>100</a>
+						</div>
+						<div class="text">
+							<strong>Age</strong>
+							: 
+							<a>100</a>
+						</div>
+						<div class="text">
+							<strong>Generation</strong>
+							: 
+							<a>100</a>
+						</div>	
+					</div>
+				
+					<canvas id="entityDisplayCanvas" width="100" height="100"></canvas>
+				</div>
 
 				<button onclick="FamilyTree.open(InfoMenu.curEntity)">Open FamilyTree</button>
 				<canvas id="populationGraph" width="1000" height="400"></canvas>
