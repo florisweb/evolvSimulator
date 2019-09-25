@@ -5,7 +5,7 @@
 	left: 0;
 	top: 0;
 
-	width: calc(100vw - 390px);
+	width: calc(100vw - 380px);
 	height: 100vh;
 
 	background: #fff;
@@ -38,13 +38,8 @@
 #mainContentHolder .mainContentPage {
 	position: absolute;
 	top: 0;
-	width: calc(100% - 5px * 2 - 35px);
+	width: 100%;
 	height: calc(100vh);
-
-	padding: 0 5px;
-	padding-left: 35px;
-	padding-right: 30px;
-
 
 	overflow-x: hidden;
 	overflow-y: auto;
