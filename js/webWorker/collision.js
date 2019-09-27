@@ -74,7 +74,6 @@ const Collision = new function() {
 			let distance = maxDistance - directDistance;
 
 			if (distance <= 0) continue;
-			entity.distance = distance;
 			visableEntities.push(entity);
 		}
 
