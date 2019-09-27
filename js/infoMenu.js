@@ -60,7 +60,7 @@ function InfoMenu_searchPage() {
 		brain: {
 			creatureOnly: true,
 			getValue: function (_e) {return _e.DNA.brain.length},
-			displayName: "Brainsize"
+			displayName: "axons"
 		},
 		energy: {
 			getValue: function (_e) {return _e.energy},
@@ -96,9 +96,6 @@ function InfoMenu_searchPage() {
 	}
 
 
-
-	
-
 		function createDisplayData() {
 			let sorter = sortOptions[This.sortBy];
 			let displayData = Object.assign([], Main.data.entities);
@@ -119,18 +116,19 @@ function InfoMenu_searchPage() {
 
 
 
+		function createSearchResult(_results) {
+			HTML.listHolder.innerHTML = "";
+			let entityIndex = 0;
+			for (entity of _results) 
+			{
+				if (entityIndex > This.settings.maxEntityCount) break;
 
-	function createSearchResult(_results) {
-		HTML.listHolder.innerHTML = "";
-		let entityIndex = 0;
-		for (entity of _results) 
-		{
-			if (entityIndex > This.settings.maxEntityCount) break;
-
-			entityIndex++;
-			createSearchItem(entity, entity.searchValue + " " + This.sortBy);
+				entityIndex++;
+				createSearchItem(entity, entity.searchValue + " " + This.sortBy);
+			}
 		}
-	}
+
+
 
 
 
@@ -138,7 +136,7 @@ function InfoMenu_searchPage() {
 	function createSearchItem(_entity) {
 		let sorter = sortOptions[This.sortBy];
 		let html = document.createElement("div");
-		html.className = "entityItem";
+		html.className = "entityItem clickable";
 		html.innerHTML = 	"<canvas class='entityPreviewCanvas' width='60' height='60'></canvas>" + 
 							"<div class='text titleHolder'></div>";
 							
@@ -168,6 +166,9 @@ function InfoMenu_searchPage() {
 
 	return This;
 }
+
+
+
 
 
 

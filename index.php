@@ -10,7 +10,7 @@
 
 		<link rel="stylesheet" type="text/css" href="css/component.css">
 		<link rel="stylesheet" type="text/css" href="css/mainContent/header.css">
-		<link rel="stylesheet" type="text/css" href="css/infoMenu.css?a=6">
+		<link rel="stylesheet" type="text/css" href="css/infoMenu.css?a=8">
 		<link rel="stylesheet" type="text/css" href="css/familyTree.css?a=4">
 		<link rel="stylesheet" type="text/css" href="css/mainContent/mainContent.css?a=12">
 		<script type="text/javascript" src="/JS/jQuery.js" asy nc></script>
@@ -63,7 +63,7 @@
 		<div id="infoMenu">
 			<div class="infoMenuPage">
 				<div class="headerText preventTextOverflow">PROJECTS</div>
-				<img class="exitIcon" src="images/exitIcon.png" onclick="InfoMenu.close()">
+
 				<select onInput="InfoMenu.searchPage.sortBy = this.value; InfoMenu.searchPage.update(true)">
 					<option value="age">Age</option>
 					<option value="energy">Energy</option>
@@ -74,6 +74,8 @@
 
 
 			<div class="infoMenuPage hide">
+				<img class="exitIcon" src="images/exitIcon.png" onclick="InfoMenu.searchPage.open()">
+
 				<div class="header">
 					<div class="text">
 						<strong>Frame</strong>
