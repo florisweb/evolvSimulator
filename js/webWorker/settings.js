@@ -1,10 +1,10 @@
 let Settings = {		
 	//photosyntheses
 	// energy/nutrient = 1 / nutrientsPerReaction * [-.5, 1] / sunEnergyPerReaction 
-	sunEnergyPerReaction: .05, //.1
-	nutrientsPerReaction: .25, // .15
+	sunEnergyPerReaction: .1, 
+	nutrientsPerReaction: .25,
 
-	nutrientsPercOnDeath: .2,
+	nutrientsPercOnDeath: .15,
 	minimumEnergyToBeAlive: 50,
 
 	mutationChance: 1,
