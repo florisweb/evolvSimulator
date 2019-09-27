@@ -37,7 +37,7 @@ const Renderer = new function() {
 		let entities = getAllEntitiesWithinRange(x, y, 5);
 		if (!entities) return;
 
-		InfoMenu.open(entities[0]);
+		InfoMenu.entityPage.open(entities[0]);
 	}
 
 

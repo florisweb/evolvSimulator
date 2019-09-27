@@ -64,6 +64,11 @@
 			<div class="infoMenuPage">
 				<div class="headerText preventTextOverflow">PROJECTS</div>
 				<img class="exitIcon" src="images/exitIcon.png" onclick="InfoMenu.close()">
+				<select onInput="InfoMenu.searchPage.sortBy = this.value; InfoMenu.searchPage.update(true)">
+					<option value="age">Age</option>
+					<option value="energy">Energy</option>
+					<option value="brain">Brainsize</option>
+				</select>
 				<div id="entityListHolder"></div>
 			</div>
 
@@ -109,7 +114,7 @@
 					<canvas id="entityDisplayCanvas" width="100" height="100"></canvas>
 				</div>
 
-				<button onclick="FamilyTree.open(InfoMenu.curEntity)">Open FamilyTree</button>
+				<button onclick="FamilyTree.open(InfoMenu.entityPage.curEntity)">Open FamilyTree</button>
 				<canvas id="populationGraph" width="1000" height="400"></canvas>
 			</div>
 		</div>
