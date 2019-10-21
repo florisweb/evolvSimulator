@@ -1,7 +1,6 @@
 
 
 
-
 const Main = new function() {
 	let This = {
 		totalEnergyConsumption: 0,

@@ -1,7 +1,7 @@
 
 const antiCache = Math.round(Math.random() * 100000);
 importScripts("seedGenerator.js?a="		+ antiCache);
-Seed.setSeed("hey there");
+Seed.setSeed("hey there8" + Math.random());
 
 importScripts("settings.js?a="			+ antiCache);
 importScripts("collision.js?a=" 		+ antiCache);
@@ -78,9 +78,10 @@ function exportData() {
 	data.statistics = {
 		frames: Main.updates,
 		graphLines: [
-			Main.creatures,
-			Main.plants,
-			Main.totalNutrients / Main.map.nutrients.length / Main.map.nutrients[0].length * 1000,
+			[Main.creatures, Settings.creatureRange[1]],
+			[Main.plants, Settings.plantRange[1]],
+			[Main.totalNutrients / Main.map.nutrients.length / Main.map.nutrients[0].length, 1],
+			[Main.averageEnergy, 200]
 		]
 	}
 	

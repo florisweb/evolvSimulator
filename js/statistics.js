@@ -13,10 +13,11 @@ const Statistics = new function() {
 
 	
 	let prefGraphLines = [];
-	let colours = [
+	const colours = [
 		"#f00",
 		"#0f0",
-		"#00f"
+		"#00f",
+		"#fa0",
 	];
 
 	let lastFrame = 0;
@@ -31,7 +32,6 @@ const Statistics = new function() {
 		let cursorShift = framesSinceLastUpdate / This.settings.updateEveryXFrames * 50;
 		drawCursorX 	+= cursorShift;
 		
-		
 		if (drawCursorX > This.canvas.width)
 		{
 			canvasShift += cursorShift;
@@ -43,8 +43,6 @@ const Statistics = new function() {
 				prefCanvasShift += Math.floor(dShift);
 			}
 		}
-
-
 
 		drawGraphLines(_data.graphLines);
 
@@ -80,8 +78,8 @@ const Statistics = new function() {
 	}
 
 
-	function mapY(_value) {
-		return _value / 1000 * This.canvas.height; // 200 is max population size
+	function mapY(_valuePair) {//  0 = actual value, 1 = max value
+		return _valuePair[0] / _valuePair[1] * This.canvas.height; // 200 is max population size
 	}
 	return This;
 }
